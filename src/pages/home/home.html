@@ -1,0 +1,17 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>{{titulo}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content class="masters">
+  <div class="botao-perdidos" #botaoPerdidos (click)="animarBotao('perdidos')">
+      <div class="icon search"></div>
+  </div>
+  <div class="botao-adocao" #botaoAdocao (click)="animarBotao('adocao')">
+    <div class="icon heart"></div>
+  </div>
+  <div class="botao-registro" #botaoRegistro (click)="animarBotao('registro')">
+    <div class="icon paw"></div>
+  </div>
+</ion-content>

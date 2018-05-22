@@ -1,0 +1,78 @@
+page-home {
+    text-align: center;
+}
+
+.title-div {
+    background-color: map-get($colors, secondary );
+    position: absolute;
+    color: black;
+    vertical-align: middle;
+    left: 0;
+    top: 0;
+    width: 100%;
+}
+
+.botao-perdidos {
+    background-color:map-get($colors, secondary);
+    position: absolute;
+    top: 80px;
+    left: 5%;
+    height: 200px;
+    width: 40%;
+    max-width: 200px;
+    border-radius: 50%;
+    box-shadow: 5px 5px 20px 1px black;
+}
+
+.icon.search {
+    background-image: url(../assets/imgs/search.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 60% 60%;
+    height: 100%;
+    width: auto;
+    height: 200px;
+}
+
+.botao-adocao {
+    background-color:map-get($colors, secondary);
+    position: absolute;
+    top: 300px;
+    right: 5%;
+    height: 200px;
+    width: 40%;
+    max-width: 200px;
+    border-radius: 50%;
+    box-shadow: 5px 5px 20px 1px black;
+}
+
+.icon.heart {
+    background-image: url(../assets/imgs/heart.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 60% 60%;
+    height: 100%;
+    width: auto;
+    height: 200px;
+}
+
+.botao-registro {
+    background-color:map-get($colors, secondary);
+    position: absolute;
+    top: 520px;
+    left: 5%;
+    height: 200px;
+    width: 40%;
+    max-width: 200px;
+    border-radius: 50%;
+    box-shadow: 5px 5px 20px 1px black;
+}
+
+.icon.paw {
+    background-image: url(../assets/imgs/pawprint.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 60% 60%;
+    height: 100%;
+    width: auto;
+}
