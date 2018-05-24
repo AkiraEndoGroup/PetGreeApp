@@ -4,16 +4,27 @@ import { ModalInsertPet } from './modal-insert-pet';
 import { ModalController } from 'ionic-angular';
 import { trigger, state, style, animate, transition, keyframes } from '@angular/animations';
 
-interface PetResponse {
+export interface PetResponse {
     id: number,
-    type: { description: string },
-    gender: { description: string },
-    size: { description: string },
-    color: { description: string },
+    type: { description: string, id: number },
+    gender: { description: string, id: number },
+    size: { description: string, id: number },
+    color: { description: string, id: number },
     spots: boolean,
     description: string,
     state: string,
-    postString: string
+    postString: string,
+    image_url: string
+}
+
+function PetJSON(type,gender,size,color,spots,description,image_url) {
+  this.type = type;
+  this.gender = gender;
+  this.size = size;
+  this.color = color;
+  this.spots = spots;
+  this.description = description;
+  this.image_url = image_url;
 }
 
 @Component({
@@ -34,13 +45,7 @@ interface PetResponse {
 export class PagePerdidos implements OnInit {
 
     // sample (in case no server is available)
-    messageList = [
-        {type:{description:"SampleAnimal"},gender:{description:"SampleGender"},size:{description:"Grande"},color:{description:"Branco"},spots:true, description:"Sample Description.",state:"yellow",postString:"Post"},
-        {type:{description:"SampleAnimal"},gender:{description:"SampleGender"},size:{description:"Grande"},color:{description:"Branco"},spots:true, description:"Sample Description.",state:"yellow",postString:"Post"},
-        {type:{description:"SampleAnimal"},gender:{description:"SampleGender"},size:{description:"Grande"},color:{description:"Branco"},spots:true, description:"Sample Description.",state:"yellow",postString:"Post"},
-        {type:{description:"SampleAnimal"},gender:{description:"SampleGender"},size:{description:"Grande"},color:{description:"Branco"},spots:true, description:"Sample Description.",state:"yellow",postString:"Post"},
-        {type:{description:"SampleAnimal"},gender:{description:"SampleGender"},size:{description:"Grande"},color:{description:"Branco"},spots:true, description:"Sample Description.",state:"yellow",postString:"Post"},
-    ];
+    messageList = [];
     url = 'http://localhost:4242/pets';
 
     constructor(
@@ -71,6 +76,13 @@ export class PagePerdidos implements OnInit {
         this.messageList.forEach(message => {
             message.state = 'yellow';
             message.postString = 'Post';
+            if (message.spots)
+              message.spotsTxt = "Sim";
+            else
+              message.spotsTxt = "Não";
+
+            if (message.image_url == null)
+              message.image_url = "./assets/imgs/pet1.png";
         });
       },
       (err: HttpErrorResponse) => {
@@ -87,7 +99,98 @@ export class PagePerdidos implements OnInit {
   
     modal.onDidDismiss(data => {
         if (data) {
-            this.postPet(data);
+          let pet = { type:"string", color:"string", gender:"string", size:"string", spots:false, description:"string", image_url:null }
+          switch(parseInt(data.gender,10)) {
+            case 0: {
+              pet.gender = "Macho"; break;
+            }
+            case 1: {
+              pet.gender = "Femea"; break;
+            }
+            case 2: {
+              pet.gender = "Desconhecido"; break;
+            }
+          }
+          switch(parseInt(data.type,10)) {
+              case 1: {
+                pet.type = "Cachorro"; break;
+              }
+              case 2: {
+                pet.type = "Gato"; break;
+              }
+              case 3: {
+                pet.type = "Hamster"; break;
+              }
+              case 4: {
+                pet.type = "Coelho"; break;
+              }
+              case 5: {
+                pet.type = "Cavalo"; break;
+              }
+              case 6: {
+                pet.type = "Lagarto"; break;
+              }
+              case 7: {
+                pet.type = "Pássaro"; break;
+              }
+              case 8: {
+                pet.type = "Tartaruga"; break;
+              }
+              default: {
+                pet.type = "Outro"; break;
+              }
+          }
+          switch(parseInt(data.size,10)) {
+            case 0: {
+              pet.size = "Pequenino"; break;
+            }
+            case 1: {
+              pet.size = "Pequeno"; break;
+            }
+            case 2: {
+              pet.size = "Medio"; break;
+            }
+            case 3: {
+              pet.size = "Grande"; break;
+            }
+            case 4: {
+              pet.size = "Muitogrande"; break;
+            }
+            case 5: {
+              pet.size = "Imenso"; break;
+            }
+            default: {
+              pet.size = "Outro"; break;
+            }
+          }
+          switch(parseInt(data.color,10)) {
+            case 0: {
+              pet.color = "Branco"; break;
+            }
+            case 1: {
+              pet.color = "Preto"; break;
+            }
+            case 2: {
+              pet.color = "Marrom"; break;
+            }
+            case 3: {
+              pet.color = "Laranja"; break;
+            }
+            case 4: {
+              pet.color = "Malhado"; break;
+            }
+            case 5: {
+              pet.color = "Bege"; break;
+            }
+            default: {
+              pet.color = "Outro"; break;
+            }
+          }
+          pet.spots = data.spots;
+          pet.description = data.description;
+          pet.image_url = data.image_url;
+          // TODO fazer o fetch do link de upload
+          this.postPet(pet);
         }
     });
 
@@ -95,17 +198,19 @@ export class PagePerdidos implements OnInit {
   }
 
   postPet(pet): void {
-    let petVO = {
-      type: pet.type.description,
-      gender: pet.gender.description,
-      size: pet.size.description,
-      color: pet.color.description,
-      spots: pet.spots,
-      description: pet.description
-    }
+    let petVO = new PetJSON(
+      pet.type,
+      pet.gender,
+      pet.size,
+      pet.color,
+      pet.spots,
+      pet.description,
+      pet.image_url);
+
+    console.log("POST: http://servidor:4242/ -d'{type:" + petVO.type + ",gender:" + petVO.gender + ",size:" + petVO.size + ",color:" + petVO.color + ",spots:" + petVO.spots + ",description:" + petVO.description + ",image_url:" + petVO.image_url + "\n")
     this.http.post(this.url,petVO).subscribe(
       data => {
-        console.log(data);
+        console.log("POSTADOOO -> " + data);
         this.getPets();
       }
     )

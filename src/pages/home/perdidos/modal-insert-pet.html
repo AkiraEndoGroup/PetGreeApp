@@ -35,27 +35,27 @@
 
     <ion-grid><ion-row align-items-center>
         <ion-col col-12 col-sm>
-            <div style="align-items: center;"><img src="{{petImage}}" (click)="takePic()"/></div>
+            <div style="align-items: center;"><img src="{{petImgURL}}" (click)="takePic()"/></div>
         </ion-col>
         <ion-col col-12 col-sm>
         <ion-item>
             <ion-label>Espécie</ion-label>
-            <ion-select [(ngModel)]="newPet.type">
-                <ion-option value="1">Cachorro</ion-option>
-                <ion-option value="2">Gato</ion-option>
-                <ion-option value="3">Hamster</ion-option>
-                <ion-option value="4">Coelho</ion-option>
-                <ion-option value="5">Cavalo</ion-option>
-                <ion-option value="6">Lagarto</ion-option>
-                <ion-option value="7">Pássaro</ion-option>
-                <ion-option value="8">Tartaruga</ion-option>
-                <ion-option value="9">Outro</ion-option>
+            <ion-select [(ngModel)]="type">
+                <ion-option value=1>Cachorro</ion-option>
+                <ion-option value=2>Gato</ion-option>
+                <ion-option value=3>Hamster</ion-option>
+                <ion-option value=4>Coelho</ion-option>
+                <ion-option value=5>Cavalo</ion-option>
+                <ion-option value=6>Lagarto</ion-option>
+                <ion-option value=7>Pássaro</ion-option>
+                <ion-option value=8>Tartaruga</ion-option>
+                <ion-option value=9>Outro</ion-option>
             </ion-select>
         </ion-item>
         
         <ion-item>
             <ion-label>Sexo</ion-label>
-            <ion-select [(ngModel)]="newPet.gender">
+            <ion-select [(ngModel)]="gender">
                 <ion-option value="0">Macho</ion-option>
                 <ion-option value="1">Fêmea</ion-option>
                 <ion-option value="2">Não sei</ion-option>
@@ -64,7 +64,7 @@
 
         <ion-item>
             <ion-label>Tamanho</ion-label>
-            <ion-select [(ngModel)]="newPet.size">
+            <ion-select [(ngModel)]="size">
                 <ion-option value="0">Pequenino</ion-option>
                 <ion-option value="1">Pequeno</ion-option>
                 <ion-option value="2">Médio</ion-option>
@@ -76,7 +76,7 @@
 
         <ion-item>
             <ion-label>Cor</ion-label>
-            <ion-select [(ngModel)]="newPet.color">
+            <ion-select [(ngModel)]="color">
                 <ion-option value="0">Branco</ion-option>
                 <ion-option value="1">Preto</ion-option>
                 <ion-option value="2">Marrom</ion-option>
@@ -89,14 +89,14 @@
         
         <ion-item>
             <ion-label>Manchas?</ion-label>
-            <ion-checkbox color="secondary" checked="false" [(ngModel)]="newPet.spots"></ion-checkbox>
+            <ion-checkbox color="secondary" checked="false" [(ngModel)]="spots"></ion-checkbox>
         </ion-item>
 
         <ion-item>
             <ion-label>Descrição adicional</ion-label>
         </ion-item>
         <ion-item>
-            <ion-textarea [(ngModel)]="newPet.description" placeholder="Diga algo que se destaque nesse animal."></ion-textarea>
+            <ion-textarea [(ngModel)]="description" placeholder="Diga algo que se destaque nesse animal."></ion-textarea>
         </ion-item>
     </ion-col>
     </ion-row></ion-grid>

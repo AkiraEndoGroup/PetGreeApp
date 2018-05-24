@@ -11,7 +11,7 @@ import java.io.Serializable;
 public class PetType implements Serializable {
 
     public enum TypePet {
-        NULL(0), CACHORRO(1), GATO(2), HAMSTER(3), COELHO(4), CAVALO(5), LAGARTO(6), PASSARO(7), TARTARUGA(8), OUTROS(9);
+        NULL(0), CACHORRO(1), GATO(2), HAMSTER(3), COELHO(4), CAVALO(5), LAGARTO(6), PASSARO(7), TARTARUGA(8), OUTRO(9);
 
         TypePet(int type) { this.type = type; }
 

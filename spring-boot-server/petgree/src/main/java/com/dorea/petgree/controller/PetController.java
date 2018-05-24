@@ -45,6 +45,9 @@ public class PetController extends WebMvcConfigurerAdapter {
         if (!ValidatePet.isValid(pet)) {
             throw new InvalidInputException();
         }
+        if (pet.getDescription() == null) {
+    		pet.setDescription("Nenhuma.");
+        }
         petService.postPet(pet);
     }
 
@@ -61,6 +64,7 @@ public class PetController extends WebMvcConfigurerAdapter {
 
         if (ValidatePet.isValid(pet)) {
             if (petService.getPetById(pet.getId()) != null) {
+            	petService.updatePet(pet);
                 return pet;
             } else {
                 throw new PetNotFoundException(pet.getId());

@@ -1,37 +1,34 @@
 <ion-header>
  
     <ion-navbar color="primary">
-      <ion-title>My Files</ion-title>
+      <ion-title>{{title}}</ion-title>
     </ion-navbar>
   </ion-header>
    
    
   <ion-content>
-   
-    <ion-card *ngFor="let file of files | async">
-      <ion-card-header>
-        {{ file.created | date:'medium' }}
-      </ion-card-header>
-   
-      <ion-card-content>
-   
-        <button ion-button block icon-left outline (click)="viewFile(file.url)">
-          <ion-icon name="eye"></ion-icon>
-          {{ file.fullPath }}
-        </button>
-   
-        <button ion-button block outline icon-left color="danger" (click)="deleteFile(file)">
-          <ion-icon name="trash"></ion-icon> Delete
-        </button>
-   
-      </ion-card-content>
-   
-    </ion-card>
-   
-    <ion-fab right bottom>
-      <button ion-fab color="primary" (click)="addFile()">
-        <ion-icon name="cloud-upload"></ion-icon>
-      </button>
-    </ion-fab>
-   
+      <ion-row>
+          <ion-col col-9>
+            <ion-item>
+              <ion-input type="text" [(ngModel)]="newItem" placeholder="New Shopping item"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <button ion-button (click)="addItem()">Add!</button>
+          </ion-col>
+        </ion-row>
+
+      <ion-list>
+          Items
+          <ion-item-sliding *ngFor="let item of items">
+            <ion-item>
+              {{item}}
+            </ion-item>
+            <ion-item-options side="right">
+              <button ion-button color="danger" icon-only (click)="removeItem('lista')"><ion-icon name="trash"></ion-icon></button>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+
+        <img src="{{imgURL}}" placeholder="blabla"/>
   </ion-content>

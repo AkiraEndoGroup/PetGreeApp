@@ -56,6 +56,10 @@ public class PetConverter {
 			pet.setDescription(petModel.getDescription());
 		}
 
+		if (petModel.getImage_url() != null) {
+			pet.setImage_url(petModel.getImage_url());
+		}
+
 		return pet;
 	}
 }

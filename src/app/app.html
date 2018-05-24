@@ -6,11 +6,16 @@
   </ion-header>
 
   <ion-content>
-    <ion-list>
-      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-        {{p.title}}
-      </button>
-    </ion-list>
+    <ion-row *ngIf="!loggedIn" align-items-center>
+      <ion-col col-12><button ion-button menuClose block (click)="openLogin()">Entrar</button></ion-col>
+    </ion-row>
+    <ion-row *ngIf="loggedIn" align-items-center>
+      <ion-col col-12>Logado como {{myEmail}}</ion-col>
+      <h1>Disponibilizar aqui depois um avatar do usuário e o logo do aplicativo.</h1>
+    </ion-row>
+    <ion-row *ngIf="loggedIn" align-items-center>
+      <ion-col col-12><button ion-button menuClose block (click)="logout()">Sair</button></ion-col>
+    </ion-row>
   </ion-content>
 
 </ion-menu>

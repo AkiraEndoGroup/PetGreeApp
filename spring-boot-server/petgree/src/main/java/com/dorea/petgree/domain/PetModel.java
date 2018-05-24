@@ -22,6 +22,9 @@ public class PetModel {
 	@JsonInclude(JsonInclude.Include.ALWAYS)
 	private String description;
 
+	@JsonInclude(JsonInclude.Include.ALWAYS)
+	private String image_url;
+
 	public Long getId() {
 		return id;
 	}
@@ -76,5 +79,13 @@ public class PetModel {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getImage_url() {
+		return image_url;
+	}
+
+	public void setImage_url(String image_url) {
+		this.image_url = image_url;
 	}
 }

@@ -37,7 +37,10 @@ public class Pet implements Serializable {
     @Column(name = "description")
     private String description;
 
-    // Getters and Setters
+    @Column(name = "image_url")
+    private String image_url;
+
+	// Getters and Setters
 
     public Long getId() {
         return id;
@@ -94,4 +97,12 @@ public class Pet implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
+
+	public String getImage_url() {
+		return image_url;
+	}
+
+	public void setImage_url(String image_url) {
+		this.image_url = image_url;
+	}
 }

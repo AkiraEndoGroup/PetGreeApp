@@ -19,14 +19,16 @@
                     <ion-grid>
                         <ion-row align-items-center>
                             <ion-col col-6>
-                                <img src="./assets/imgs/pet1.png"/>
+                                <img src={{message.image_url}}/>
                             </ion-col>
                             <ion-col col-6>
-                                Gender: {{message.gender.description}} <br/>
-                                Size: {{message.size.description}} <br/>
-                                Color: {{message.color.description}} <br/>
-                                Description: {{message.description}} <br/>
-                                Spots? {{message.spots}} <br/>
+                                Sexo: {{message.gender.description}} <br/>
+                                Tamanho: {{message.size.description}} <br/>
+                                Cor: {{message.color.description}} <br/>
+                                <div>
+                                    Descrição: {{message.description}}
+                                </div>
+                                Tem manchas? {{message.spotsTxt}} <br/>
                                 <button ion-button color="danger" (click)="changeColor(message,1)">Delete</button> <button ion-button (click)="changeColor(message,0)">{{message.postString}}</button>
                             </ion-col>                            
                         </ion-row>

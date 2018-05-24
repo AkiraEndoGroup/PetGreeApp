@@ -42,3 +42,8 @@ body {
 .masters-navbar {
     background-color: map-get($colors, secondary);
 }
+
+.form-error {
+    color: red;
+    size: 16dp;
+}

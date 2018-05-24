@@ -1,11 +1,9 @@
 import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { IonicApp, IonicErrorHandler, IonicModule, LoadingController } from 'ionic-angular';
 
-import { Camera } from '@ionic-native/camera'
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { AngularFireStorageModule } from 'angularfire2/storage';
-import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { IonicStorageModule } from '@ionic/storage'
+
+import { Camera } from '@ionic-native/camera';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -16,18 +14,26 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StatusBar } from '@ionic-native/status-bar';
 import { AnimatesDirective, AnimationService } from 'css-animator';
 import { ModalInsertPet } from '../pages/home/perdidos/modal-insert-pet';
+import { ModalLogin } from '../pages/home/modal-login';
+import { ModalSignup } from '../pages/home/modal-signup'
 import { PagePerdidos } from '../pages/home/perdidos/perdidos';
-import { AdocaoPage } from '../pages/adocao/adocao'
-import { DataProvider } from '../providers/data/data';
-// import { SplashScreen } from '@ionic-native/splash-screen';
+import { AdocaoPage } from '../pages/adocao/adocao';
 
-var firebaseConfig = {
-  apiKey: "AIzaSyAmn6JwCXZIJWXk7w9Ies3WCBOtxm_Jg8w",
-  authDomain: "petgree-1b7e6.firebaseapp.com",
-  databaseURL: "https://petgree-1b7e6.firebaseio.com",
-  projectId: "petgree-1b7e6",
-  storageBucket: "",
-  messagingSenderId: "814325765331"
+// Firebase modules
+// import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireStorageModule } from 'angularfire2/storage';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { FirebaseProvider } from '../providers/firebase/firebase';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA3NSMbfS7Gwcd0S2LZQwnfvUSgazwCvYc",
+  authDomain: "petgree-app.firebaseapp.com",
+  databaseURL: "https://petgree-app.firebaseio.com",
+  projectId: "petgree-app",
+  storageBucket: "petgree-app.appspot.com",
+  messagingSenderId: "806791357162"
 };
 
 @NgModule({
@@ -35,6 +41,8 @@ var firebaseConfig = {
     MyApp,
     HomePage,
     ModalInsertPet,
+    ModalLogin,
+    ModalSignup,
     PagePerdidos,
     AdocaoPage,
     AnimatesDirective
@@ -44,15 +52,20 @@ var firebaseConfig = {
     HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,
-    AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireDatabaseModule,
-    AngularFireStorageModule
+    IonicStorageModule.forRoot(),
+    // AngularFireDatabaseModule,
+    AngularFirestoreModule,
+    AngularFireStorageModule,
+    AngularFireAuthModule,
+    AngularFireModule.initializeApp(firebaseConfig)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
     ModalInsertPet,
+    ModalLogin,
+    ModalSignup,
     PagePerdidos,
     AdocaoPage
   ],
@@ -60,8 +73,8 @@ var firebaseConfig = {
     StatusBar,
     Camera,
     AnimationService,
-    InAppBrowser,
-    DataProvider,
+    FirebaseProvider,
+    LoadingController,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
   ]
 })
