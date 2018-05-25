@@ -49,7 +49,12 @@ export class ModalLogin {
             .then(
                 () => {
                     this.loading.dismiss();
-                    this.viewCtrl.dismiss(credentials);
+                    if (this.fire.auth.auth.currentUser.emailVerified) {
+                        this.viewCtrl.dismiss(credentials);
+                    } else {
+                        this.loginError = 'Você precisa verificar seu email.';
+                        this.fire.signOut();
+                    }
                 },
                 error => {
                     console.log("Erro: " + error);
@@ -94,7 +99,7 @@ export class ModalLogin {
         modal.present();
     }
 
-    closeModal() {
+    close() {
         this.viewCtrl.dismiss(false);
     }
 }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ViewController, LoadingController } from 'ionic-angular';
+import { ViewController, LoadingController, ToastController, Modal } from 'ionic-angular';
 import { FirebaseProvider } from '../../providers/firebase/firebase';
 
 @Component({
@@ -16,12 +16,24 @@ export class ModalSignup {
 		fb: FormBuilder,
 		public viewCtrl: ViewController, 
         private fire: FirebaseProvider,
-        private loadingCtrl: LoadingController
+        private loadingCtrl: LoadingController,
+        public toastCtrl: ToastController
 	) {
 		this.form = fb.group({
 			email: ['', Validators.compose([Validators.required, Validators.email])],
-			password: ['', Validators.compose([Validators.required, Validators.minLength(6)])]
-		});
+			password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
+			passconfirm: ['', Validators.compose([Validators.required, Validators.minLength(6)])]
+		}, { validator: ModalSignup.passwordsMatch });
+    }
+
+    static passwordsMatch(cg: FormGroup) {
+        let p1 = cg.get('password');
+        let p2 = cg.get('passconfirm');
+        let rv: { [error: string]: any } = {};
+        if ((p1.touched || p2.touched) && p1.value !== p2.value) {
+            rv['passwordMismatch'] = true;
+        }
+        return rv;
     }
 
     signup() {
@@ -41,7 +53,9 @@ export class ModalSignup {
         .then(
 			() => {
                 this.loading.dismiss();
-                this.viewCtrl.dismiss(credentials);
+                // Enviar email de verificação
+                this.fire.auth.auth.currentUser.sendEmailVerification();
+                this.displayEmailToastAndLeave();
             },
 			error => {
                 console.log(error);
@@ -51,7 +65,22 @@ export class ModalSignup {
             }
 		);
     }
-    closeModal() {
+
+    displayEmailToastAndLeave() {
+        let toast = this.toastCtrl.create({
+            message: 'Email de verificação enviado.',
+            duration: 3000,
+            position: 'bottom'
+        });
+
+        toast.onDidDismiss(() => {
+            this.viewCtrl.dismiss(false);
+        });
+
+        toast.present();
+    }
+
+    close() {
         this.viewCtrl.dismiss(false);
     }
 }
