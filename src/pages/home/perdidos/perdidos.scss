@@ -5,6 +5,8 @@ ion-list {
 
 .card {
     border-radius: 20px;
+    max-height: 400px;
+    background-color: map-get($colors, secondary);
 }
 
 .item {

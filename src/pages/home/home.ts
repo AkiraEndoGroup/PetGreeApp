@@ -43,8 +43,8 @@ export class HomePage {
       }
     }
     if (elem) {
-      this.animator.setType('bounceIn')
-      .setDuration(500)
+      this.animator.setType('pulse')
+      .setDuration(300)
       .show(elem)
       .then(() => {
         if (elem.page)

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ModalInsertPet } from './modal-insert-pet';
-import { ModalController } from 'ionic-angular';
+import { ModalController, AlertController } from 'ionic-angular';
 import { trigger, state, style, animate, transition, keyframes } from '@angular/animations';
+import { ModalShowImage } from './modal-show-image';
 
 export interface PetResponse {
     id: number,
@@ -35,8 +36,8 @@ function PetJSON(type,gender,size,color,spots,description,image_url) {
       state('red', style({
         backgroundColor: "red"
       })),
-      state('yellow', style({
-        backgroundColor: "yellow"
+      state('normal', style({
+        backgroundColor: "#7d5dc3"
       })),
       transition('* => *', animate('1000ms ease'))
     ])
@@ -44,29 +45,31 @@ function PetJSON(type,gender,size,color,spots,description,image_url) {
 })
 export class PagePerdidos implements OnInit {
 
-    // sample (in case no server is available)
-    messageList = [];
-    url = 'http://localhost:4242/pets';
+  // sample (in case no server is available)
+  messageList = [];
+  // url = 'http://ec2-18-231-183-70.sa-east-1.compute.amazonaws.com:4242/pets';
+  url = 'http://localhost:4242/pets';
 
-    constructor(
-        private http: HttpClient,
-        private modalCtrl: ModalController) {
-    }
+  constructor(
+      private http: HttpClient,
+      private modalCtrl: ModalController,
+      private alertCtrl: AlertController) {
+  }
 
-    changeColor(message,number) {
-        if (number == 1) {
-            message.state = 'red';
-            this.deletePet(message);
-        }
-        else {
-            message.state = 'yellow';
-            this.postPet(message);
-        }
-    }
+  changeColor(message,number) {
+      if (number == 1) {
+          message.state = 'red';
+          this.deletePet(message);
+      }
+      else {
+          message.state = 'normal';
+          this.postPet(message);
+      }
+  }
 
-    ngOnInit() {
-    this.getPets();
-    }
+  ngOnInit() {
+  this.getPets();
+  }
 
   getPets(): void {
     this.http.get<PetResponse[]>(this.url).subscribe(
@@ -74,7 +77,7 @@ export class PagePerdidos implements OnInit {
         console.log(data);
         this.messageList = data;
         this.messageList.forEach(message => {
-            message.state = 'yellow';
+            message.state = 'normal';
             message.postString = 'Post';
             if (message.spots)
               message.spotsTxt = "Sim";
@@ -92,6 +95,11 @@ export class PagePerdidos implements OnInit {
           console.log("Server-side error occurred. Details:\n" + err.message);
         }
       });
+  }
+
+  showImage(image) {
+    let modal = this.modalCtrl.create(ModalShowImage, {image: image});
+    modal.present();
   }
 
   insertPet(): void {
@@ -207,7 +215,7 @@ export class PagePerdidos implements OnInit {
       pet.description,
       pet.image_url);
 
-    console.log("POST: http://servidor:4242/ -d'{type:" + petVO.type + ",gender:" + petVO.gender + ",size:" + petVO.size + ",color:" + petVO.color + ",spots:" + petVO.spots + ",description:" + petVO.description + ",image_url:" + petVO.image_url + "\n")
+    console.log("POST:"+this.url+" -d'{type:" + petVO.type + ",gender:" + petVO.gender + ",size:" + petVO.size + ",color:" + petVO.color + ",spots:" + petVO.spots + ",description:" + petVO.description + ",image_url:" + petVO.image_url + "\n")
     this.http.post(this.url,petVO).subscribe(
       data => {
         console.log("POSTADOOO -> " + data);

@@ -15,19 +15,19 @@ public class Pet implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "type",referencedColumnName = "id_type")
     private PetType type;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "gender",referencedColumnName = "id_gender")
     private PetGender gender;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "size",referencedColumnName = "id_size")
     private PetSize size;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "color",referencedColumnName = "id_color")
     private PetColor color;
 

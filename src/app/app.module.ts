@@ -15,7 +15,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { AnimatesDirective, AnimationService } from 'css-animator';
 import { ModalInsertPet } from '../pages/home/perdidos/modal-insert-pet';
 import { ModalLogin } from '../pages/home/modal-login';
-import { ModalSignup } from '../pages/home/modal-signup'
+import { ModalSignup } from '../pages/home/modal-signup';
+import { ModalShowImage } from '../pages/home/perdidos/modal-show-image';
 import { PagePerdidos } from '../pages/home/perdidos/perdidos';
 import { AdocaoPage } from '../pages/adocao/adocao';
 
@@ -43,6 +44,7 @@ const firebaseConfig = {
     ModalInsertPet,
     ModalLogin,
     ModalSignup,
+    ModalShowImage,
     PagePerdidos,
     AdocaoPage,
     AnimatesDirective
@@ -66,6 +68,7 @@ const firebaseConfig = {
     ModalInsertPet,
     ModalLogin,
     ModalSignup,
+    ModalShowImage,
     PagePerdidos,
     AdocaoPage
   ],
