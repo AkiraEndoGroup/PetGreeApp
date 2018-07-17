@@ -34,7 +34,8 @@ export class ModalInsertPet {
     takePic() {
         console.log("takePic()");
         const options: CameraOptions = {
-            quality: 30,
+            quality: 100,
+            targetWidth: 720,
             destinationType: this.camera.DestinationType.DATA_URL,
             encodingType: this.camera.EncodingType.JPEG,
             mediaType: this.camera.MediaType.PICTURE
