@@ -32,7 +32,7 @@ public class UserController extends WebMvcConfigurerAdapter {
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	@ResponseStatus(value = HttpStatus.CREATED)
-	public void postUser(@RequestBody UserModel userModel) {
+	public User postUser(@RequestBody UserModel userModel) {
 		System.out.println("postUser invoked.");
 		User user = UserConverter.toUser(userModel);
 
@@ -44,7 +44,7 @@ public class UserController extends WebMvcConfigurerAdapter {
 			// throw new InvalidInputException();
 		}
 
-		userService.postUser(user);
+		return userService.postUser(user);
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
@@ -52,5 +52,19 @@ public class UserController extends WebMvcConfigurerAdapter {
 	public List<User> getUsers() {
 		System.out.println("getUsers invoked.");
 		return userService.getUsers();
+	}
+
+	@RequestMapping(value = "/{userId}", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	public User getUser(@PathVariable("userId") Long userId) {
+		System.out.println("getUser invoked.");
+		return userService.getUser(userId);
+	}
+
+	@RequestMapping(value = "/email/{email:.+}", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	public User getUserByEmail(@PathVariable("email") String email) {
+		System.out.println("getUserByEmail invoked.");
+		return userService.findByEmail(email);
 	}
 }

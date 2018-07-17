@@ -6,14 +6,26 @@
   </ion-header>
 
   <ion-content>
-    <ion-row *ngIf="!loggedIn" align-items-center>
+    <ion-row *ngIf="!loggedIn">
       <ion-col col-12><button ion-button menuClose block (click)="openLogin()">Entrar</button></ion-col>
     </ion-row>
-    <ion-row *ngIf="loggedIn" align-items-center>
-      <ion-col col-12>Logado como {{myEmail}}</ion-col>
-      <h1>Disponibilizar aqui depois um avatar do usuário e o logo do aplicativo.</h1>
+    <ion-row *ngIf="loggedIn" justify-content-center>
+      <ion-col align-items-center col-12>Logado como {{myEmail}}</ion-col>
     </ion-row>
-    <ion-row *ngIf="loggedIn" align-items-center>
+
+    <ion-row *ngIf="loggedIn" justify-content-center>
+        <img src="{{avatarImg}}" style="align-self: center;"/>
+    </ion-row>
+
+    <ion-row *ngIf="loggedIn" justify-content-center>
+        <p>{{name}}, {{age}}.</p>
+    </ion-row>
+
+    <ion-row *ngIf="loggedIn" justify-content-center>
+        <p>Bio: {{bio}}</p>
+    </ion-row>
+
+    <ion-row *ngIf="loggedIn">
       <ion-col col-12><button ion-button menuClose block (click)="logout()">Sair</button></ion-col>
     </ion-row>
   </ion-content>

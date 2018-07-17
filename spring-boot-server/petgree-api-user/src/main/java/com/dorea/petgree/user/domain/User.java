@@ -15,7 +15,7 @@ public class User implements Serializable {
 	private Long id;
 
 	@JoinColumn(name = "avatar",referencedColumnName = "avatar_id")
-	@OneToOne(cascade = CascadeType.DETACH)
+	@OneToOne(cascade = CascadeType.ALL)
 	private Avatar avatar;
 
 	@Column(name = "email")
@@ -26,7 +26,7 @@ public class User implements Serializable {
 	private Set<String> telefones;
 
 	@JoinColumn(name = "endereco",referencedColumnName = "address_id")
-	@OneToOne(cascade = CascadeType.DETACH)
+	@OneToOne(cascade = CascadeType.ALL)
 	private Address endereco;
 
 	@ElementCollection

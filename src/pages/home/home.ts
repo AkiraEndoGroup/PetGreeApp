@@ -4,8 +4,6 @@ import { NavController } from 'ionic-angular';
 import { PagePerdidos } from './perdidos/perdidos';
 import { AdocaoPage } from '../adocao/adocao';
 
-
-
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -17,6 +15,7 @@ export class HomePage {
   @ViewChild('botaoRegistro') botaoRegistro;
   private animator: AnimationBuilder;
   titulo = 'PetGree';
+
 
   constructor(
     animationService: AnimationService,

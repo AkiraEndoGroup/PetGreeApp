@@ -11,6 +11,8 @@ import { FirebaseProvider } from '../providers/firebase/firebase';
 
 import { HomePage } from '../pages/home/home';
 
+import { HttpClient } from '@angular/common/http';
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -22,9 +24,17 @@ export class MyApp {
   myEmail: string;
   loading;
 
+  avatarImg: any;
+  name: string;
+  bio:string;
+  age: number;
+
   pages: Array<{title: string, component: any}>;
 
+  user_api_url = "http://localhost:4243/users";
+
   constructor(
+    private http: HttpClient,
     public platform: Platform, 
     public statusBar: StatusBar,
     private modalCtrl: ModalController,
@@ -99,5 +109,15 @@ export class MyApp {
   updateUserInfo() {
     this.loggedIn = this.fire.authenticated;
     this.myEmail = this.fire.getEmail();
+    this.http.get(this.user_api_url + '/email/' + this.myEmail)
+    .subscribe((data) => {
+      if (data != null) {
+        console.log(data['avatar']);
+        this.avatarImg = data['avatar'].imageUrl;
+        this.name = data['avatar'].name;
+        this.bio = data['avatar'].bio;
+        this.age = data['avatar'].idade;
+      }
+    });
   }
 }

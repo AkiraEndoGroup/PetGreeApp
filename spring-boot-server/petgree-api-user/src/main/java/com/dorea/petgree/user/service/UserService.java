@@ -10,6 +10,8 @@ public interface UserService {
 
 	User getUser(Long userId);
 
+	User findByEmail(String email);
+
 	User postUser(User user);
 
 	User updateUser(User user);

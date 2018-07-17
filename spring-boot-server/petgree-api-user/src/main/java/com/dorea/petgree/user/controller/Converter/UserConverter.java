@@ -22,7 +22,7 @@ public class UserConverter {
 			newAvatar.setBio("Sem informações de descrição.");
 			newAvatar.setIdade(0);
 			newAvatar.setImageUrl("http://via.placeholder.com/150x150");
-			newAvatar.setNome(userModel.getEmail());
+			newAvatar.setName(userModel.getEmail());
 			user.setAvatar(newAvatar);
 		}
 
