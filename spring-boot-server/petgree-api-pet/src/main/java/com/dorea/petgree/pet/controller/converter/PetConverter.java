@@ -19,6 +19,12 @@ public class PetConverter {
 			pet.setId(petModel.getId());
 		}
 
+		if (petModel.getName() != null) {
+			pet.setName(petModel.getName());
+		} else {
+			pet.setName("Sem nome");
+		}
+
 		TypePet typePet = PetType.TypePet.getType(petModel.getType().toUpperCase());
 		if (typePet != null) {
 			PetType petType = new PetType();

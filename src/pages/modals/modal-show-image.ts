@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavParams, ViewController, LoadingController } from 'ionic-angular';
+import { NavParams, ViewController } from 'ionic-angular';
 
 @Component({
     selector: 'page-showimage-modal',
@@ -11,8 +11,8 @@ export class ModalShowImage {
 
     constructor(
         public navParams: NavParams, 
-        public viewCtrl: ViewController, 
-        private loadingCtrl: LoadingController)
+        public viewCtrl: ViewController
+      )
         {
             this.imageUrl = navParams.get('image');
         }

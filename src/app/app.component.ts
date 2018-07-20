@@ -5,11 +5,12 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { Storage } from '@ionic/storage';
 
 import { ModalController } from 'ionic-angular';
-import { ModalLogin } from '../pages/home/modal-login';
+import { ModalLogin } from '../pages/modals/modal-login';
 
 import { FirebaseProvider } from '../providers/firebase/firebase';
 
 import { HomePage } from '../pages/home/home';
+import { PageMeusPets } from '../pages/meuspets/meuspets';
 
 import { HttpClient } from '@angular/common/http';
 
@@ -20,6 +21,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = HomePage;
+  meusPets = PageMeusPets;
   loggedIn: boolean;
   myEmail: string;
   loading;
@@ -119,5 +121,9 @@ export class MyApp {
         this.age = data['avatar'].idade;
       }
     });
+  }
+
+  removeView() {
+    
   }
 }

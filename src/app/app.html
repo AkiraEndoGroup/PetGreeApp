@@ -25,6 +25,10 @@
         <p>Bio: {{bio}}</p>
     </ion-row>
 
+    <ion-row *ngIf="loggedIn" justify-content-center>
+      <button ion-button menuClose (click)="this.nav.push(meusPets)">Meus Pets</button>
+    </ion-row>
+
     <ion-row *ngIf="loggedIn">
       <ion-col col-12><button ion-button menuClose block (click)="logout()">Sair</button></ion-col>
     </ion-row>

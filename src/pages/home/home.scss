@@ -13,63 +13,91 @@ page-home {
 }
 
 .botao-perdidos {
-    background-color:map-get($colors, secondary);
-    position: absolute;
-    top: 80px;
-    left: 5%;
-    height: 200px;
-    width: 200px;
-    border-radius: 20%;
-    box-shadow: 5px 5px 20px 1px black;
+  background-color:map-get($colors, secondary);
+  position: absolute;
+  height: 40vw;
+  width: 40vw;
+  max-width: 40vh; 
+  max-height: 40vh;
+  border-radius: 20%;
+  box-shadow: 5px 5px 20px 1px black;
+}
+
+.title-perdidos {
+  font-size: 5vmin;
+  position: relative;
+  line-height: 40vmin;
+  text-align: left;
+  margin-left: 10%;
 }
 
 .icon.search {
-    background-image: url(../assets/imgs/search.png);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 60% 60%;
-    height: 100%;
-    width: auto;
-    height: 200px;
+  background-image: url(../assets/imgs/search.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 50% 50%;
+  height: 100%;
 }
 
 .botao-adocao {
-    background-color:map-get($colors, secondary);
-    position: absolute;
-    top: 300px;
-    right: 5%;
-    height: 200px;
-    width: 200px;
-    border-radius: 20%;
-    box-shadow: 5px 5px 20px 1px black;
+  background-color:map-get($colors, secondary);
+  position: absolute;
+  height: 40vw;
+  width: 40vw;
+  max-width: 40vh; 
+  max-height: 40vh;
+  border-radius: 20%;
+  box-shadow: 5px 5px 20px 1px black;
+}
+
+.title-adocao {
+  font-size: 5vmin;
+  position: relative;
+  line-height: 40vmin;
+  text-align: right;
+  margin-right: 10%;
+}
+
+.boxelement {
+  background-color: adjust-color($color: #0000FF, $red: 0, $green: 0, $blue: 0, $alpha: -1.0);
+  vertical-align: middle;
+  height: 40vmin;
+  width: 100%;
 }
 
 .icon.heart {
-    background-image: url(../assets/imgs/heart.png);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 60% 60%;
-    height: 100%;
-    width: auto;
-    height: 200px;
+  background-image: url(../assets/imgs/heart.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 50% 50%;
+  height: 100%;
 }
 
 .botao-registro {
-    background-color:map-get($colors, secondary);
-    position: absolute;
-    top: 520px;
-    left: 5%;
-    height: 200px;
-    width: 200px;
-    border-radius: 20%;
-    box-shadow: 5px 5px 20px 1px black;
+  background-color:map-get($colors, secondary);
+  position: absolute;
+  height: 40vw;
+  width: 40vw;
+  max-width: 40vh; 
+  max-height: 40vh;
+  border-radius: 20%;
+  box-shadow: 5px 5px 20px 1px black;
+  margin-bottom: 5vw
+}
+
+.title-registro {
+  font-size: 5vmin;
+  position: relative;
+  line-height: 40vmin;
+  text-align: left;
+  margin-left: 10%;
 }
 
 .icon.paw {
-    background-image: url(../assets/imgs/pawprint.png);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 60% 60%;
-    height: 100%;
-    width: auto;
+  background-image: url(../assets/imgs/pawprint.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 60% 60%;
+  height: 100%;
+  width: auto;
 }

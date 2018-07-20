@@ -7,20 +7,45 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content class="masters">
-  <div class="botao-perdidos" #botaoPerdidos (click)="animarBotao('perdidos')">
-      <div class="icon search"></div>
-  </div>
-  <div class="botao-adocao" #botaoAdocao (click)="animarBotao('adocao')">
-    <div class="icon heart"></div>
-  </div>
-  <div class="botao-registro" #botaoRegistro (click)="animarBotao('registro')">
-    <div class="icon paw"></div>
-  </div>
-</ion-content>
+<ion-content class="masters"> 
+
+  <ion-grid style="width:100vw; max-width: 100vh; margin-block-start: 3vmin; margin-block-end: 3vmin;">
+    <ion-row >
+      <ion-col col-5>
+        <div class="botao-perdidos" #botaoPerdidos (click)="animarBotao('perdidos')">
+          <div class="icon search"></div>
+        </div>
+      </ion-col>
+      <ion-col col-7>
+        <div class="boxelement"><div class="title-perdidos">Pets Perdidos</div></div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-7>
+        <div class="boxelement"><div class="title-adocao">Adote um Pet!</div></div>
+      </ion-col>
+      <ion-col col-5>
+        <div class="botao-adocao" #botaoAdocao (click)="animarBotao('adocao')">
+          <div class="icon heart"></div>
+        </div>    
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-5>
+        <div class="botao-registro" #botaoRegistro (click)="animarBotao('registro')">
+          <div class="icon paw"></div>
+        </div>
+      </ion-col>
+      <ion-col col-7>
+        <div class="boxelement"><div class="title-registro">Registre seu pet!</div></div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  </ion-content>
 
 <ion-footer no-border>
-    <ion-toolbar>
-      <ion-title>Feito por Yago Dórea</ion-title>
-    </ion-toolbar>
-  </ion-footer>
+  <ion-toolbar>
+    <ion-title>Feito por Yago Dórea</ion-title>
+  </ion-toolbar>
+</ion-footer>

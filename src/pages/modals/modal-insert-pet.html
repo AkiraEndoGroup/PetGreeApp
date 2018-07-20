@@ -38,6 +38,12 @@
             <div style="align-items: center;"><img src="{{petImgURL}}" (click)="takePic()"/></div>
         </ion-col>
         <ion-col col-12 col-sm>
+
+        <ion-item>
+          <ion-label>Nome</ion-label>
+          <ion-input [(ngModel)]="name"></ion-input>
+        </ion-item>
+
         <ion-item>
             <ion-label>Espécie</ion-label>
             <ion-select [(ngModel)]="type">

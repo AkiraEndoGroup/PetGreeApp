@@ -1,5 +1,5 @@
 import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule, LoadingController } from 'ionic-angular';
+import { IonicApp, IonicErrorHandler, IonicModule, LoadingController   } from 'ionic-angular';
 
 import { IonicStorageModule } from '@ionic/storage'
 
@@ -13,15 +13,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StatusBar } from '@ionic-native/status-bar';
 import { AnimatesDirective, AnimationService } from 'css-animator';
-import { ModalInsertPet } from '../pages/home/perdidos/modal-insert-pet';
-import { ModalLogin } from '../pages/home/modal-login';
-import { ModalSignup } from '../pages/home/modal-signup';
-import { ModalShowImage } from '../pages/home/perdidos/modal-show-image';
+import { ModalInsertPet } from '../pages/modals/modal-insert-pet';
+import { ModalLogin } from '../pages/modals/modal-login';
+import { ModalSignup } from '../pages/modals/modal-signup';
+import { ModalShowImage } from '../pages/modals/modal-show-image';
 import { PagePerdidos } from '../pages/home/perdidos/perdidos';
+import { PageMeusPets } from '../pages/meuspets/meuspets';
 import { AdocaoPage } from '../pages/adocao/adocao';
 
 // Firebase modules
-// import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireStorageModule } from 'angularfire2/storage';
@@ -46,6 +46,7 @@ const firebaseConfig = {
     ModalSignup,
     ModalShowImage,
     PagePerdidos,
+    PageMeusPets,
     AdocaoPage,
     AnimatesDirective
   ],
@@ -55,7 +56,6 @@ const firebaseConfig = {
     BrowserModule,
     BrowserAnimationsModule,
     IonicStorageModule.forRoot(),
-    // AngularFireDatabaseModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireAuthModule,
@@ -70,6 +70,7 @@ const firebaseConfig = {
     ModalSignup,
     ModalShowImage,
     PagePerdidos,
+    PageMeusPets,
     AdocaoPage
   ],
   providers: [

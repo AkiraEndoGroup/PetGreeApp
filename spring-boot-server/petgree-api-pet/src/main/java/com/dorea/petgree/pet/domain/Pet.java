@@ -12,6 +12,9 @@ public class Pet implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "name")
+    private String name;
+
     @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "type",referencedColumnName = "id_type")
     private PetType type;
@@ -51,7 +54,15 @@ public class Pet implements Serializable {
         this.id = id;
     }
 
-    public PetType getType() {
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public PetType getType() {
         return type;
     }
 
