@@ -12,7 +12,5 @@ public interface PetService {
 
     Pet postPet(Pet pet);
 
-    Pet updatePet(Pet pet);
-
     void deletePet(Long id);
 }

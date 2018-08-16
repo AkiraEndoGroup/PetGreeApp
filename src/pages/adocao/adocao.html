@@ -1,34 +1,62 @@
 <ion-header>
- 
-    <ion-navbar color="primary">
-      <ion-title>{{title}}</ion-title>
-    </ion-navbar>
-  </ion-header>
-   
-   
-  <ion-content>
-      <ion-row>
-          <ion-col col-9>
-            <ion-item>
-              <ion-input type="text" [(ngModel)]="newItem" placeholder="New Shopping item"></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col>
-            <button ion-button (click)="addItem()">Add!</button>
-          </ion-col>
-        </ion-row>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Adote!</ion-title>
+  </ion-navbar>
+</ion-header>
 
-      <ion-list>
-          Items
-          <ion-item-sliding *ngFor="let item of items">
-            <ion-item>
-              {{item}}
-            </ion-item>
-            <ion-item-options side="right">
-              <button ion-button color="danger" icon-only (click)="removeItem('lista')"><ion-icon name="trash"></ion-icon></button>
-            </ion-item-options>
-          </ion-item-sliding>
-        </ion-list>
 
-        <img src="{{imgURL}}" placeholder="blabla"/>
-  </ion-content>
+<ion-content class="masters">
+  <ion-grid style="width:100vmin; min-width: 500px;">
+    <ion-list>
+      <ion-item sliding *ngFor="let pet of petsList" style="background-color: transparent">
+        <ion-card>
+          <ion-card-header>
+            <h1>{{pet.name}}</h1>
+            <h1 style="color: #00a98e; font-weight: bold; text-shadow: 1px 2px black;">{{pet.ong_name}}</h1>
+            <h1>{{pet.type.description}}</h1>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-grid>
+              <ion-row align-items-center>
+                <ion-col col-6>
+                  <img src={{pet.image_url}} style="height: 200px; width: auto;" (click)="showImage(pet.image_url)" />
+                </ion-col>
+                <ion-col col-6>
+                  Sexo: {{pet.gender.description}}
+                  <br/> Tamanho: {{pet.size.description}}
+                  <br/> Cor: {{pet.color.description}}
+                  <br/> Tem manchas? {{pet.spotsTxt}}
+                  <br/> Descrição:
+                  <p text-wrap style="text-align: left; color: white;">{{pet.description}}</p>
+                  <br/>
+                  <button ion-button style="width: 100%;" >Adotar!</button>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+    </ion-list>
+  </ion-grid>
+</ion-content>
+
+<ion-footer>
+  <div #fabButton>
+    <ion-fab right bottom padding="10dp">
+      <button ion-fab>
+        <ion-icon name="paw"></ion-icon>
+      </button>
+      <ion-fab-list side="left">
+        <button ion-fab (click)="insertPet()">
+          <ion-icon name="add"></ion-icon>
+        </button>
+        <button ion-fab (click)="makeOng()">
+          <ion-icon name="flag"></ion-icon>
+        </button>
+      </ion-fab-list>
+    </ion-fab>
+  </div>
+</ion-footer>

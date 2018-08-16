@@ -28,11 +28,6 @@ public class PetServiceImpl implements PetService {
     public Pet postPet(Pet pet) { return petRepository.save(pet); }
 
     @Override
-    public Pet updatePet(Pet pet) {
-        return petRepository.save(pet);
-    }
-
-    @Override
     public void deletePet(Long id) {
         Pet pet = getPetById(id);
         if (pet != null) {

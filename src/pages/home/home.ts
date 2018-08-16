@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { AnimationService, AnimationBuilder } from 'css-animator';
-import { NavController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 import { PagePerdidos } from './perdidos/perdidos';
 import { AdocaoPage } from '../adocao/adocao';
 
@@ -19,7 +19,8 @@ export class HomePage {
 
   constructor(
     animationService: AnimationService,
-    public navCtrl: NavController) {
+    public navCtrl: NavController,
+    public alertCtrl: AlertController) {
     this.animator = animationService.builder();
   }
 
@@ -38,7 +39,13 @@ export class HomePage {
         break;
       }
       case 'registro': {
-        elem = this.botaoRegistro.nativeElement; break;
+        let alert = this.alertCtrl.create({
+          title: "Opa!",
+          message: "Em breve isso será implementado, rs! ^.^'",
+          buttons: ['Hmpf!']
+        });
+        alert.present();
+        break;
       }
     }
     if (elem) {

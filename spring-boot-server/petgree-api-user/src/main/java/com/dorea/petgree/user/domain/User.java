@@ -2,7 +2,6 @@ package com.dorea.petgree.user.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -18,7 +17,7 @@ public class User implements Serializable {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Avatar avatar;
 
-	@Column(name = "email")
+	@Column(name = "email",unique = true)
 	private String email;
 
 	@ElementCollection

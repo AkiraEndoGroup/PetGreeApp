@@ -1,0 +1,17 @@
+version: '2'
+services:
+  pet:
+    container_name: api-pet
+    build: ./petgree-api-pet/
+    ports:
+     - "4242:4242"
+  user:
+    container_name: api-user
+    build: ./petgree-api-user/
+    ports:
+      - "4243:4243"
+  ong:
+    container_name: api-ong
+    build: ./petgree-api-ong/
+    ports:
+      - "4244:4244"

@@ -33,9 +33,9 @@ public class PetController extends WebMvcConfigurerAdapter {
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
-    public void postPet(@RequestBody PetModel petModel) {
+    public Pet postPet(@RequestBody PetModel petModel) {
 	    System.out.println("postPet invoked.");
-	    Pet pet = PetConverter.toPet(petModel);
+	    Pet pet = PetConverter.toPet(petModel,null);
 
     	if (pet.getId() != null) {
             throw new IdForbiddenException();
@@ -43,10 +43,7 @@ public class PetController extends WebMvcConfigurerAdapter {
         if (!ValidatePet.isValid(pet)) {
             throw new InvalidInputException();
         }
-        if (pet.getDescription() == null) {
-    		pet.setDescription("Nenhuma.");
-        }
-        petService.postPet(pet);
+        return petService.postPet(pet);
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
@@ -56,24 +53,19 @@ public class PetController extends WebMvcConfigurerAdapter {
         return petService.getPets();
     }
 
-    @RequestMapping(value = "", method = RequestMethod.PUT)
-    public Pet updatePet(@RequestBody PetModel petModel) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public Pet updatePet(@PathVariable Long id,
+                         @RequestBody PetModel petModel) {
 	    System.out.println("putPet invoked.");
-	    Pet pet = PetConverter.toPet(petModel);
 
-        if (ValidatePet.isValid(pet)) {
-            if (petService.getPetById(pet.getId()) != null) {
+	    Pet pet = petService.getPetById(id);
+	    if (pet == null) {
+		    throw new PetNotFoundException(id);
+	    }
 
-            	// TODO: Adicionar validação de ONG
+	    pet = PetConverter.toPet(petModel, pet);
 
-            	petService.updatePet(pet);
-                return pet;
-            } else {
-                throw new PetNotFoundException(pet.getId());
-            }
-        } else {
-            throw new InvalidInputException();
-        }
+	    return petService.postPet(pet);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

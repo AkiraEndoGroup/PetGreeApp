@@ -4,6 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule, LoadingController   } from 'i
 import { IonicStorageModule } from '@ionic/storage'
 
 import { Camera } from '@ionic-native/camera';
+import { EmailComposer } from '@ionic-native/email-composer'; 
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -12,7 +13,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StatusBar } from '@ionic-native/status-bar';
-import { AnimatesDirective, AnimationService } from 'css-animator';
+import { ImagePicker } from '@ionic-native/image-picker';
+import { AnimationService } from 'css-animator';
 import { ModalInsertPet } from '../pages/modals/modal-insert-pet';
 import { ModalLogin } from '../pages/modals/modal-login';
 import { ModalSignup } from '../pages/modals/modal-signup';
@@ -27,6 +29,10 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireStorageModule } from 'angularfire2/storage';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { FirebaseProvider } from '../providers/firebase/firebase';
+import { ModalEditProfile } from '../pages/modals/modal-edit-profile';
+
+// Geolocation
+import { Geolocation } from '@ionic-native/geolocation';
 
 const firebaseConfig = {
   apiKey: "AIzaSyA3NSMbfS7Gwcd0S2LZQwnfvUSgazwCvYc",
@@ -45,10 +51,9 @@ const firebaseConfig = {
     ModalLogin,
     ModalSignup,
     ModalShowImage,
+    ModalEditProfile,
     PagePerdidos,
-    PageMeusPets,
-    AdocaoPage,
-    AnimatesDirective
+    PageMeusPets
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -69,16 +74,20 @@ const firebaseConfig = {
     ModalLogin,
     ModalSignup,
     ModalShowImage,
+    ModalEditProfile,
     PagePerdidos,
     PageMeusPets,
     AdocaoPage
   ],
   providers: [
     StatusBar,
+    Geolocation,
     Camera,
+    EmailComposer,
     AnimationService,
     FirebaseProvider,
     LoadingController,
+    ImagePicker,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
   ]
 })

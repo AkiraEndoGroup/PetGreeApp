@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { NavParams, ViewController, LoadingController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
-import { FirebaseProvider } from '../../providers/firebase/firebase'
+import { Geolocation } from '@ionic-native/geolocation';
+
+import { FirebaseProvider } from '../../providers/firebase/firebase';
 
 @Component({
   selector: 'page-insertpet-modal',
@@ -10,7 +12,7 @@ import { FirebaseProvider } from '../../providers/firebase/firebase'
 })
 export class ModalInsertPet {
 
-  newPet = {name:"",type:"",gender:"",size:"",color:"",description:"",spots:false,image_url:""};
+  newPet = {name:"",type:"",gender:"",size:"",color:"",description:"",spots:false,image_url:"",lat:null,lon:null};
   name;
   type;
   gender;
@@ -23,13 +25,23 @@ export class ModalInsertPet {
   petImage;
   petImgURL = "./assets/imgs/placeholder.png";
 
+  myLocation: Coordinates;
+  locationFound: boolean;
+
   constructor(
     public navParams: NavParams, 
     public viewCtrl: ViewController, 
     private camera: Camera, 
     private loadingCtrl: LoadingController, 
-    public fireProvider: FirebaseProvider
-  ) {}
+    public fireProvider: FirebaseProvider,
+    private geolocation: Geolocation
+  ) { 
+    this.locationFound = false;
+    this.myLocation = navParams.get('location');
+    if (this.myLocation != null) {
+      this.locationFound = true;
+    }
+  }
 
   takePic() {
     console.log("takePic()");
@@ -92,6 +104,8 @@ export class ModalInsertPet {
     this.newPet.size = this.size;
     this.newPet.spots = this.spots;
     this.newPet.description = this.description;
+    this.newPet.lat = this.myLocation.latitude;
+    this.newPet.lon = this.myLocation.longitude;
     this.viewCtrl.dismiss(this.newPet);
   }
   // ...

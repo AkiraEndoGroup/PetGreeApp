@@ -4,18 +4,8 @@ import { ModalInsertPet } from '../../modals/modal-insert-pet';
 import { ModalController } from 'ionic-angular';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { ModalShowImage } from '../../modals/modal-show-image';
-import { PetResponse } from '../../../providers/interfaces/PetResponse';
-
-function PetJSON(name,type,gender,size,color,spots,description,image_url) {
-  this.name = name;
-  this.type = type;
-  this.gender = gender;
-  this.size = size;
-  this.color = color;
-  this.spots = spots;
-  this.description = description;
-  this.image_url = image_url;
-}
+import { PetResponse, PetJSON } from '../../../providers/interfaces/PetResponse';
+import { Geolocation } from '@ionic-native/geolocation';
 
 @Component({
   selector: 'perdidos',
@@ -39,11 +29,29 @@ export class PagePerdidos implements OnInit {
   // url = 'http://ec2-18-231-183-70.sa-east-1.compute.amazonaws.com:4242/pets';
   url = 'http://localhost:4242/pets';
 
+  myLocation: Coordinates;
+  locationFound: boolean;
+
   constructor(
     private http: HttpClient,
-    private modalCtrl: ModalController) { }
+    private modalCtrl: ModalController,
+    private geolocation: Geolocation) {
 
-  changeColor(message,number) {
+    this.locationFound = false;
+    console.log('running geolocation api');
+    this.geolocation.getCurrentPosition({
+      enableHighAccuracy: true,
+      timeout: 5000
+    }).then((resp) => {
+      console.log('location found!');
+      this.myLocation = resp.coords;
+      this.locationFound = true;
+    }).catch((error) => {
+      console.log('geolocation error. ' + error.message);
+    });
+  }
+
+  changeColor(message, number) {
     if (number == 1) {
       message.state = 'red';
       this.deletePet(message);
@@ -56,6 +64,20 @@ export class PagePerdidos implements OnInit {
 
   ngOnInit() {
     this.getPets();
+  }
+
+  getDistanceToMe(lat, lon) {
+    var R = 6371; // Radius of the earth in km
+    var dLat = (lat - this.myLocation.latitude) * Math.PI / 180;
+    var dLon = (lon - this.myLocation.longitude) * Math.PI / 180;
+    var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(this.myLocation.latitude* Math.PI / 180) * Math.cos(lat * Math.PI / 180) *
+      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    var d = R * c; // Distance in km
+    console.log('distance: ' + d);
+    console.log('distance truncated: ' + Math.round(d));
+    return Math.round(d);
   }
 
   getPets(): void {
@@ -71,10 +93,8 @@ export class PagePerdidos implements OnInit {
           else
             message.spotsTxt = "Não";
 
-          if (message.image_url == null)
-            message.image_url = "./assets/imgs/pet1.png";
-
           if (message.status.description == 'PERDIDO') {
+            message.distanceToMe = this.getDistanceToMe(message.lat,message.lon);
             this.messageList.push(message)
           }
         });
@@ -90,17 +110,17 @@ export class PagePerdidos implements OnInit {
   }
 
   showImage(image) {
-    let modal = this.modalCtrl.create(ModalShowImage, {image: image});
+    let modal = this.modalCtrl.create(ModalShowImage, { image: image });
     modal.present();
   }
 
   insertPet(): void {
-    let modal = this.modalCtrl.create(ModalInsertPet);
-  
+    let modal = this.modalCtrl.create(ModalInsertPet, { location: this.myLocation });
+
     modal.onDidDismiss(data => {
       if (data) {
-        let pet = { name: "string", type:"string", color:"string", gender:"string", size:"string", spots:false, description:"string", image_url:null }
-        switch(parseInt(data.gender,10)) {
+        let pet = { name: "string", type: "string", color: "string", gender: "string", size: "string", spots: false, description: "string", image_url: null, lat: 0, lon: 0 }
+        switch (parseInt(data.gender, 10)) {
           case 0: {
             pet.gender = "Macho"; break;
           }
@@ -111,36 +131,36 @@ export class PagePerdidos implements OnInit {
             pet.gender = "Desconhecido"; break;
           }
         }
-        switch(parseInt(data.type,10)) {
-            case 1: {
-              pet.type = "Cachorro"; break;
-            }
-            case 2: {
-              pet.type = "Gato"; break;
-            }
-            case 3: {
-              pet.type = "Hamster"; break;
-            }
-            case 4: {
-              pet.type = "Coelho"; break;
-            }
-            case 5: {
-              pet.type = "Cavalo"; break;
-            }
-            case 6: {
-              pet.type = "Lagarto"; break;
-            }
-            case 7: {
-              pet.type = "Pássaro"; break;
-            }
-            case 8: {
-              pet.type = "Tartaruga"; break;
-            }
-            default: {
-              pet.type = "Outro"; break;
-            }
+        switch (parseInt(data.type, 10)) {
+          case 1: {
+            pet.type = "Cachorro"; break;
+          }
+          case 2: {
+            pet.type = "Gato"; break;
+          }
+          case 3: {
+            pet.type = "Hamster"; break;
+          }
+          case 4: {
+            pet.type = "Coelho"; break;
+          }
+          case 5: {
+            pet.type = "Cavalo"; break;
+          }
+          case 6: {
+            pet.type = "Lagarto"; break;
+          }
+          case 7: {
+            pet.type = "Pássaro"; break;
+          }
+          case 8: {
+            pet.type = "Tartaruga"; break;
+          }
+          default: {
+            pet.type = "Outro"; break;
+          }
         }
-        switch(parseInt(data.size,10)) {
+        switch (parseInt(data.size, 10)) {
           case 0: {
             pet.size = "Pequenino"; break;
           }
@@ -163,7 +183,7 @@ export class PagePerdidos implements OnInit {
             pet.size = "Outro"; break;
           }
         }
-        switch(parseInt(data.color,10)) {
+        switch (parseInt(data.color, 10)) {
           case 0: {
             pet.color = "Branco"; break;
           }
@@ -190,7 +210,8 @@ export class PagePerdidos implements OnInit {
         pet.spots = data.spots;
         pet.description = data.description;
         pet.image_url = data.image_url;
-        // TODO fazer o fetch do link de upload
+        pet.lat = data.lat;
+        pet.lon = data.lon;
         this.postPet(pet);
       }
     });
@@ -207,20 +228,24 @@ export class PagePerdidos implements OnInit {
       pet.color,
       pet.spots,
       pet.description,
-      pet.image_url
+      pet.image_url,
+      'PERDIDO',
+      null,
+      pet.lat,
+      pet.lon
     );
 
-    console.log("POST:"+this.url+" -d'{name: "+petVO.name+",type:" + petVO.type + ",gender:" + petVO.gender + ",size:" + petVO.size + ",color:" + petVO.color + ",spots:" + petVO.spots + ",description:" + petVO.description + ",image_url:" + petVO.image_url + "\n")
-    this.http.post(this.url,petVO).subscribe(
+    this.http.post(this.url, petVO).subscribe(
       data => {
-        console.log("POSTADOOO -> " + data);
+        console.log("POSTADOOO");
+        console.log(data);
         this.getPets();
       }
     )
   }
 
   deletePet(pet): void {
-    console.log('DELETE' + this.url + '/' + pet.id);  
+    console.log('DELETE' + this.url + '/' + pet.id);
     this.http.delete(this.url + '/' + pet.id).subscribe(
       data => {
         console.log(data);

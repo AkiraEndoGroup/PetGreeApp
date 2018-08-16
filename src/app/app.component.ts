@@ -13,6 +13,9 @@ import { HomePage } from '../pages/home/home';
 import { PageMeusPets } from '../pages/meuspets/meuspets';
 
 import { HttpClient } from '@angular/common/http';
+import { ModalEditProfile } from '../pages/modals/modal-edit-profile';
+import { UserAvatarJSON } from '../providers/interfaces/UserResponse';
+import { ModalShowImage } from '../pages/modals/modal-show-image';
 
 @Component({
   templateUrl: 'app.html'
@@ -24,12 +27,14 @@ export class MyApp {
   meusPets = PageMeusPets;
   loggedIn: boolean;
   myEmail: string;
+  myId: number;
   loading;
 
   avatarImg: any;
   name: string;
   bio:string;
   age: number;
+  avatar: any;
 
   pages: Array<{title: string, component: any}>;
 
@@ -79,6 +84,28 @@ export class MyApp {
     this.nav.setRoot(page.component);
   }
 
+  editProfile() {
+    let modal = this.modalCtrl.create(ModalEditProfile, { avatar: this.avatar });
+    modal.onDidDismiss( (newAvatar) => {
+      if (newAvatar) {
+        this.name = (newAvatar.name == null || newAvatar.name == "") ? this.name : newAvatar.name;
+        this.age = (newAvatar.idade == null || newAvatar.idade == 0) ? this.age : newAvatar.idade;
+        this.bio = (newAvatar.bio == null || newAvatar.bio == "") ? this.bio : newAvatar.bio;
+        this.avatarImg = (newAvatar.imageUrl == null || newAvatar.imageUrl == "") ? this.avatarImg : newAvatar.imageUrl;
+
+        let body = new UserAvatarJSON(this.name,this.bio,this.age,this.avatarImg);
+        this.http.put(this.user_api_url + '/' + this.myId,{
+          avatar: body
+        }).subscribe((data) => {
+          console.log(data);
+          this.updateUserInfo();
+        });
+      }
+    });
+
+    modal.present();
+  }
+
   openLogin() {
     console.log('Opening login modal');
     let modal = this.modalCtrl.create(ModalLogin);
@@ -115,12 +142,19 @@ export class MyApp {
     .subscribe((data) => {
       if (data != null) {
         console.log(data['avatar']);
+        this.avatar = data['avatar'];
         this.avatarImg = data['avatar'].imageUrl;
         this.name = data['avatar'].name;
         this.bio = data['avatar'].bio;
         this.age = data['avatar'].idade;
+        this.myId = data['id'];
       }
     });
+  }
+
+  showImage(image) {
+    let modal = this.modalCtrl.create(ModalShowImage,{image: image});
+    modal.present();
   }
 
   removeView() {

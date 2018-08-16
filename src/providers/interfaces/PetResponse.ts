@@ -11,5 +11,25 @@ export interface PetResponse {
   description: string,
   state: string,
   postString: string,
-  image_url: string
+  image_url: string,
+  ong_email: string,
+  ong_name: string,
+  lat: number,
+  lon: number,
+  distanceToMe: number
+}
+
+export function PetJSON(name,type,gender,size,color,spots,description,image_url,status,ong_email,lat,lon) {
+  this.name = name;
+  this.type = type;
+  this.gender = gender;
+  this.size = size;
+  this.color = color;
+  this.spots = spots;
+  this.description = description;
+  this.image_url = image_url;
+  this.status = status;
+  this.ong_email = ong_email;
+  this.lat = lat;
+  this.lon = lon;
 }

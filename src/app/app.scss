@@ -19,18 +19,11 @@ body {
     padding: 10%;
 }
 
-.toolbar-background-md {
-    background: map-get($colors, secondary);
-}
-.toolbar-background-ios {
+.toolbar-background-md,.toolbar-background-ios,.toolbar-background-wp {
     background: map-get($colors, secondary);
 }
 
-.toolbar-title-md{
-    color: white;
-    font-family: 'Aleo';
-}
-.toolbar-title-ios{
+.toolbar-title-md,.toolbar-title-ios,.toolbar-title-wp {
     color: white;
     font-family: 'Aleo';
 }

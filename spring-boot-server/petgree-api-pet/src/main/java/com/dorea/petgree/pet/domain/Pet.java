@@ -44,6 +44,30 @@ public class Pet implements Serializable {
     @Column(name = "image_url")
     private String image_url;
 
+    @Column(name = "ong_email")
+    private String ong_email;
+
+    @Column(name = "lat")
+    private Float lat;
+
+	@Column(name = "lon")
+	private Float lon;
+
+	public Float getLat() {
+		return lat;
+	}
+
+	public void setLat(Float lat) {
+		this.lat = lat;
+	}
+
+	public Float getLon() {
+		return lon;
+	}
+
+	public void setLon(Float lon) {
+		this.lon = lon;
+	}
 	// Getters and Setters
 
     public Long getId() {
@@ -121,5 +145,13 @@ public class Pet implements Serializable {
 
 	public void setImage_url(String image_url) {
 		this.image_url = image_url;
+	}
+
+	public String getOng_email() {
+		return ong_email;
+	}
+
+	public void setOng_email(String ong_email) {
+		this.ong_email = ong_email;
 	}
 }
