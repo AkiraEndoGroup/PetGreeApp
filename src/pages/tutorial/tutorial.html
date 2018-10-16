@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-navbar text-center>
+    <ion-title>Tutorial</ion-title>
+    <ion-buttons end>
+      <button ion-button (tap)="skipTutorial()">
+        <ion-icon name="skip-forward" style="color:white;" size="large"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <!-- SLIDER PARA MOSTRAR O TUTORIAL -->
+  <ion-slides padding pager 
+  paginationType="progress"
+  spaceBetween="200" speed="500" class="slide-container">
+    <ion-slide *ngFor="let slide of slides">
+      <img [src]="slide.image" class="slide-image" />
+      <h2 class="slide-title" [innerHTML]="slide.title"></h2>
+      <p [innerHTML]="slide.description"></p>
+      <div align=center>
+        <button ion-button block *ngIf="slide.final" (click)="start()" style="max-width: 300px;">Começar!</button>
+      </div>
+      <br />
+    </ion-slide>
+  </ion-slides>
+
+</ion-content>

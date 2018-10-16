@@ -1,26 +1,28 @@
-import { Component, OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NavController, NavParams, AlertController, ModalController, Content } from 'ionic-angular';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { PetResponse, PetJSON } from '../../providers/interfaces/PetResponse';
 import { FirebaseProvider } from '../../providers/firebase/firebase';
 import { EmailComposer } from '@ionic-native/email-composer';
-import { ModalInsertPet } from '../modals/modal-insert-pet';
-import { ModalShowImage } from '../modals/modal-show-image';
+import { ModalInsertPet } from '../../modals/modal-insert-pet';
+import { ModalShowImage } from '../../modals/modal-show-image';
 import { OngResponse } from '../../providers/interfaces/OngResponse';
-
-@IonicPage()
 @Component({
   selector: 'page-adocao',
   templateUrl: 'adocao.html',
 })
 export class AdocaoPage implements OnInit {
+  @ViewChild(Content) content: Content;
 
-  petsUrl = 'http://localhost:4242/pets';
-  ongsUrl = 'http://localhost:4244/ongs';
+  petsUrl = 'http://ec2-18-228-44-159.sa-east-1.compute.amazonaws.com:4242/pets';
+  ongsUrl = 'http://ec2-18-228-44-159.sa-east-1.compute.amazonaws.com:4244/ongs';
 
   petsList = [];
   ongsList = [];
   ongName;
+
+  finishedLoading: boolean;
+  myLocation: Coordinates;
 
   constructor(
     public navCtrl: NavController,
@@ -30,34 +32,38 @@ export class AdocaoPage implements OnInit {
     public composer: EmailComposer,
     public alertCtrl: AlertController,
     public modalCtrl: ModalController) {
+    this.myLocation = this.navParams.get('location');
   }
 
   ngOnInit() {
+    this.finishedLoading = false;
     this.getOngs();
     this.getPets();
   }
 
   makeOng() {
+    if (this.fire.authenticated) {
     if (this.composer.isAvailable) {
       if (this.composer.hasPermission) {
-        let userEmail = this.fire.auth.auth.currentUser.email;
-        let email = {
-          from: userEmail,
-          to: 'yago.dorea@gmail.com',
-          subject: 'Cadastro de ONG',
-          cc: [],
-          bcc: [],
-          body: 'Olá! Quero cadastrar minha ONG com o email ' + userEmail + '.',
-          isHtml: false,
-          app: 'gmail'
-        }
-        this.composer.open(email);
-
         let alert = this.alertCtrl.create({
           title: "Pronto",
           subTitle: "Solicitação enviada!",
           message: "Vamos analisar se seu cadastro pode se tornar uma ONG. :)",
           buttons: ['OK']
+        });
+        alert.onDidDismiss(() => {
+          let userEmail = this.fire.auth.auth.currentUser.email;
+          let email = {
+            from: userEmail,
+            to: 'yago.dorea@gmail.com',
+            subject: 'Cadastro de ONG',
+            cc: [],
+            bcc: [],
+            body: 'Olá! Quero cadastrar minha ONG com o email ' + userEmail + '.',
+            isHtml: false,
+            app: 'gmail'
+          }
+          this.composer.open(email);
         });
         alert.present();
       } else {
@@ -71,6 +77,14 @@ export class AdocaoPage implements OnInit {
       });
       ruim.present();
     }
+  } else {
+    let aut = this.alertCtrl.create({
+      title: "Ooops!",
+      message: "É preciso estar logado!",
+      buttons: ['("-_-) ok...']
+    });
+    aut.present();
+  }
   }
 
   isOng(email, callback) {
@@ -89,7 +103,7 @@ export class AdocaoPage implements OnInit {
         alert.present();
         callback(false);
       }
-    )
+    );
   }
 
   showImage(image) {
@@ -103,22 +117,35 @@ export class AdocaoPage implements OnInit {
       data => {
         console.log(data);
         data.forEach(pet => {
-          pet.state = 'normal';
-          pet.postString = 'Post';
-          if (pet.spots)
-            pet.spotsTxt = "Sim";
-          else
-            pet.spotsTxt = "Não";
-
-          if (pet.ong_email)
-            pet.ong_name = this.getOngName(pet.ong_email);
-
-          console.log(pet.ong_name);
-
           if (pet.status.description == 'DISPONIVEL') {
+            pet.postString = 'Post';
+            if (pet.spots)
+              pet.spotsTxt = "Sim";
+            else
+              pet.spotsTxt = "Não";
+
+            if (pet.ong_email)
+              pet.ong_name = this.getOngName(pet.ong_email);
+
+            if (this.myLocation != null) {
+              var R = 6371; // Radius of the earth in km
+              var dLat = (pet.lat - this.myLocation.latitude) * Math.PI / 180;
+              var dLon = (pet.lon - this.myLocation.longitude) * Math.PI / 180;
+              var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(this.myLocation.latitude * Math.PI / 180) * Math.cos(pet.lat * Math.PI / 180) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+              var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+              var d = R * c; // Distance in km
+              pet.distanceToMe = Math.round(d * 100) / 100;
+            }
+
             this.petsList.push(pet)
           }
         });
+
+        this.petsList.sort(this.sortByDistance);
+        this.finishedLoading = true;
+        this.update();
       },
       (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
@@ -127,6 +154,14 @@ export class AdocaoPage implements OnInit {
           console.log("Server-side error occurred. Details:\n" + err.message);
         }
       });
+  }
+
+  sortByDistance(a: PetResponse, b: PetResponse) {
+    return (a.distanceToMe - b.distanceToMe);
+  }
+
+  update() {
+    this.content.resize();
   }
 
   getOngs(): void {
@@ -158,14 +193,23 @@ export class AdocaoPage implements OnInit {
   }
 
   insertPet() {
-    this.isOng(this.fire.auth.auth.currentUser.email, result => {
-      if (result) {
-        console.log('okay');
-        this.insertAPet();
-      } else {
-        console.log('nope');
-      }
-    });
+    if (this.fire.authenticated) {
+      this.isOng(this.fire.auth.auth.currentUser.email, result => {
+        if (result) {
+          console.log('okay');
+          this.insertAPet();
+        } else {
+          console.log('nope');
+        }
+      });
+    } else {
+      let alert = this.alertCtrl.create({
+        title: "Erro",
+        message: "É preciso ser uma ONG para cadastrar pets para adoção.",
+        buttons: ['OK']
+      });
+      alert.present();
+    }
   }
 
   insertAPet(): void {
@@ -173,7 +217,7 @@ export class AdocaoPage implements OnInit {
 
     modal.onDidDismiss(data => {
       if (data) {
-        let pet = { name: "string", type: "string", color: "string", gender: "string", size: "string", spots: false, description: "string", image_url: null,lat:null,lon:null }
+        let pet = { name: "string", type: "string", color: "string", gender: "string", size: "string", spots: false, description: "string", image_url: null, lat: null, lon: null }
         switch (parseInt(data.gender, 10)) {
           case 0: {
             pet.gender = "Macho"; break;
@@ -286,7 +330,8 @@ export class AdocaoPage implements OnInit {
       'DISPONIVEL',
       this.fire.auth.auth.currentUser.email,
       pet.lat,
-      pet.lon
+      pet.lon,
+      this.fire.auth.auth.currentUser.email
     );
 
     this.http.post(this.petsUrl, petVO).subscribe(

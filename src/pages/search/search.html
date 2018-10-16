@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-navbar hideBackButton text-center>
+    <ion-title>Descrição</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content no-scroll class="search-master">
+  <div align=center class="search-container">
+    <div class="filter-grid">
+      <div #firstFocus class="grid-element" (tap)="focus('location')"><img src="../../assets/imgs/location.png"></div>
+      <div class="grid-element" (tap)="focus('gender')"><img src="../../assets/imgs/gender.png"></div>
+      <div class="grid-element" (tap)="focus('Espécie')"><img src="../../assets/imgs/type.png"></div>
+      <div class="grid-element" (tap)="focus('race')"><img src="../../assets/imgs/race.png"></div>
+      <div class="grid-element" (tap)="focus('color')"><img src="../../assets/imgs/color.png"></div>
+      <div class="grid-element" (tap)="focus('size')"><img src="../../assets/imgs/size.png"></div>
+      <div class="grid-element" (tap)="focus('hair')"><img src="../../assets/imgs/hair.png"></div>
+      <div class="grid-element" (tap)="focus('other')"><img src="../../assets/imgs/other.png"></div>
+    </div>
+  </div>
+</ion-content>
+<ion-content no-scroll class="master-2">
+  <div align=center>
+    <div class="focus-title">
+      <h1>{{focused}}</h1>
+    </div>
+    <div class="focused">
+      <div *ngIf="focused == 'location'" class="location"></div>
+      <div *ngIf="focused == 'gender'" class="gender"></div>
+      <div *ngIf="focused == 'Espécie'" class="type">
+        <div class="type-grid">
+          <div class="type-element" (tap)="setType('Cachorro')">
+            <img src="../../assets/imgs/species/dog.png" />
+            <div *ngIf="type == 'Cachorro'"><p>{{type}}</p></div>
+          </div>
+          <div class="type-element" (tap)="setType('Gato')">
+            <img src="../../assets/imgs/species/cat.png" />
+            <div *ngIf="type == 'Gato'"><p>{{type}}</p></div>
+          </div>
+          <div class="type-element" (tap)="setType('rodent')">
+            <img src="../../assets/imgs/species/rodent.png" />
+            <div *ngIf="type == 'Roedor'"><p>{{type}}</p></div>
+          </div>
+          <div class="type-element" (tap)="setType('horse')">
+            <img src="../../assets/imgs/species/horse.png" />
+            <div *ngIf="type == 'Cavalo'"><p>{{type}}</p></div>
+          </div>
+          <div class="type-element-non-clickable"></div>
+          <div class="type-element" (tap)="setType('reptile')">
+            <img src="../../assets/imgs/species/reptile.png" />
+            <div *ngIf="type == 'Réptil'"><p>{{type}}</p></div>
+          </div>
+          <div class="type-element" (tap)="setType('bird')">
+            <img src="../../assets/imgs/species/bird.png" />
+            <div *ngIf="type == 'Pássaro'"><p>{{type}}</p></div>
+          </div>
+          <div class="type-element" (tap)="setType('other')">
+            <img src="../../assets/imgs/species/other.png" />
+            <div *ngIf="type == 'Outro'"><p>{{type}}</p></div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="focused == 'race'" class="race"></div>
+      <div *ngIf="focused == 'color'" class="color"></div>
+      <div *ngIf="focused == 'size'" class="size"></div>
+      <div *ngIf="focused == 'hair'" class="hair"></div>
+      <div *ngIf="focused == 'other'" class="other"></div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-fab bottom left padding="10dp">
+  <button ion-fab (tap)="return()" color="primary">
+    <ion-icon name="return-left" size="large" color="secondary"></ion-icon>
+  </button>
+</ion-fab>

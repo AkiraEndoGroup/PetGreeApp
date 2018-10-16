@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ModalController } from 'ionic-angular';
 import { FirebaseProvider } from '../../providers/firebase/firebase';
 import { PetResponse } from '../../providers/interfaces/PetResponse';
-import { ModalShowImage } from '../modals/modal-show-image'
+import { ModalShowImage } from '../../modals/modal-show-image'
 
 @Component({
   selector: 'meuspets',
@@ -11,8 +11,8 @@ import { ModalShowImage } from '../modals/modal-show-image'
 })
 export class PageMeusPets implements OnInit {
 
-  usersUrl ='http://localhost:4243/users'; 
-  petsUrl = 'http://localhost:4242/pets';
+  usersUrl ='http://ec2-18-228-44-159.sa-east-1.compute.amazonaws.com:4243/users'; 
+  petsUrl = 'http://ec2-18-228-44-159.sa-east-1.compute.amazonaws.com:4242/pets';
   myPets = [];
 
   constructor(

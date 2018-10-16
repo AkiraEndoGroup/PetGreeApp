@@ -1,48 +1,49 @@
 <ion-header no-border>
-    <ion-navbar>
-        <button ion-button icon-only menuToggle>
-          <ion-icon name="person" style="color: white;"></ion-icon>
-        </button>
-        <ion-title>{{titulo}}</ion-title>
-    </ion-navbar>
+  <ion-navbar>
+    <button ion-button icon-only menuToggle>
+      <ion-icon name="person" style="color: white;"></ion-icon>
+    </button>
+    <ion-title>{{titulo}}</ion-title>
+  </ion-navbar>
 </ion-header>
 
-<ion-content class="masters"> 
+<ion-content class="masters">
 
-  <ion-grid style="width:100vw; max-width: 100vh; max-height: 100vh; margin-block-start: 3vmin; margin-block-end: 3vmin;">
-    <ion-row >
-      <ion-col col-5>
+  <ion-grid style="width:100vmin; margin-block-start: 3vmin; margin-block-end: 3vmin;">
+    <ion-row style="height: 25vh;margin: 20px;">
+      <ion-col col-4>
         <div class="botao-perdidos" #botaoPerdidos (click)="animarBotao('perdidos')">
           <div class="icon search"></div>
         </div>
       </ion-col>
-      <ion-col col-7>
-        <div class="boxelement"><div class="title-perdidos">Pets Perdidos</div></div>
+      <ion-col col-8>
+        <div class="title-perdidos">Pets Perdidos</div>
       </ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col col-7>
-        <div class="boxelement"><div class="title-adocao">Adote um Pet!</div></div>
+    <ion-row style="height: 25vh;margin: 20px;">
+      <ion-col col-8>
+        <div class="title-adocao">Adote um Pet!</div>
       </ion-col>
-      <ion-col col-5>
+      <ion-col col-4>
         <div class="botao-adocao" #botaoAdocao (click)="animarBotao('adocao')">
-          <div class="icon heart"></div>
-        </div>    
+          <div class="icon heart">
+          </div>
+        </div>
       </ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col col-5>
+    <ion-row style="height: 25vh;margin: 20px;">
+      <ion-col col-4>
         <div class="botao-registro" #botaoRegistro (click)="animarBotao('registro')">
           <div class="icon paw"></div>
         </div>
       </ion-col>
-      <ion-col col-7>
-        <div class="boxelement"><div class="title-registro">Registre seu pet!</div></div>
+      <ion-col col-8>
+        <div class="title-registro">Registre seu pet!</div>
       </ion-col>
     </ion-row>
   </ion-grid>
 
-  </ion-content>
+</ion-content>
 
 <ion-footer no-border>
   <ion-toolbar>

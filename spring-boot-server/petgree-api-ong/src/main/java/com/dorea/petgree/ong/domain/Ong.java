@@ -31,6 +31,15 @@ public class Ong implements Serializable {
 	@Column(name = "email", unique = true)
 	private String email;
 
+	@Column(name = "verificada")
+	private boolean verificada;
+
+	@Column(name = "descricao")
+	private String descricao;
+
+	@Column(name = "logo")
+	private String logo;
+
 	public Long getId() {
 		return id;
 	}
@@ -77,5 +86,29 @@ public class Ong implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public boolean isVerificada() {
+		return verificada;
+	}
+
+	public void setVerificada(boolean verificada) {
+		this.verificada = verificada;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public String getLogo() {
+		return logo;
+	}
+
+	public void setLogo(String logo) {
+		this.logo = logo;
 	}
 }

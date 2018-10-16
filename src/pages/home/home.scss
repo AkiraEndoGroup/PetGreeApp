@@ -1,103 +1,236 @@
-page-home {
-    text-align: center;
+:root {
+  --primary-color: #00a98e;
+  --secondary-color: #7d5dc3;
 }
 
-.title-div {
-    background-color: map-get($colors, secondary );
-    position: absolute;
-    color: black;
-    vertical-align: middle;
-    left: 0;
-    top: 0;
-    width: 100%;
+.home-slide-container {
+  margin-top: 10px;
+  height: 50vh;
+  max-width: 600px
 }
 
-.botao-perdidos {
-  background-color:map-get($colors, secondary);
+.home-slide-img {
+  height: 32vh !important;
+  width: 80% !important;
+  object-fit: cover !important;
+}
+
+.scroll-content,
+.fixed-content {
+  background-color: var(--secondary-color);
+  max-height: calc(100% - 56px)
+}
+
+.status-box {
+  color: white;
+  background-color: black;
   position: absolute;
-  height: 40vw;
-  width: 40vw;
-  max-width: 40vh; 
-  max-height: 40vh;
-  border-radius: 20%;
-  box-shadow: 5px 5px 20px 1px black;
+  top: 20px;
+  right: 50px;
 }
 
-.title-perdidos {
-  font-size: 5vmin;
-  position: relative;
-  line-height: 40vmin;
-  text-align: left;
-  margin-left: 10%;
-}
-
-.icon.search {
-  background-image: url(../assets/imgs/search.png);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 50% 50%;
-  height: 100%;
-}
-
-.botao-adocao {
-  background-color:map-get($colors, secondary);
+.distance-box {
+  color: black;
+  background-color: white;
   position: absolute;
-  height: 40vw;
-  width: 40vw;
-  max-width: 40vh; 
-  max-height: 40vh;
-  border-radius: 20%;
-  box-shadow: 5px 5px 20px 1px black;
+  bottom: 25%;
+  right: 50px;
 }
 
-.title-adocao {
-  font-size: 5vmin;
-  position: relative;
-  line-height: 40vmin;
-  text-align: right;
-  margin-right: 10%;
+ion-fab[center] {
+  margin-left: -44px; // FAB tem 88px
 }
 
-.boxelement {
-  background-color: adjust-color($color: #0000FF, $red: 0, $green: 0, $blue: 0, $alpha: -1.0);
-  vertical-align: middle;
-  height: 40vmin;
-  width: 100%;
+.home-grid {
+  display: grid;
+  width: 80%;
+  height: 35vh;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 30px auto 30px;
+  grid-column-gap: 3px;
+  grid-row-gap: 3px;
+  max-width: 600px
 }
 
-.icon.heart {
-  background-image: url(../assets/imgs/heart.png);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 50% 50%;
-  height: 100%;
+.item-a1 {
+  border-radius: 30px 0 0 0;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  background-color: var(--primary-color);
+  display: flex;
+  justify-content: center;
+  div {
+    font-size: medium;
+    align-self: center;
+    justify-self: center;
+  }
 }
 
-.botao-registro {
-  background-color:map-get($colors, secondary);
-  position: absolute;
-  height: 40vw;
-  width: 40vw;
-  max-width: 40vh; 
-  max-height: 40vh;
-  border-radius: 20%;
-  box-shadow: 5px 5px 20px 1px black;
-  margin-bottom: 5vw
+.item-a2 {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  background-color: var(--primary-color);
 }
 
-.title-registro {
-  font-size: 5vmin;
-  position: relative;
-  line-height: 40vmin;
-  text-align: left;
-  margin-left: 10%;
+.item-a3 {
+  border-radius: 0 0 0 30px;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  background-color: var(--primary-color);;
 }
 
-.icon.paw {
-  background-image: url(../assets/imgs/pawprint.png);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 60% 60%;
-  height: 100%;
-  width: auto;
+.item-b1 {
+  border-radius: 0 30px 0 0;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  background-color: var(--primary-color);
+  display: flex;
+  justify-content: center;
+
+  div {
+    font-size: medium;
+    align-self: center;
+    justify-self: center;
+  }
 }
+
+.item-b2 {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  background-color: var(--primary-color);;
+  object-fit: contain;
+}
+
+.item-b3 {
+  border-radius: 0 0 30px 0;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  background-color: var(--primary-color);;
+}
+
+.navbar-input {
+  display: block !important;
+  background-color: blueviolet;
+  border-radius: 10px;
+  color: white;
+}
+
+.navbar-input::placeholder {
+  color: white;
+  ;
+}
+
+
+
+
+
+
+
+
+
+
+// page-home {
+//     text-align: center;
+// }
+
+// .title-div {
+//     background-color: map-get($colors, secondary );
+//     position: absolute;
+//     color: black;
+//     vertical-align: middle;
+//     left: 0;
+//     top: 0;
+//     width: 100%;
+// }
+
+// .botao-perdidos {
+//   background-color:map-get($colors, secondary);
+//   position: absolute;
+//   height: 25vmin;
+//   width: 25vmin;
+//   border-radius: 20%;
+//   box-shadow: 5px 5px 20px 1px black;
+// }
+
+// .title-perdidos {
+//   font-family: Montserrat;
+//   margin-left: 10%;
+//   font-size: 5vmin;
+//   position: relative;
+//   line-height: 30vmin;
+//   text-align: left;
+// }
+
+// .icon.search {
+//   background-image: url(../assets/imgs/search.png);
+//   background-position: center;
+//   background-repeat: no-repeat;
+//   background-size: 50% 50%;
+//   height: 100%;
+// }
+
+// .botao-adocao {
+//   background-color:map-get($colors, secondary);
+//   position: absolute;
+//   height: 25vmin;
+//   width: 25vmin;
+//   border-radius: 20%;
+//   box-shadow: 5px 5px 20px 1px black;
+// }
+
+// .title-adocao {
+//   font-family: Montserrat;
+//   margin-right: 10%;
+//   font-size: 5vmin;
+//   position: relative;
+//   line-height: 30vmin;
+//   text-align: right;
+// }
+
+// .icon.heart {
+//   background-image: url(../assets/imgs/heart.png);
+//   background-position: center;
+//   background-repeat: no-repeat;
+//   background-size: 50% 50%;
+//   height: 100%;
+// }
+
+// .botao-registro {
+//   background-color:map-get($colors, secondary);
+//   position: absolute;
+//   height: 25vmin;
+//   width: 25vmin;
+//   border-radius: 20%;
+//   box-shadow: 5px 5px 20px 1px black;
+//   margin-bottom: 5vw
+// }
+
+// .title-registro {
+//   margin-left: 10%;
+//   font-family: Montserrat;
+//   font-size: 5vmin;
+//   position: relative;
+//   line-height: 30vmin;
+//   text-align: left;
+// }
+
+// .icon.paw {
+//   background-image: url(../assets/imgs/pawprint.png);
+//   background-position: center;
+//   background-repeat: no-repeat;
+//   background-size: 60% 60%;
+//   height: 100%;
+//   width: auto;
+// }

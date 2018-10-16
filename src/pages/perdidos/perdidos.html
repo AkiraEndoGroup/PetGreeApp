@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Animais Perdidos</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content class="masters">
+  <ion-grid style="width:100vmin;">
+    <ion-list *ngIf="finishedLoading">
+      <ion-item sliding *ngFor="let pet of messageList" style="background-color: transparent">
+        <ion-card>
+          <ion-card-header>
+            <div align=center>
+              <h1>{{pet.name}}</h1>
+              <h1>{{pet.type.description}}</h1>
+              <div align=center *ngIf="myLocation" class="distance-container">
+                <h2 *ngIf="pet.lat" [ngClass]="(3 >= pet.distanceToMe) ? 'distance-close' : 'distance'">A {{pet.distanceToMe}} km de distância.</h2>
+              </div>  
+            </div>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-grid>
+              <ion-row style="object-fit: contain;">
+                <div align=center class="cardRow">
+                  <img src={{pet.image_url}} (click)="showImage(pet.image_url)" />
+                </div>
+                <div align=center class="cardRow">
+                  Sexo: {{pet.gender.description}}
+                  <br/> Tamanho: {{pet.size.description}}
+                  <br/> Cor: {{pet.color.description}}
+                  <br/> Tem manchas? {{pet.spotsTxt}}
+                  <br/> Descrição:
+                  <p text-wrap style="text-align: left; color: white;">{{pet.description}}</p>
+                  <br/>
+                  <button ion-button style="width: 100%;" (click)="resgatar(pet)">É meu!</button>
+                </div>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+    </ion-list>
+  </ion-grid>
+</ion-content>
+
+<ion-footer>
+  <div #fabButton>
+    <ion-fab right bottom padding="10dp">
+      <button ion-fab>
+        <ion-icon name="paw"></ion-icon>
+      </button>
+      <ion-fab-list side="top">
+        <button ion-fab (click)="getPets()">
+          <ion-icon name="refresh"></ion-icon>
+        </button>
+        <button ion-fab (click)="insertPet()">
+          <ion-icon name="add"></ion-icon>
+        </button>
+      </ion-fab-list>
+    </ion-fab>
+  </div>
+</ion-footer>

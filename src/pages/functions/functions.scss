@@ -1,0 +1,243 @@
+:root {
+  --primary-color: #00a98e;
+  --secondary-color: #7d5dc3;
+  --grid-color: #00a98e;
+}
+
+.functions-grid {
+  padding-top: 5%;
+  display: grid;
+  width: 80%;
+  height: 90vh;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 4vh 15vh 4vh 15vh 4vh 15vh 4vh 15vh ;
+  grid-column-gap: 3px;
+  grid-row-gap: 3px;
+  max-width: 600px;
+}
+
+// ------------ ELEMENTOS
+
+.perdi-title {
+  border-radius: 30px 0 0 0;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  background-color: var(--primary-color);
+  display: flex;
+  justify-content: center;
+  div {
+    font-size: medium;
+    align-self: center;
+    justify-self: center;
+  }
+}
+
+.perdi {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  background-color: var(--primary-color);
+  img {
+    height: 100%;
+  }
+}
+
+// ----------------------------------
+
+.encontrei-title {
+  border-radius: 0 30px 0 0;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  background-color: var(--primary-color);
+  display: flex;
+  justify-content: center;
+  div {
+    font-size: medium;
+    align-self: center;
+    justify-self: center;
+  }
+}
+
+.encontrei {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  background-color: var(--primary-color);
+  img {
+    height: 100%;
+  }
+}
+
+// ----------------------------------
+.precisa-ajuda-title {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  background-color: var(--primary-color);
+  display: flex;
+  justify-content: center;
+  div {
+    font-size: medium;
+    align-self: center;
+    justify-self: center;
+  }
+}
+
+.precisa-ajuda {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 4;
+  grid-row-end: 5;
+  background-color: var(--primary-color);
+  img {
+    height: 100%;
+  }
+}
+
+// ----------------------------------
+
+.posso-ajudar-title {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  background-color: var(--primary-color);
+  display: flex;
+  justify-content: center;
+  div {
+    font-size: medium;
+    align-self: center;
+    justify-self: center;
+  }
+}
+
+.posso-ajudar {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 4;
+  grid-row-end: 5;
+  background-color: var(--primary-color);
+  img {
+    height: 100%;
+  }
+}
+
+// ----------------------------------
+.precisa-abrigo-title {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 5;
+  grid-row-end: 6;
+  background-color: var(--primary-color);
+  display: flex;
+  justify-content: center;
+  div {
+    font-size: medium;
+    align-self: center;
+    justify-self: center;
+  }
+}
+
+.precisa-abrigo {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 6;
+  grid-row-end: 7;
+  background-color: var(--primary-color);
+  img {
+    height: 100%;
+  }
+}
+
+// ----------------------------------
+
+.posso-abrigar-title {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 5;
+  grid-row-end: 6;
+  background-color: var(--primary-color);
+  display: flex;
+  justify-content: center;
+  div {
+    font-size: medium;
+    align-self: center;
+    justify-self: center;
+  }
+}
+
+.posso-abrigar {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 6;
+  grid-row-end: 7;
+  background-color: var(--primary-color);
+  img {
+    height: 100%;
+  }
+}
+
+// ----------------------------------
+
+.quer-cruzar-title {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 7;
+  grid-row-end: 8;
+  background-color: var(--primary-color);
+  display: flex;
+  justify-content: center;
+  div {
+    font-size: medium;
+    align-self: center;
+    justify-self: center;
+  }
+}
+
+.quer-cruzar {
+  border-radius: 0 0 0 30px;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 8;
+  grid-row-end: 9;
+  background-color: var(--primary-color);
+  img {
+    height: 100%;
+  }
+}
+
+// ----------------------------------
+
+.loja-title {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 7;
+  grid-row-end: 8;
+  background-color: var(--primary-color);
+  display: flex;
+  justify-content: center;
+  div {
+    font-size: medium;
+    align-self: center;
+    justify-self: center;
+  }
+}
+
+.loja {
+  border-radius: 0 0 30px 0;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 8;
+  grid-row-end: 9;
+  background-color: var(--primary-color);
+  img {
+    height: 100%;
+  }
+}

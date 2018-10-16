@@ -9,22 +9,27 @@
 
 
 <ion-content class="masters">
-  <ion-grid style="width:100vmin; min-width: 500px;">
-    <ion-list>
+  <ion-grid style="width:100vmin;">
+    <ion-list *ngIf="finishedLoading">
       <ion-item sliding *ngFor="let pet of petsList" style="background-color: transparent">
         <ion-card>
           <ion-card-header>
-            <h1>{{pet.name}}</h1>
-            <h1 style="color: #00a98e; font-weight: bold; text-shadow: 1px 2px black;">{{pet.ong_name}}</h1>
-            <h1>{{pet.type.description}}</h1>
+            <div align=center>
+              <h1>{{pet.name}}</h1>
+              <h1 style="color: #00a98e; font-weight: bold; text-shadow: 1px 2px black;">{{pet.ong_name}}</h1>
+              <h1>{{pet.type.description}}</h1>
+              <div align=center *ngIf="myLocation" class="distance-container">
+                <h2 [ngClass]="(3 >= pet.distanceToMe) ? 'distance-close' : 'distance'">A {{pet.distanceToMe}} km de distância.</h2>
+              </div>
+            </div>
           </ion-card-header>
           <ion-card-content>
             <ion-grid>
-              <ion-row align-items-center>
-                <ion-col col-6>
-                  <img src={{pet.image_url}} style="height: 200px; width: auto;" (click)="showImage(pet.image_url)" />
-                </ion-col>
-                <ion-col col-6>
+              <ion-row style="object-fit: contain;">
+                <div align=center class="cardRow">
+                  <img src={{pet.image_url}} (click)="showImage(pet.image_url)" />
+                </div>
+                <div align=center class="cardRow">
                   Sexo: {{pet.gender.description}}
                   <br/> Tamanho: {{pet.size.description}}
                   <br/> Cor: {{pet.color.description}}
@@ -32,8 +37,9 @@
                   <br/> Descrição:
                   <p text-wrap style="text-align: left; color: white;">{{pet.description}}</p>
                   <br/>
-                  <button ion-button style="width: 100%;" >Adotar!</button>
-                </ion-col>
+                  <button ion-button style="width: 50%;" color="danger" (click)="changeColor(pet,1)">Delete</button>
+                  <button ion-button style="width: 50%;" (click)="changeColor(pet,0)">{{pet.postString}}</button>
+                </div>
               </ion-row>
             </ion-grid>
           </ion-card-content>

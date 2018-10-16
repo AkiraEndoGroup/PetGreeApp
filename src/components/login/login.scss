@@ -1,0 +1,15 @@
+:root {
+  --primary-color: #00a98e;
+  --secondary-color: #7d5dc3;
+}
+
+.login-body {
+  background-color: var(--secondary-color);
+  width: 100vw;
+  height: 100vh;
+}
+
+.login-grid {
+  height: 50%;
+  width: 100%;
+}

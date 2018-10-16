@@ -1,0 +1,45 @@
+<ion-menu [content]="content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Perfil</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-row *ngIf="!loggedIn">
+      <ion-col col-12>
+        <button ion-button menuClose block (click)="openLogin()">Entrar</button>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="loggedIn" justify-content-center>
+      <ion-col align-items-center col-12>Logado como {{myEmail}}</ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="loggedIn" justify-content-center>
+      <img src="{{avatarImg}}" style="align-self: center;" (click)="showImage(avatarImg)" />
+    </ion-row>
+
+    <ion-row *ngIf="loggedIn" justify-content-center>
+      <p>{{name}}, {{age}}.</p>
+    </ion-row>
+
+    <ion-row *ngIf="loggedIn" justify-content-center>
+      <p>Bio: {{bio}}</p>
+    </ion-row>
+
+    <ion-row *ngIf="loggedIn" justify-content-center>
+      <button ion-button menuClose (click)="this.nav.push(meusPets)">Meus Pets</button>
+      <button ion-button menuClose (click)="editProfile()">Editar Perfil</button>
+    </ion-row>
+
+    <ion-row *ngIf="loggedIn">
+      <ion-col col-12>
+        <button ion-button menuClose block (click)="logout()">Sair</button>
+      </ion-col>
+    </ion-row>
+  </ion-content>
+
+</ion-menu>
+
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

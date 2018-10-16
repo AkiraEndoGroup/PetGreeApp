@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-navbar hideBackButton text-center>
+    <ion-title>{{pet.name}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <!-- SLIDER PARA MOSTRAR AS FOTOS DO PET -->
+  <div align=center>
+    <ion-slides padding pager #slides class="perfil-pet-slide-container" *ngIf="fotos && fotos.length" paginationType="bullets"
+      spaceBetween="200" speed="500" effect="slide" style="padding-bottom: 0; padding-top: 0; margin: 0;">
+      <ion-slide *ngFor="let foto of fotos">
+        <div>
+          <img [src]="foto" class="perfil-pet-slide-img" />
+          <div class="pet-status-box">Status: {{pet.status.description}}</div>
+          <div *ngIf="pet.distanceToMe" class="pet-distance-box">Distância: {{pet.distanceToMe}} km</div>
+        </div>
+      </ion-slide>
+    </ion-slides>
+  </div>
+  <!-- BOTÕES -->
+  <div align=center>
+    <ion-grid class="grid-buttons">
+      <ion-row justify-content-center>
+        <ion-col col-4 class="button-container">
+          <img *ngIf="hasOwner" (tap)="goToOwner()" src="../../assets/imgs/avatar.png" />
+        </ion-col>
+        <ion-col col-4 class="button-container">
+          <img (tap)="foundIt()" src="../../assets/imgs/warning.png" />
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <!-- ATRIBUTOS -->
+  <ion-content class="attrib-container">
+    <div align=center>
+      <ion-grid class="attrib-grid">
+        <ion-row class="attrib-row" *ngFor="let attrib of attribs">
+          <ion-col col-4 class="attrib-key">
+            {{attrib.key}}
+          </ion-col>
+          <ion-col col-8 class="attrib-value">
+            {{attrib.value}}
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ion-content>
+
+</ion-content>
+
+<ion-fab bottom left padding="10dp">
+  <button ion-fab (tap)="return()" color="primary">
+    <ion-icon name="return-left" size="large" color="secondary"></ion-icon>
+  </button>
+</ion-fab>
+
+<ion-fab *ngIf="isOwner" bottom right padding="10dp">
+  <button ion-fab (tap)="alert('tap edit')" color="primary">
+    <ion-icon name="create" size="large" color="secondary"></ion-icon>
+  </button>
+</ion-fab>

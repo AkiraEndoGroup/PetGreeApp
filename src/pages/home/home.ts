@@ -1,64 +1,122 @@
 import { Component, ViewChild } from '@angular/core';
-import { AnimationService, AnimationBuilder } from 'css-animator';
-import { NavController, AlertController } from 'ionic-angular';
-import { PagePerdidos } from './perdidos/perdidos';
-import { AdocaoPage } from '../adocao/adocao';
+import { PetsProvider } from '../../providers/pets/pets';
+import { Slides, NavController, MenuController, Loading, LoadingController, AlertController } from 'ionic-angular';
+// import { UsersProvider } from '../../providers/users/users';
+import { FunctionsPage } from '../functions/functions';
+import { PerfilPetPage } from '../perfil-pet/perfil-pet';
+import { Geolocation } from '@ionic-native/geolocation';
+import { PetResponse } from '../../providers/interfaces/PetResponse';
+import { SearchPage } from '../search/search';
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'newHome.html'
 })
 export class HomePage {
-  // ELEMENTOS FILHOS
-  @ViewChild('botaoPerdidos') botaoPerdidos;
-  @ViewChild('botaoAdocao') botaoAdocao;
-  @ViewChild('botaoRegistro') botaoRegistro;
-  private animator: AnimationBuilder;
-  titulo = 'PetGree';
+  @ViewChild(Slides) slides: Slides
 
+  slidesList: Object[] = [
+    {
+      // placeholder
+      name: "",
+      image_url: "",
+      status: { description: "OK", id: 0 }
+    }
+  ]
+
+  hasLocation: boolean = false
+  location: any
+  loading: Loading
 
   constructor(
-    animationService: AnimationService,
+    private pets: PetsProvider,
+    // private users: UsersProvider,
     public navCtrl: NavController,
-    public alertCtrl: AlertController) {
-    this.animator = animationService.builder();
+    public menuCtrl: MenuController,
+    public geo: Geolocation,
+    public loadingCtrl: LoadingController,
+    public alertCtrl: AlertController
+  ) {
+    this.pets.getAllPets().then((res: PetResponse[]) => {
+      this.slidesList = Array.from(res)
+      this.getDistances()
+    })
+
+    this.loading = loadingCtrl.create({
+      content: "Determinando localização",
+      spinner: 'dots'
+    })
+
+    console.log('running geolocation api');
+    this.geo.getCurrentPosition({
+      enableHighAccuracy: true,
+      timeout: 5000
+    }).then((resp) => {
+      console.log('location found!');
+      this.location = resp.coords;
+      this.hasLocation = true;
+      this.loading.dismiss();
+    }).catch((error) => {
+      this.loading.dismiss();
+      let alert = alertCtrl.create({
+        title: 'Erro de localização',
+        message: 'Não foi possível determinar sua localização.',
+        buttons: ['OK :/']
+      });
+      alert.present();
+      console.log('geolocation error. ' + error.message);
+    });
   }
 
-  // FUNÇÃO QUE GERENCIA OS BOTÕES DA TELA PRINCIPAL
-  animarBotao(botao) {
-    let elem;
-    switch(botao) {
-      case 'perdidos': {
-        elem = this.botaoPerdidos.nativeElement; 
-        elem.page = PagePerdidos;
-        break;
-      }
-      case 'adocao': {
-        elem = this.botaoAdocao.nativeElement; 
-        elem.page = AdocaoPage;
-        break;
-      }
-      case 'registro': {
-        let alert = this.alertCtrl.create({
-          title: "Opa!",
-          message: "Em breve isso será implementado, rs! ^.^'",
-          buttons: ['Hmpf!']
-        });
-        alert.present();
-        break;
-      }
-    }
-    if (elem) {
-      this.animator.setType('pulse')
-      .setDuration(300)
-      .show(elem)
-      .then(() => {
-        if (elem.page)
-          this.navCtrl.push(elem.page);
-      })
-      .catch(() => {
-        this.animator.stop(elem);
+  getDistances() {
+    if (this.hasLocation) {
+      this.slidesList.forEach((pet: PetResponse) => {
+        if (pet.lat && pet.lon) {
+          if (this.location != null) {
+            var R = 6371; // Radius of the earth in km
+            var dLat = (pet.lat - this.location.latitude) * Math.PI / 180;
+            var dLon = (pet.lon - this.location.longitude) * Math.PI / 180;
+            var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+              Math.cos(this.location.latitude * Math.PI / 180) * Math.cos(pet.lat * Math.PI / 180) *
+              Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            var d = R * c; // Distance in km
+            pet.distanceToMe = Math.round(d * 100) / 100;
+          }
+        }
       });
     }
+  }
+
+  ionViewDidEnter() {
+    this.slides.autoplayDisableOnInteraction = false;
+  }
+
+  ionViewWillEnter() {
+    this.menuCtrl.swipeEnable(true)
+    this.slides.update()
+    this.slides.startAutoplay()
+  }
+
+  ionViewWillLeave() {
+    this.menuCtrl.swipeEnable(false)
+  }
+
+  goToPet() {
+    this.slides.stopAutoplay()
+    let index = this.slides.realIndex
+    let pet = this.slidesList[index]
+    this.navCtrl.push(PerfilPetPage, {
+      pet: pet
+    })
+  }
+
+  more() {
+    this.slides.stopAutoplay()
+    this.navCtrl.push(FunctionsPage)
+  }
+
+  search(status) {
+    this.navCtrl.push(SearchPage,{filter: status})
   }
 }

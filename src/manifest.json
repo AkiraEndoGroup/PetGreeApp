@@ -1,6 +1,6 @@
 {
-  "name": "Ionic",
-  "short_name": "Ionic",
+  "name": "PetGree App",
+  "short_name": "PetGree",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{

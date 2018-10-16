@@ -23,6 +23,13 @@ public class OngModel {
 	@JsonInclude(JsonInclude.Include.ALWAYS)
 	private String email;
 
+	@JsonInclude(JsonInclude.Include.ALWAYS)
+	private boolean verificada;
+
+	private String descricao;
+
+	private String logo;
+
 	public Long getId() {
 		return id;
 	}
@@ -69,5 +76,29 @@ public class OngModel {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public boolean isVerificada() {
+		return verificada;
+	}
+
+	public void setVerificada(boolean verificada) {
+		this.verificada = verificada;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public String getLogo() {
+		return logo;
+	}
+
+	public void setLogo(String logo) {
+		this.logo = logo;
 	}
 }

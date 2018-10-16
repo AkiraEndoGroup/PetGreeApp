@@ -11,33 +11,38 @@
     "ionic:serve": "ionic-app-scripts serve"
   },
   "dependencies": {
-    "@angular/animations": "^6.0.0",
+    "@angular/animations": "5.2.10",
     "@angular/cli": "^1.0.0-beta.28.3",
-    "@angular/common": "^6.0.0",
-    "@angular/compiler": "^6.0.0",
-    "@angular/compiler-cli": "^6.0.0",
-    "@angular/core": "^6.0.0",
-    "@angular/forms": "^6.0.0",
-    "@angular/platform-browser": "^6.0.0",
-    "@angular/platform-browser-dynamic": "^6.0.0",
-    "@angular/platform-server": "^6.0.0",
-    "@angular/router": "^6.0.0",
-    "@ionic-native/camera": "^4.7.0",
-    "@ionic-native/core": "^4.7.0",
-    "@ionic-native/email-composer": "^4.11.0",
-    "@ionic-native/geolocation": "^4.11.0",
-    "@ionic-native/image-picker": "^4.11.0",
-    "@ionic-native/in-app-browser": "^4.7.0",
-    "@ionic-native/status-bar": "^4.7.0",
-    "@ionic/storage": "^2.1.3",
-    "angularfire2": "^5.0.0-rc.9",
+    "@angular/common": "5.2.10",
+    "@angular/compiler": "5.2.10",
+    "@angular/compiler-cli": "5.2.10",
+    "@angular/core": "5.2.10",
+    "@angular/forms": "5.2.10",
+    "@angular/platform-browser": "5.2.10",
+    "@angular/platform-browser-dynamic": "5.2.10",
+    "@angular/platform-server": "5.2.10",
+    "@angular/router": "5.2.10",
+    "@ionic-native/camera": "4.15.0",
+    "@ionic-native/core": "4.11.0",
+    "@ionic-native/email-composer": "4.15.0",
+    "@ionic-native/facebook": "4.15.0",
+    "@ionic-native/geolocation": "4.15.0",
+    "@ionic-native/google-plus": "4.15.0",
+    "@ionic-native/image-picker": "4.15.0",
+    "@ionic-native/in-app-browser": "4.15.0",
+    "@ionic-native/status-bar": "4.15.0",
+    "@ionic-native/push": "4.15.0",
+    "@ionic/storage": "2.2.0",
+    "@angular/fire": "5.0.2",
     "cordova-android": "7.0.0",
     "cordova-browser": "5.0.3",
     "cordova-plugin-advanced-http": "^1.11.1",
     "cordova-plugin-camera": "^4.0.3",
     "cordova-plugin-device": "^2.0.1",
     "cordova-plugin-email-composer": "^0.8.15",
+    "cordova-plugin-facebook4": "^3.1.0",
     "cordova-plugin-geolocation": "^4.0.1",
+    "cordova-plugin-googleplus": "^5.3.2",
     "cordova-plugin-ionic-keyboard": "^2.0.5",
     "cordova-plugin-ionic-webview": "^1.2.0",
     "cordova-plugin-splashscreen": "^5.0.2",
@@ -45,12 +50,12 @@
     "cordova-plugin-whitelist": "^1.3.3",
     "cordova-sqlite-storage": "^2.3.1",
     "css-animator": "^2.3.0",
-    "firebase": "^5.0.3",
+    "firebase": "5.5.4",
     "ionic-angular": "3.9.0",
     "ionic-native": "^2.9.0",
     "ionicons": "^3.0.0",
-    "rxjs": "^6.0.0",
-    "rxjs-compat": "^6.1.0",
+    "phonegap-plugin-push": "^2.1.3",
+    "rxjs": "^5.5.11",
     "sw-toolbox": "^3.6.0",
     "tsickle": "0.2.5",
     "webpack": "^2.2.0",
@@ -58,7 +63,7 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.1.11",
-    "typescript": "2.7.2"
+    "typescript": "2.6.2"
   },
   "description": "An Ionic project",
   "cordova": {
@@ -77,6 +82,19 @@
       },
       "cordova-plugin-geolocation": {
         "GEOLOCATION_USAGE_DESCRIPTION": "To pinpoint the nearest shelter and locate lost pets"
+      },
+      "cordova-plugin-file": {},
+      "cordova-plugin-googleplus": {
+        "WEB_APPLICATION_CLIENT_ID": "806791357162-062k2cl531t823ccoaod99d0srqv4i5v.apps.googleusercontent.com"
+      },
+      "cordova-plugin-facebook4": {
+        "APP_ID": "494256917715469",
+        "APP_NAME": "Petgree",
+        "FACEBOOK_ANDROID_SDK_VERSION": "4.37.0"
+      },
+      "phonegap-plugin-push": {
+        "SENDER_ID": "AIzaSyAyP5aLrmgDlZ23kRMrfKU9QKSJRhlx970",
+        "FCM_VERSION": "11.6.2"
       }
     },
     "platforms": [

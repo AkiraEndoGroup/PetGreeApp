@@ -6,6 +6,7 @@ import com.dorea.petgree.ong.exception.InvalidPhoneException;
 import com.dorea.petgree.ong.validate.ValidateOng;
 
 import javax.validation.constraints.NotNull;
+import java.util.UUID;
 
 public class OngConverter {
 
@@ -40,6 +41,22 @@ public class OngConverter {
 				throw new InvalidPhoneException(phone);
 			}
 			ong.setTelefones(ongModel.getTelefones());
+		}
+
+		if (ongModel.isVerificada()) {
+			ong.setVerificada(true);
+		}
+
+		if (ongModel.getDescricao() != null) {
+			ong.setDescricao(ongModel.getDescricao());
+		} else if (ong.getDescricao() == null) {
+			ong.setDescricao("Insira uma descrição!");
+		}
+
+		if (ongModel.getLogo() != null) {
+			ong.setLogo(ongModel.getLogo());
+		} else if(ong.getLogo() == null) {
+			ong.setLogo("https://api.adorable.io/avatars/200/" + UUID.randomUUID());
 		}
 
 		return ong;

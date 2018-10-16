@@ -15,24 +15,41 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StatusBar } from '@ionic-native/status-bar';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { AnimationService } from 'css-animator';
-import { ModalInsertPet } from '../pages/modals/modal-insert-pet';
-import { ModalLogin } from '../pages/modals/modal-login';
-import { ModalSignup } from '../pages/modals/modal-signup';
-import { ModalShowImage } from '../pages/modals/modal-show-image';
-import { PagePerdidos } from '../pages/home/perdidos/perdidos';
+import { ModalInsertPet } from '../modals/modal-insert-pet';
+import { ModalLogin } from '../modals/modal-login';
+import { ModalSignup } from '../modals/modal-signup';
+import { ModalShowImage } from '../modals/modal-show-image';
+import { PagePerdidos } from '../pages/perdidos/perdidos';
 import { PageMeusPets } from '../pages/meuspets/meuspets';
+import { PageTutorial } from '../pages/tutorial/tutorial'
 import { AdocaoPage } from '../pages/adocao/adocao';
 
 // Firebase modules
-import { AngularFireModule } from 'angularfire2';
-import { AngularFirestoreModule } from 'angularfire2/firestore';
-import { AngularFireStorageModule } from 'angularfire2/storage';
-import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 import { FirebaseProvider } from '../providers/firebase/firebase';
-import { ModalEditProfile } from '../pages/modals/modal-edit-profile';
+import { ModalEditProfile } from '../modals/modal-edit-profile';
+
+import { GooglePlus } from '@ionic-native/google-plus'
+import { LoginComponent } from '../components/login/login';
+
+import { Facebook } from '@ionic-native/facebook'
 
 // Geolocation
 import { Geolocation } from '@ionic-native/geolocation';
+import { PetsProvider } from '../providers/pets/pets';
+import { SplashPage } from '../pages/splash/splash';
+import { UsersProvider } from '../providers/users/users';
+import { OngsProvider } from '../providers/ongs/ongs';
+import { FunctionsPage } from '../pages/functions/functions';
+import { SuportePage } from '../pages/suporte/suporte';
+import { PerfilPetPage } from '../pages/perfil-pet/perfil-pet';
+import { Push } from '@ionic-native/push';
+import { PerfilUserPage } from '../pages/perfil-user/perfil-user';
+import { PerfilUserEditPage } from '../pages/perfil-user/perfil-user-edit/perfil-user-edit';
+import { SearchPage } from '../pages/search/search';
 
 const firebaseConfig = {
   apiKey: "AIzaSyA3NSMbfS7Gwcd0S2LZQwnfvUSgazwCvYc",
@@ -53,7 +70,17 @@ const firebaseConfig = {
     ModalShowImage,
     ModalEditProfile,
     PagePerdidos,
-    PageMeusPets
+    PageMeusPets,
+    PageTutorial,
+    SplashPage,
+    FunctionsPage,
+    SuportePage,
+    PerfilPetPage,
+    PerfilUserPage,
+    PerfilUserEditPage,
+    SearchPage,
+    AdocaoPage,
+    LoginComponent
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -77,17 +104,32 @@ const firebaseConfig = {
     ModalEditProfile,
     PagePerdidos,
     PageMeusPets,
-    AdocaoPage
+    PageTutorial,
+    SplashPage,
+    FunctionsPage,
+    SuportePage,
+    PerfilPetPage,
+    PerfilUserPage,
+    PerfilUserEditPage,
+    SearchPage,
+    AdocaoPage,
+    LoginComponent
   ],
   providers: [
     StatusBar,
     Geolocation,
     Camera,
+    GooglePlus,
     EmailComposer,
     AnimationService,
     FirebaseProvider,
+    PetsProvider,
+    UsersProvider,
+    OngsProvider,
     LoadingController,
     ImagePicker,
+    Push,
+    Facebook,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
   ]
 })

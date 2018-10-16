@@ -1,0 +1,92 @@
+<ion-header>
+  <ion-navbar hideBackButton text-center>
+    <ion-title>Editar</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div align=center>
+    <ion-content class="photo">
+      <img src="{{user.avatar.imageUrl}}" />
+      <ion-fab top right padding="10dp">
+        <button ion-fab (tap)="changePicture()" color="primary">
+          <ion-icon name="camera" size="large" color="secondary"></ion-icon>
+        </button>
+      </ion-fab>
+    </ion-content>
+  </div>
+
+  <!-- ATRIBUTOS -->
+  <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm.value)"  >
+    <ion-content class="user-attrib-container">
+      <div align=center>
+        <ion-grid class="attrib-grid">
+
+          <ion-row class="attrib-row">
+            <ion-col col-4 class="attrib-key">
+              Nome
+            </ion-col>
+            <ion-col col-8 class="edit-attrib-value">
+              <div class="form-group">
+                <input type="text" class="input-box" [formControl]="myForm.controls['name']">
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="attrib-row">
+            <ion-col col-4 class="attrib-key">
+              Bio
+            </ion-col>
+            <ion-col col-8 class="edit-attrib-value">
+              <div class="form-group">
+                <input type="text" class="input-box" [formControl]="myForm.controls['bio']">
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="attrib-row">
+            <ion-col col-4 class="attrib-key">
+              Idade
+            </ion-col>
+            <ion-col col-8 class="edit-attrib-value">
+              <div class="form-group">
+                <input type="number" class="input-box" [formControl]="myForm.controls['idade']">
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="attrib-row">
+            <ion-col col-4 class="attrib-key">
+              Endereço
+            </ion-col>
+            <ion-col col-8 class="edit-attrib-value">
+              <button ion-button type="button" class="edit-button" (tap)="editAddress()">Editar endereço</button>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="attrib-row">
+              <ion-col col-4 class="attrib-key">
+                Telefones
+              </ion-col>
+              <ion-col col-8 class="edit-attrib-value">
+                <button ion-button type="button" class="edit-button" (tap)="editPhones()">Editar telefones</button>
+              </ion-col>
+            </ion-row>
+
+        </ion-grid>
+      </div>
+    </ion-content>
+    <ion-fab bottom right padding="10dp">
+      <button ion-fab type="submit" color="primary">
+        <ion-icon name="checkmark" size="large" color="secondary"></ion-icon>
+      </button>
+    </ion-fab>
+  </form>
+
+</ion-content>
+
+<ion-fab bottom left padding="10dp">
+  <button ion-fab (tap)="return()" color="primary">
+    <ion-icon name="return-left" size="large" color="secondary"></ion-icon>
+  </button>
+</ion-fab>

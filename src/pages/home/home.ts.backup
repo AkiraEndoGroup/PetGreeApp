@@ -1,0 +1,100 @@
+import { Component } from '@angular/core';
+// import { Component, ViewChild } from '@angular/core';
+// import { AnimationService, AnimationBuilder } from 'css-animator';
+// import { NavController, AlertController, LoadingController } from 'ionic-angular';
+// import { PagePerdidos } from '../perdidos/perdidos';
+// import { AdocaoPage } from '../adocao/adocao';
+// import { Geolocation } from '@ionic-native/geolocation';
+
+@Component({
+  selector: 'page-home',
+  templateUrl: 'newHome.html'
+})
+export class HomePage {
+  // // ELEMENTOS FILHOS
+  // @ViewChild('botaoPerdidos') botaoPerdidos;
+  // @ViewChild('botaoAdocao') botaoAdocao;
+  // @ViewChild('botaoRegistro') botaoRegistro;
+  // private animator: AnimationBuilder;
+  // titulo = 'PetGree';
+
+  // myLocation: Coordinates;
+  // locationFound: boolean;
+
+  // loading;
+  constructor() {}
+  // constructor(
+  //   animationService: AnimationService,
+  //   public navCtrl: NavController,
+  //   public alertCtrl: AlertController,
+  //   private geolocation: Geolocation,
+  //   private loadingCtrl: LoadingController) {
+  //   this.animator = animationService.builder();
+
+  //   this.locationFound = false;
+
+  //   this.loading = this.loadingCtrl.create({
+  //     content: 'Encontrando sua localização...'
+  //   });
+
+  //   this.loading.present();
+
+  //   console.log('running geolocation api');
+  //   this.geolocation.getCurrentPosition({
+  //     enableHighAccuracy: true,
+  //     timeout: 5000
+  //   }).then((resp) => {
+  //     console.log('location found!');
+  //     this.myLocation = resp.coords;
+  //     this.locationFound = true;
+  //     this.loading.dismiss();
+  //   }).catch((error) => {
+  //     this.loading.dismiss();
+  //     let alert = alertCtrl.create({
+  //       title: 'Erro de localização',
+  //       message: 'Não foi possível determinar sua localização.',
+  //       buttons: ['OK :/']
+  //     });
+  //     alert.present();
+  //     console.log('geolocation error. ' + error.message);
+  //   });
+  // }
+
+  // // FUNÇÃO QUE GERENCIA OS BOTÕES DA TELA PRINCIPAL
+  // animarBotao(botao) {
+  //   let elem;
+  //   switch(botao) {
+  //     case 'perdidos': {
+  //       elem = this.botaoPerdidos.nativeElement; 
+  //       elem.page = PagePerdidos;
+  //       break;
+  //     }
+  //     case 'adocao': {
+  //       elem = this.botaoAdocao.nativeElement; 
+  //       elem.page = AdocaoPage;
+  //       break;
+  //     }
+  //     case 'registro': {
+  //       let alert = this.alertCtrl.create({
+  //         title: "Opa!",
+  //         message: "Em breve isso será implementado, rs! ^.^'",
+  //         buttons: ['Hmpf!']
+  //       });
+  //       alert.present();
+  //       break;
+  //     }
+  //   }
+  //   if (elem) {
+  //     this.animator.setType('pulse')
+  //     .setDuration(300)
+  //     .show(elem)
+  //     .then(() => {
+  //       if (elem.page)
+  //         this.navCtrl.push(elem.page,{location: this.myLocation});
+  //     })
+  //     .catch(() => {
+  //       this.animator.stop(elem);
+  //     });
+  //   }
+  // }
+}
