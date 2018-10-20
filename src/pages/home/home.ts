@@ -48,24 +48,26 @@ export class HomePage {
     })
 
     console.log('running geolocation api');
-    this.geo.getCurrentPosition({
-      enableHighAccuracy: true,
-      timeout: 5000
-    }).then((resp) => {
-      console.log('location found!');
-      this.location = resp.coords;
-      this.hasLocation = true;
-      this.loading.dismiss();
-    }).catch((error) => {
-      this.loading.dismiss();
-      let alert = alertCtrl.create({
-        title: 'Erro de localização',
-        message: 'Não foi possível determinar sua localização.',
-        buttons: ['OK :/']
+    if (!this.hasLocation) {
+      this.geo.getCurrentPosition({
+        enableHighAccuracy: true,
+        timeout: 5000
+      }).then((resp) => {
+        console.log('location found!');
+        this.location = resp.coords;
+        this.hasLocation = true;
+        this.loading.dismiss();
+      }).catch((error) => {
+        this.loading.dismiss();
+        let alert = alertCtrl.create({
+          title: 'Erro de localização',
+          message: 'Não foi possível determinar sua localização.',
+          buttons: ['OK :/']
+        });
+        alert.present();
+        console.log('geolocation error. ' + error.message);
       });
-      alert.present();
-      console.log('geolocation error. ' + error.message);
-    });
+    }
   }
 
   getDistances() {
@@ -83,6 +85,9 @@ export class HomePage {
             var d = R * c; // Distance in km
             pet.distanceToMe = Math.round(d * 100) / 100;
           }
+        }
+        if (pet.size.description.toLowerCase() == 'muitogrande') {
+          pet.size.description = "Muito grande"
         }
       });
     }
@@ -117,6 +122,6 @@ export class HomePage {
   }
 
   search(status) {
-    this.navCtrl.push(SearchPage,{filter: status})
+    this.navCtrl.push(SearchPage, { filter: status })
   }
 }

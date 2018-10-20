@@ -15,22 +15,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StatusBar } from '@ionic-native/status-bar';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { AnimationService } from 'css-animator';
-import { ModalInsertPet } from '../modals/modal-insert-pet';
-import { ModalLogin } from '../modals/modal-login';
-import { ModalSignup } from '../modals/modal-signup';
-import { ModalShowImage } from '../modals/modal-show-image';
-import { PagePerdidos } from '../pages/perdidos/perdidos';
-import { PageMeusPets } from '../pages/meuspets/meuspets';
+// import { ModalShowImage } from '../modals/modal-show-image';
 import { PageTutorial } from '../pages/tutorial/tutorial'
-import { AdocaoPage } from '../pages/adocao/adocao';
 
 // Firebase modules
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { FirebaseProvider } from '../providers/firebase/firebase';
-import { ModalEditProfile } from '../modals/modal-edit-profile';
 
 import { GooglePlus } from '@ionic-native/google-plus'
 import { LoginComponent } from '../components/login/login';
@@ -50,6 +42,7 @@ import { Push } from '@ionic-native/push';
 import { PerfilUserPage } from '../pages/perfil-user/perfil-user';
 import { PerfilUserEditPage } from '../pages/perfil-user/perfil-user-edit/perfil-user-edit';
 import { SearchPage } from '../pages/search/search';
+import { NativeGeocoder } from '@ionic-native/native-geocoder'
 
 const firebaseConfig = {
   apiKey: "AIzaSyA3NSMbfS7Gwcd0S2LZQwnfvUSgazwCvYc",
@@ -64,13 +57,7 @@ const firebaseConfig = {
   declarations: [
     MyApp,
     HomePage,
-    ModalInsertPet,
-    ModalLogin,
-    ModalSignup,
-    ModalShowImage,
-    ModalEditProfile,
-    PagePerdidos,
-    PageMeusPets,
+    // ModalShowImage,
     PageTutorial,
     SplashPage,
     FunctionsPage,
@@ -79,7 +66,6 @@ const firebaseConfig = {
     PerfilUserPage,
     PerfilUserEditPage,
     SearchPage,
-    AdocaoPage,
     LoginComponent
   ],
   imports: [
@@ -97,13 +83,7 @@ const firebaseConfig = {
   entryComponents: [
     MyApp,
     HomePage,
-    ModalInsertPet,
-    ModalLogin,
-    ModalSignup,
-    ModalShowImage,
-    ModalEditProfile,
-    PagePerdidos,
-    PageMeusPets,
+    // ModalShowImage,
     PageTutorial,
     SplashPage,
     FunctionsPage,
@@ -112,17 +92,16 @@ const firebaseConfig = {
     PerfilUserPage,
     PerfilUserEditPage,
     SearchPage,
-    AdocaoPage,
     LoginComponent
   ],
   providers: [
     StatusBar,
     Geolocation,
+    NativeGeocoder,
     Camera,
     GooglePlus,
     EmailComposer,
     AnimationService,
-    FirebaseProvider,
     PetsProvider,
     UsersProvider,
     OngsProvider,

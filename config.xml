@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.dorea.petgree.app" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>PetGree</name>
+    <name>Petgree</name>
     <description>Aplicativo para registro de animais perdidos.</description>
     <author email="yago.dorea@gmail.com" href="https://github.com/yagodorea">Meu Github</author>
     <content src="index.html" />
@@ -21,6 +21,7 @@
     <preference name="SplashScreenDelay" value="3000" />
     <platform name="android">
         <allow-intent href="market:*" />
+        <resource-file src="google-services.json" target="google-services.json" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
         <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />
         <icon density="hdpi" src="resources/android/icon/drawable-hdpi-icon.png" />
@@ -92,8 +93,6 @@
     <plugin name="cordova-plugin-geolocation" spec="^4.0.1">
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="To pinpoint the nearest shelter and locate lost pets" />
     </plugin>
-    <engine name="android" spec="7.0.0" />
-    <engine name="browser" spec="5.0.3" />
     <plugin name="cordova-plugin-file" spec="~6.0.1" />
     <plugin name="cordova-plugin-googleplus" spec="^5.3.2">
         <variable name="WEB_APPLICATION_CLIENT_ID" value="806791357162-062k2cl531t823ccoaod99d0srqv4i5v.apps.googleusercontent.com" />
@@ -105,6 +104,9 @@
     </plugin>
     <plugin name="phonegap-plugin-push" spec="^2.1.3">
         <variable name="SENDER_ID" value="AIzaSyAyP5aLrmgDlZ23kRMrfKU9QKSJRhlx970" />
-        <variable name="FCM_VERSION" value="11.6.2" />
+        <variable name="FCM_VERSION" value="17.3.4" />
     </plugin>
+    <plugin name="cordova-plugin-nativegeocoder" spec="^3.1.2" />
+    <engine name="browser" spec="5.0.3" />
+    <engine name="android" spec="^7.0.0" />
 </widget>
