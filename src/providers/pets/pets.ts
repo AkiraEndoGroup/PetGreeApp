@@ -60,6 +60,23 @@ export class PetsProvider {
     return query
   }
 
+  orderByDistanceToMe(pets) {
+    console.log('ordering');
+    
+    return pets.sort((a,b) => {
+      if (a.distanceToMe && b.distanceToMe) {
+        if (a.distanceToMe > b.distanceToMe)
+          return 1
+        if (a.distanceToMe < b.distanceToMe)
+          return -1
+        if (a.distanceToMe == b.distanceToMe)
+          return 0
+      } else {
+        return 0
+      } 
+    })
+  }
+
   getPetsEmail(email) { }
 
   getPetsPerdidos() { }

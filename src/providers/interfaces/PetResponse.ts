@@ -8,8 +8,6 @@ export interface PetResponse {
   size: { description: string, id: number },
   colors: PetColor[],
   status: { description: string, id: number },
-  spots: boolean,
-  spotsTxt: string,
   description: string,
   postString: string,
   image_url: string,
@@ -28,13 +26,12 @@ export interface PetColor {
   description: string
 }
 
-export function PetJSON(name,type,gender,size,color,spots,description,image_url,status,ong_email,lat,lon,created_by) {
+export function PetJSON(name,type,gender,size,color,description,image_url,status,ong_email,lat,lon,created_by) {
   this.name = name;
   this.type = type;
   this.gender = gender;
   this.size = size;
   this.color = color;
-  this.spots = spots;
   this.description = description;
   this.image_url = image_url;
   this.status = status;

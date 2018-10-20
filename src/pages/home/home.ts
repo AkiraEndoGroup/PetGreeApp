@@ -37,9 +37,12 @@ export class HomePage {
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController
   ) {
-    this.pets.getAllPets().then((res: PetResponse[]) => {
+      this.pets.getAllPets().then((res: PetResponse[]) => {
       this.slidesList = Array.from(res)
+      console.log(this.slidesList)
       this.getDistances()
+      this.slidesList = pets.orderByDistanceToMe(this.slidesList)
+      console.log(this.slidesList)
     })
 
     this.loading = loadingCtrl.create({
@@ -104,11 +107,11 @@ export class HomePage {
   }
 
   ionViewWillLeave() {
+    this.slides.stopAutoplay()
     this.menuCtrl.swipeEnable(false)
   }
 
   goToPet() {
-    this.slides.stopAutoplay()
     let index = this.slides.realIndex
     let pet = this.slidesList[index]
     this.navCtrl.push(PerfilPetPage, {
@@ -117,7 +120,6 @@ export class HomePage {
   }
 
   more() {
-    this.slides.stopAutoplay()
     this.navCtrl.push(FunctionsPage)
   }
 
