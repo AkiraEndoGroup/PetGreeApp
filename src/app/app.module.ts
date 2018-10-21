@@ -13,7 +13,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StatusBar } from '@ionic-native/status-bar';
-import { ImagePicker } from '@ionic-native/image-picker';
 import { AnimationService } from 'css-animator';
 // import { ModalShowImage } from '../modals/modal-show-image';
 import { PageTutorial } from '../pages/tutorial/tutorial'
@@ -112,7 +111,6 @@ const firebaseConfig = {
     UsersProvider,
     OngsProvider,
     LoadingController,
-    ImagePicker,
     Push,
     Facebook,
     {provide: ErrorHandler, useClass: IonicErrorHandler},

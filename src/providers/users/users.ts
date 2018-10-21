@@ -5,8 +5,9 @@ import { UserResponse } from "../interfaces/UserResponse"
 
 @Injectable()
 export class UsersProvider {
-
-  usersUrl = 'http://localhost:4243/users'
+  
+  usersUrl = 'http://ec2-18-228-44-159.sa-east-1.compute.amazonaws.com:4243/users';
+  // usersUrl = 'http://localhost:4243/users'
 
   constructor(
     private http: HttpClient,

@@ -71,7 +71,7 @@ export class LoginComponent {
 
   googleLogin() {
     this.presentLoading('Entrando...')
-    if (this.platform.is('cordova')) {
+    if (this.platform.is('cordova') && !this.platform.is('core')) {
       this.nativeGoogleLogin()
     } else {
       this.webGoogleLogin()

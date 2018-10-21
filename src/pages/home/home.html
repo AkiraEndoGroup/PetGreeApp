@@ -12,13 +12,13 @@
 
   <!-- SLIDER PARA MOSTRAR OS PETS -->
   <div align=center>
-    <ion-slides padding pager #slides class="home-slide-container" *ngIf="slidesList && slidesList.length" autoplay="3000"
+    <ion-slides padding pager #slides class="home-slide-container" *ngIf="slidesList && slidesList.length > 0" autoplay="3000"
       paginationType="bullets" spaceBetween="200" speed="500" effect="slide">
       <ion-slide *ngFor="let slide of slidesList" (tap)="goToPet()">
         <div>
           <img [src]="slide.image_url" class="home-slide-img" />
-          <div class="status-box">Status: {{slide.status.description}}</div>
-          <div *ngIf="slide.distanceToMe" class="distance-box">Distância: {{slide.distanceToMe}} km</div>
+          <div *ngIf="slide.status" class="status-box">Status: {{slide.status.description}}</div>
+          <div *ngIf="(slide.distanceToMe >= -0.1)" class="distance-box">Distância: {{slide.distanceToMe}} km</div>
         </div>
         <h2 class="slide-title" no-margin [innerHTML]="slide.name"></h2>
         <br />
@@ -31,12 +31,12 @@
       <div class="item-a1">
         <div>Estou procurando</div>
       </div>
-      <div (tap)="search('encontrado')" class="item-a2"><img src="assets/imgs/searching.png" /></div>
+      <div (tap)="search('Encontrado')" class="item-a2"><img src="assets/imgs/searching.png" /></div>
       <div class="item-a3"></div>
       <div class="item-b1">
         <div>Encontrei</div>
       </div>
-      <div (tap)="search('perdido')" class="item-b2"><img src="assets/imgs/scared.png" /></div>
+      <div (tap)="search('Perdido')" class="item-b2"><img src="assets/imgs/scared.png" /></div>
       <div class="item-b3"></div>
     </div>
   </div>

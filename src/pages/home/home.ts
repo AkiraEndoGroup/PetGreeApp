@@ -18,9 +18,8 @@ export class HomePage {
   slidesList: Object[] = [
     {
       // placeholder
-      name: "",
-      image_url: "",
-      status: { description: "OK", id: 0 }
+      name: "Indisponível",
+      image_url: "assets/imgs/not-found.png"
     }
   ]
 
@@ -45,6 +44,7 @@ export class HomePage {
         content: "Determinando localização",
         spinner: 'dots'
       })
+      this.loading.present()
 
       console.log('running geolocation api');
       if (!this.hasLocation) {
@@ -71,11 +71,23 @@ export class HomePage {
           alert.present();
           console.log('geolocation error. ' + error.message);
         });
+      } else {
+        this.slidesList = pets.getDistances(this.location, this.slidesList)
+        this.slidesList = pets.orderByDistanceToMe(this.slidesList)
+        this.loading.dismiss()
       }
     })
   }
 
   ionViewDidEnter() {
+    this.loading = this.loadingCtrl.create({
+      content: "Ordenando...",
+      spinner: 'dots'
+    })
+    this.loading.present()
+    this.slidesList = this.pets.getDistances(this.location, this.slidesList)
+    this.slidesList = this.pets.orderByDistanceToMe(this.slidesList)
+    this.loading.dismiss()
     this.slides.autoplayDisableOnInteraction = false;
   }
 
@@ -93,9 +105,11 @@ export class HomePage {
   goToPet() {
     let index = this.slides.realIndex
     let pet = this.slidesList[index]
-    this.navCtrl.push(PerfilPetPage, {
-      pet: pet
-    })
+    if (pet["name"] != "Indisponível") {
+      this.navCtrl.push(PerfilPetPage, {
+        pet: pet
+      })
+    }
   }
 
   more() {

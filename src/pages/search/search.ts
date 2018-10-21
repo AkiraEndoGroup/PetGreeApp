@@ -274,13 +274,10 @@ export class SearchPage {
         colors: this.is ? this.parseColors() : null,
         size: this.size ? this.size.replace(" ", "") : undefined,
         fur: this.fur,
-        description: this.description,
-        location: this.location
+        description: this.description
       }
       this.pets.getPetsByFilter(filter).then((res: PetResponse[]) => {
-        if (res) {
-          this.goToResults(res,filter)
-        }
+        this.goToResults(res, filter)
       }).catch(err => console.log(err))
     }
   }
@@ -317,24 +314,24 @@ export class SearchPage {
         || this.is.green)) {
       let arr = []
       if (this.is.white)
-        arr.push("branco")
+        arr.push("Branco")
       if (this.is.black)
-        arr.push("preto")
+        arr.push("Preto")
       if (this.is.brown)
-        arr.push("marrom")
+        arr.push("Marrom")
       if (this.is.orange)
-        arr.push("laranja")
+        arr.push("Laranja")
       if (this.is.beige)
-        arr.push("beige")
+        arr.push("Beige")
       if (this.is.green)
-        arr.push("outro")
+        arr.push("Outro")
 
       return arr
     }
     return null
   }
 
-  goToResults(results,filter) {
+  goToResults(results, filter) {
     this.navCtrl.push(ResultadosPage, {
       results: results,
       location: this.location,

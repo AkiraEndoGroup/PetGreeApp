@@ -1,21 +1,104 @@
 <ion-header>
   <ion-navbar hideBackButton text-center>
-    <ion-title>Suporte/Contato</ion-title>
+    <ion-title>Cadastrar</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <div align=center style="padding-top:10%;">
-    <h1 style="text-align: center;">
-      Autor: Yago Dórea
-    </h1>
-    <br />
-    <h2 style="text-align: center;">Contato: yago.dorea@gmail.com</h2>
+  <div align=center>
+    <ion-content class="photo">
+      <img src="{{imageUrl}}" />
+      <ion-fab top right padding="10dp">
+        <button ion-fab (tap)="addPhoto()" color="primary">
+          <ion-icon name="camera" size="large" color="secondary"></ion-icon>
+        </button>
+      </ion-fab>
+    </ion-content>
   </div>
-</ion-content>
+  <!-- ATRIBUTOS -->
 
-<ion-fab bottom left padding="10dp">
-  <button ion-fab (tap)="return()" color="primary">
-    <ion-icon name="return-left" size="large" color="secondary"></ion-icon>
-  </button>
-</ion-fab>
+  <ion-content class="user-attrib-container">
+    <div align=center>
+      <ion-grid class="attrib-grid">
+
+        <ion-row class="attrib-row">
+          <ion-col col-4 class="attrib-key">
+            Status
+          </ion-col>
+          <ion-col col-8 class="attrib-value">
+            {{filter.status}}
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="attrib-row">
+          <ion-col col-4 class="attrib-key">
+            Família
+          </ion-col>
+          <ion-col col-8 class="attrib-value">
+            {{filter.type}}
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="attrib-row">
+          <ion-col col-4 class="attrib-key">
+            Sexo
+          </ion-col>
+          <ion-col col-8 class="attrib-value">
+            {{filter.gender}}
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="attrib-row">
+          <ion-col col-4 class="attrib-key">
+            Raça
+          </ion-col>
+          <ion-col col-8 class="attrib-value">
+            {{filter.race}}
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="attrib-row">
+          <ion-col col-4 class="attrib-key">
+            Cores
+          </ion-col>
+          <ion-col col-8 class="attrib-value">
+            {{filter.colorsTxt}}
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="attrib-row">
+          <ion-col col-4 class="attrib-key">
+            Pêlo
+          </ion-col>
+          <ion-col col-8 class="attrib-value">
+            {{filter.fur}}
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="attrib-row">
+          <ion-col col-4 class="attrib-key">
+            Descrição
+          </ion-col>
+          <ion-col col-8 class="attrib-value">
+            {{filter.description}}
+          </ion-col>
+        </ion-row>
+
+      </ion-grid>
+    </div>
+
+    <ion-fab bottom right padding="10dp">
+      <button ion-fab (tap)="postPet()" color="primary">
+        <ion-icon name="checkmark" size="large" color="secondary"></ion-icon>
+      </button>
+    </ion-fab>
+
+    <ion-fab bottom left padding="10dp">
+      <button ion-fab (tap)="return()" color="primary">
+        <ion-icon name="return-left" size="large" color="secondary"></ion-icon>
+      </button>
+    </ion-fab>
+
+  </ion-content>
+
+</ion-content>

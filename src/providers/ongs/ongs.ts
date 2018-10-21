@@ -5,7 +5,8 @@ import { OngResponse } from "../interfaces/OngResponse"
 @Injectable()
 export class OngsProvider {
 
-  ongsUrl = 'http://localhost:4244/ongs'
+  ongsUrl = 'http://ec2-18-228-44-159.sa-east-1.compute.amazonaws.com:4244/ongs';
+  // ongsUrl = 'http://localhost:4244/ongs'
 
   constructor(
     private http: HttpClient

@@ -20,14 +20,14 @@ export class FunctionsPage {
 
   searchPerdidos() {
     this.navCtrl.push(SearchPage, {
-      filter: 'perdido',
+      filter: 'Perdido',
       location: this.location
     })
   }
 
   searchEncontrados() {
     this.navCtrl.push(SearchPage, {
-      filter: 'encontrado',
+      filter: 'Encontrado',
       location: this.location
     })
   }
@@ -38,7 +38,7 @@ export class FunctionsPage {
 
   searchMachucado() {
     this.navCtrl.push(SearchPage, {
-      filter: 'machucado',
+      filter: 'Machucado',
       location: this.location
     })
   }
@@ -49,14 +49,14 @@ export class FunctionsPage {
 
   searchPrecisaAbrigo() {
     this.navCtrl.push(SearchPage, {
-      filter: 'desabrigado',
+      filter: 'Desabrigado',
       location: this.location
     })
   }
 
   searchQuerCruzar() {
     this.navCtrl.push(SearchPage, {
-      filter: 'quer_cruzar',
+      filter: 'Quer_cruzar',
       location: this.location
     })
   }

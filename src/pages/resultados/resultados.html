@@ -7,21 +7,21 @@
 <ion-content>
 
   <!-- SLIDER PARA MOSTRAR OS PETS -->
-  <div align=center>
-    <ion-slides padding pager #slides class="home-slide-container" *ngIf="pets && pets.length" autoplay="3000"
+  <div align=center *ngIf="pets && pets.length">
+    <ion-slides padding pager #slides class="home-slide-container" autoplay="3000"
       paginationType="bullets" spaceBetween="200" speed="500" effect="slide">
       <ion-slide *ngFor="let pet of pets" (tap)="goToPet()">
         <div>
           <img [src]="pet.image_url" class="home-slide-img" />
-          <div class="status-box">Status: {{pet.status.description}}</div>
-          <div *ngIf="pet.distanceToMe" class="distance-box">Distância: {{pet.distanceToMe}} km</div>
+          <div *ngIf="pet.status" class="status-box">Status: {{pet.status.description}}</div>
+          <div *ngIf="(pet.distanceToMe >= -0.1)" class="distance-box">Distância: {{pet.distanceToMe}} km</div>
         </div>
         <h2 *ngIf="pet.name && pet.name.length > 0" class="slide-title" no-margin [innerHTML]="pet.name"></h2>
         <br />
       </ion-slide>
     </ion-slides>
 
-    <div class="results-grid">
+    <div *ngIf="!unavailable" class="results-grid">
       <div class="results-element">
         <img src="assets/imgs/this-one.png" />
         <div (tap)="thisIsIt()" class="res-btn-container">

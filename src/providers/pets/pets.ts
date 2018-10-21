@@ -4,13 +4,13 @@ import { AngularFireAuth } from "@angular/fire/auth";
 import { PetResponse } from "../interfaces/PetResponse"
 import { UsersProvider } from "../users/users";
 import { UserResponse } from "../interfaces/UserResponse";
+import { Observable } from "rxjs";
 
 @Injectable()
 export class PetsProvider {
 
-  // usersUrl ='http://ec2-18-228-44-159.sa-east-1.compute.amazonaws.com:4243/users'; 
-  // petsUrl = 'http://ec2-18-228-44-159.sa-east-1.compute.amazonaws.com:4242/pets';
-  petsUrl = 'http://localhost:4242/pets'
+  petsUrl = 'http://ec2-18-228-44-159.sa-east-1.compute.amazonaws.com:4242/pets';
+  // petsUrl = 'http://localhost:4242/pets'
 
   constructor(
     private http: HttpClient,
@@ -19,21 +19,7 @@ export class PetsProvider {
   ) { }
 
   getAllPets() {
-    let pets: PetResponse[] = []
-    return new Promise(resolve => {
-      this.http.get(this.petsUrl)
-        .subscribe((data) => {
-          if (data) {
-            Array.prototype.forEach.call(data, element => {
-              if (element.size.description.toLowerCase() == 'muitogrande') {
-                element.size.description = "Muito grande"
-              }
-              pets.push(element)
-            })
-            resolve(pets)
-          }
-        })
-    })
+    return this.getPetsByFilter(this.toQueryParam({}));
   }
 
   getPetsByFilter(filter) {
@@ -42,6 +28,10 @@ export class PetsProvider {
 
     return new Promise(resolve => {
       this.http.get(this.petsUrl + filtersQueryParam)
+        .timeout(5000)
+        .catch( (caught) => {
+          return Observable.throw(caught)
+        })
         .subscribe((data) => {
           if (data) {
             Array.prototype.forEach.call(data, element => {
@@ -52,12 +42,20 @@ export class PetsProvider {
             })
             resolve(pets)
           }
+        }, (error) => {
+          console.log(error);
+          resolve(null)
         })
     })
   }
 
   toQueryParam(filter) {
-    let query = "?status=" + filter["status"]
+    // Até que eu consiga filtrar melhor os resultados por distância...
+    let query = "?limit=100"
+
+    query += filter["status"] ? "&status=" + filter["status"] : ''
+
+
     query += filter["type"] ? "&type=" + filter["type"] : ''
     query += filter["gender"] ? "&gender=" + filter["gender"] : ''
     query += filter["race"] ? "&raca=" + filter["race"] : ''
@@ -103,7 +101,10 @@ export class PetsProvider {
             Math.sin(dLon / 2) * Math.sin(dLon / 2);
           var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
           var d = R * c; // Distance in km
-          pet.distanceToMe = Math.round(d * 100) / 100;          
+          pet.distanceToMe = Math.round(d * 100) / 100;
+          console.log(pet.distanceToMe);
+        } else {
+          pet.distanceToMe = -1
         }
       });
       return pets
@@ -114,12 +115,22 @@ export class PetsProvider {
     this.users.getCurrentUser().then((user: UserResponse) => {
       if (user) {
         console.log(user)
-        this.http.post(this.petsUrl + '/' + petId + '/notification',user)
-        .subscribe(res => {
-          console.log(res)
-        })
+        this.http.post(this.petsUrl + '/' + petId + '/notification', user).timeout(5000)
+          .subscribe(res => {
+            console.log(res)
+          })
       }
     })
+  }
+
+  postPet(pet) {
+    return new Promise(resolve => {
+      this.http.post(this.petsUrl, pet)
+      .subscribe((data) => {
+        console.log(data)
+        resolve(data)
+      }, err => console.log(err))
+    }).catch(err => console.log(err))
   }
 
   getPetsEmail(email) { }

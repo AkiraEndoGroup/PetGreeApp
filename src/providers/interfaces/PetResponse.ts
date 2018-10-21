@@ -1,3 +1,5 @@
+import { RaceOperator } from "rxjs/observable/race";
+
 export interface PetResponse {
   id: number,
   name: string,
@@ -9,7 +11,6 @@ export interface PetResponse {
   colors: PetColor[],
   status: { description: string, id: number },
   description: string,
-  postString: string,
   image_url: string,
   fotos: string[],
   ong_email: string,
@@ -26,17 +27,23 @@ export interface PetColor {
   description: string
 }
 
-export function PetJSON(name,type,gender,size,color,description,image_url,status,ong_email,lat,lon,created_by) {
-  this.name = name;
-  this.type = type;
-  this.gender = gender;
-  this.size = size;
-  this.color = color;
-  this.description = description;
-  this.image_url = image_url;
-  this.status = status;
-  this.ong_email = ong_email;
-  this.lat = lat;
-  this.lon = lon;
-  this.created_by = created_by;
+export function PetJSON(name,type,gender,raca,size,pelo,colors,description,image_url,status,ong_email,lat,lon,created_by,owner_id) {
+  let json = {
+    name: name,
+    type: type,
+    gender: gender,
+    raca: raca,
+    size: size,
+    pelo: pelo,
+    colors: colors,
+    description: description,
+    image_url: image_url,
+    status: status,
+    ong_email: ong_email,
+    lat: lat,
+    lon: lon,
+    created_by: created_by,
+    owner_id: owner_id
+  }
+  return json
 }
