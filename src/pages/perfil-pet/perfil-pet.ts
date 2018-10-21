@@ -5,6 +5,8 @@ import { Push } from "@ionic-native/push"
 import { UsersProvider } from "../../providers/users/users";
 import { UserResponse } from "../../providers/interfaces/UserResponse";
 import { PerfilUserPage } from "../perfil-user/perfil-user";
+import { HomePage } from "../home/home";
+import { PetsProvider } from "../../providers/pets/pets";
 
 @Component({
   selector: 'page-perfil-pet',
@@ -23,7 +25,8 @@ export class PerfilPetPage implements OnInit {
     public navParams: NavParams,
     public push: Push,
     public alertCtrl: AlertController,
-    public users: UsersProvider
+    public users: UsersProvider,
+    public pets: PetsProvider
   ) {
     this.pet = navParams.get('pet')
   }
@@ -48,17 +51,19 @@ export class PerfilPetPage implements OnInit {
 
   foundIt() {
     let alertMessage = this.alertCtrl.create({
-      title: "Você encontrou esse animal?",
-      message: "Iremos notificar o dono para que ele entre em contato.",
-      inputs: [{type: 'checkbox',checked: true,label:"Enviar minha localização atual"}],
+      title: "Você encontrou " + this.pet.name + "?",
+      message: "Iremos notificar o dono para que ele entre em contato!",
+      // TODO: enviar localização também
+      // inputs: [{type: 'checkbox',checked: true,label:"Enviar minha localização atual"}],
       buttons: [
         {
           text: "Sim", handler: (data: any) => {
             if (data) {
               console.log('checked')
             }
+            this.pets.notificateOwner(this.pet.id)
             alert("Notificação enviada! Muito obrigado!")
-            this.navCtrl.pop()
+            this.navCtrl.setRoot(HomePage)
           }
         }, "Não"
       ]

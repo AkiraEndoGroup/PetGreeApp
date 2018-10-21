@@ -1,10 +1,10 @@
 import { Component } from "@angular/core";
-import { NavController, NavParams, Platform } from "ionic-angular";
+import { NavController, NavParams, Platform, AlertController, LoadingController } from "ionic-angular";
 import { PetsProvider } from "../../providers/pets/pets";
 import { PetResponse } from "../../providers/interfaces/PetResponse";
 import { Geolocation, Geoposition } from "@ionic-native/geolocation"
 import { NativeGeocoder, NativeGeocoderForwardResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder';
-import { timestamp } from "rxjs/operator/timestamp";
+import { ResultadosPage } from "../resultados/resultados";
 
 @Component({
   selector: 'page-search',
@@ -39,29 +39,30 @@ export class SearchPage {
   fur: string
   description: string
 
+  loading
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    public alertCtrl: AlertController,
+    public loadingCtrl: LoadingController,
     public pets: PetsProvider,
     public geo: Geolocation,
     private nativeGeocoder: NativeGeocoder,
     public platform: Platform
   ) {
     this.filter = navParams.get('filter')
+    this.storedLocation = navParams.get('location')
     this.focused = ' '
     this.is = { white: false, black: false, brown: false, orange: false, beige: false, green: false }
     this.locPressed = false
     this.locRangeText = "Nesse ponto"
     this.locationRange = 1
-    geo.getCurrentPosition({ enableHighAccuracy: true })
-      .then(resp => {
-        this.locationAvailable = true
-        console.log(resp)
-        this.storedLocation = resp;
-      }, error => {
-        console.log(error)
-        this.locationAvailable = false
-      })
+    if (this.storedLocation) {
+      this.locationAvailable = true
+    } else {
+      this.locationAvailable = false
+    }
   }
 
   ionViewDidLoad() {
@@ -81,20 +82,34 @@ export class SearchPage {
         this.locPressed = false
       }
     } else {
-      this.geo.getCurrentPosition({ enableHighAccuracy: true })
-      .then(resp => {
-        this.locationAvailable = true
-        console.log(resp)
-        this.storedLocation = resp;
-      }, error => {
-        console.log(error)
-        this.locationAvailable = false
+      this.loading = this.loadingCtrl.create({
+        content: "Determinando localização",
+        spinner: 'dots'
       })
+      this.loading.present()
+      this.geo.getCurrentPosition({ enableHighAccuracy: true })
+        .then(resp => {
+          this.locationAvailable = true
+          this.storedLocation = resp
+          this.location = resp
+          this.locPressed = true
+          this.loading.dismiss()
+        }, error => {
+          console.log(error)
+          this.loading.dismiss()
+          let alert = this.alertCtrl.create({
+            title: 'Erro de localização',
+            message: 'Não foi possível determinar sua localização.',
+            buttons: ['OK :/']
+          });
+          alert.present();
+          this.locationAvailable = false
+        })
     }
   }
 
   updateRangeText() {
-    this.locRangeText = ["Nesse ponto", "Nesse bairro", "Nessa cidade", "Fora da cidade"][this.locationRange-1]
+    this.locRangeText = ["Nesse ponto", "Nesse bairro", "Nessa cidade", "Fora da cidade"][this.locationRange - 1]
   }
 
   geocode() {
@@ -106,13 +121,13 @@ export class SearchPage {
           useLocale: true
         }
         this.nativeGeocoder.forwardGeocode(this.locationText, options)
-        .then((result: NativeGeocoderForwardResult[]) => {
-          console.log(result)
-        })
+          .then((result: NativeGeocoderForwardResult[]) => {
+            console.log(result)
+          })
       } else {
         console.log('no cordova, mocking location')
         this.location = {}
-        let coords = {latitude: -1, longitude: -1} 
+        let coords = { latitude: -1, longitude: -1 }
         this.location.coords = coords
       }
     }
@@ -153,15 +168,19 @@ export class SearchPage {
       }
       case 'Gato': {
         this.raceList = []
-        this.raceList.push({ name: 'Vira-latas', img: "" })
-        this.raceList.push({ name: 'Siamês', img: "" })
-        this.raceList.push({ name: 'Angorá', img: "" })
-        this.raceList.push({ name: 'British Shorthair', img: "" })
+        this.raceList.push({ name: 'Vira-latas', img: "assets/imgs/races/gato-vira-latas.png" })
+        this.raceList.push({ name: 'Siamês', img: "assets/imgs/races/siames.png" })
+        this.raceList.push({ name: 'Angorá', img: "assets/imgs/races/angora.png" })
+        this.raceList.push({ name: 'British Shorthair', img: "assets/imgs/races/british-shorthair.png" })
         this.raceList.push({ name: 'Não sei', img: "assets/imgs/search/other.png" })
         break
       }
       case 'Roedor': {
         this.raceList = []
+        this.raceList.push({ name: 'Coelho', img: "assets/imgs/races/coelho.png" })
+        this.raceList.push({ name: 'Hamster', img: "assets/imgs/races/hamster.png" })
+        this.raceList.push({ name: 'Rato', img: "assets/imgs/races/rato.png" })
+        this.raceList.push({ name: 'Chinchila', img: "assets/imgs/races/chinchila.png" })
         this.raceList.push({ name: 'Não sei', img: "assets/imgs/search/other.png" })
         break
       }
@@ -172,11 +191,22 @@ export class SearchPage {
       }
       case 'Réptil': {
         this.raceList = []
+        this.raceList.push({ name: 'Jabuti', img: "assets/imgs/races/jabuti.png" })
+        this.raceList.push({ name: 'Tartaruga', img: "assets/imgs/races/tartaruga.png" })
+        this.raceList.push({ name: 'Cobra', img: "assets/imgs/races/cobra.png" })
+        this.raceList.push({ name: 'Iguana', img: "assets/imgs/races/iguana.png" })
+        this.raceList.push({ name: 'Teiú', img: "assets/imgs/races/teiu.png" })
+        this.raceList.push({ name: 'Dragão de Komodo', img: "assets/imgs/races/dragao-komodo.png" })
+        this.raceList.push({ name: 'Gecko', img: "assets/imgs/races/gecko.png" })
         this.raceList.push({ name: 'Não sei', img: "assets/imgs/search/other.png" })
         break
       }
       case 'Pássaro': {
         this.raceList = []
+        this.raceList.push({ name: 'Calopsita', img: "assets/imgs/races/calopsita.png" })
+        this.raceList.push({ name: 'Papagaio', img: "assets/imgs/races/papagaio.png" })
+        this.raceList.push({ name: 'Cacatua', img: "assets/imgs/races/cacatua.png" })
+        this.raceList.push({ name: 'Periquito', img: "assets/imgs/races/periquito.png" })
         this.raceList.push({ name: 'Não sei', img: "assets/imgs/search/other.png" })
         break
       } default: {
@@ -188,7 +218,6 @@ export class SearchPage {
   }
 
   setRace(race) {
-    console.log(race);
     this.race = race
     if (race == "Não sei") {
       this.race = undefined
@@ -208,11 +237,11 @@ export class SearchPage {
   }
 
   setSize(size) {
-    this.size = size
-  }
-
-  doIt() {
-    console.log(this.description)
+    if (size == this.size) {
+      this.size = undefined
+    } else {
+      this.size = size
+    }
   }
 
   setFur(fur) {
@@ -224,22 +253,36 @@ export class SearchPage {
   }
 
   saveFilters() {
-    let filter = {
-      status: this.filter,
-      type: this.ptType(),
-      gender: this.ptGender(),
-      race: this.race,
-      colors: this.is ? this.parseColors() : null,
-      size: this.size ? this.size.replace(" ", "") : undefined,
-      fur: this.fur,
-      description: this.description,
-      location: this.location
+    if (!this.filter) {
+      let alert = this.alertCtrl.create({
+        message: 'Precisamos saber o que você está procurando!',
+        buttons: ['OK']
+      })
+      alert.present()
+    } else if (!this.type) {
+      let alert = this.alertCtrl.create({
+        message: 'Precisamos saber que tipo de animal você está procurando!',
+        buttons: ['OK']
+      })
+      alert.present()
+    } else {
+      let filter = {
+        status: this.filter,
+        type: this.ptType(),
+        gender: this.ptGender(),
+        race: this.race,
+        colors: this.is ? this.parseColors() : null,
+        size: this.size ? this.size.replace(" ", "") : undefined,
+        fur: this.fur,
+        description: this.description,
+        location: this.location
+      }
+      this.pets.getPetsByFilter(filter).then((res: PetResponse[]) => {
+        if (res) {
+          this.goToResults(res,filter)
+        }
+      }).catch(err => console.log(err))
     }
-    var results: PetResponse[];
-    this.pets.getPetsByFilter(filter).then((res: PetResponse[]) => {
-      results = res
-      console.log(results)
-    })
   }
 
   ptType() {
@@ -289,6 +332,14 @@ export class SearchPage {
       return arr
     }
     return null
+  }
+
+  goToResults(results,filter) {
+    this.navCtrl.push(ResultadosPage, {
+      results: results,
+      location: this.location,
+      filter: filter
+    })
   }
 
   return() {

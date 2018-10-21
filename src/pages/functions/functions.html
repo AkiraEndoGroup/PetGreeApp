@@ -10,45 +10,45 @@
 <ion-content>
   <div align=center>
     <div class="functions-grid">
-      <div class="perdi-title">
+      <div (tap)="searchEncontrados()" class="perdi-title">
         <div>Estou procurando</div>
       </div>
-      <div class="perdi"><img src="assets/imgs/searching.png" /></div>
+      <div (tap)="searchEncontrados()" class="perdi"><img src="assets/imgs/searching.png" /></div>
 
-      <div class="encontrei-title">
+      <div (tap)="searchPerdidos()" class="encontrei-title">
         <div>Encontrei</div>
       </div>
-      <div class="encontrei"><img src="assets/imgs/scared.png" /></div>
+      <div (tap)="searchPerdidos()" class="encontrei"><img src="assets/imgs/scared.png" /></div>
 
-      <div class="precisa-ajuda-title">
+      <div (tap)="cadastrarMachucado()" class="precisa-ajuda-title">
         <div>Precisa de ajuda</div>
       </div>
-      <div class="precisa-ajuda"><img src="assets/imgs/injured.png" /></div>
+      <div (tap)="cadastrarMachucado()" class="precisa-ajuda"><img src="assets/imgs/injured.png" /></div>
 
-      <div class="posso-ajudar-title">
+      <div (tap)="searchMachucado()" class="posso-ajudar-title">
         <div>Posso ajudar</div>
       </div>
-      <div class="posso-ajudar"><img src="assets/imgs/hero.png" /></div>
+      <div (tap)="searchMachucado()" class="posso-ajudar"><img src="assets/imgs/hero.png" /></div>
 
-      <div class="precisa-abrigo-title">
+      <div (tap)="cadastrarPrecisaAbrigo()" class="precisa-abrigo-title">
         <div>Precisa de abrigo</div>
       </div>
-      <div class="precisa-abrigo"><img src="assets/imgs/house.png" /></div>
+      <div (tap)="cadastrarPrecisaAbrigo()" class="precisa-abrigo"><img src="assets/imgs/house.png" /></div>
 
-      <div class="posso-abrigar-title">
+      <div (tap)="searchPrecisaAbrigo()" class="posso-abrigar-title">
         <div>Posso abrigar</div>
       </div>
-      <div class="posso-abrigar"><img src="assets/imgs/adopt.png" /></div>
+      <div (tap)="searchPrecisaAbrigo()" class="posso-abrigar"><img src="assets/imgs/adopt.png" /></div>
 
-      <div class="quer-cruzar-title">
+      <div (tap)="searchQuerCruzar()" class="quer-cruzar-title">
         <div>Quer cruzar</div>
       </div>
-      <div class="quer-cruzar"><img src="assets/imgs/dog-love.png" /></div>
+      <div (tap)="searchQuerCruzar()" class="quer-cruzar"><img src="assets/imgs/dog-love.png" /></div>
 
-      <div class="loja-title">
+      <div (tap)="goShop()" class="loja-title">
         <div>Loja</div>
       </div>
-      <div class="loja"><img src="assets/imgs/shop.png" /></div>
+      <div (tap)="goShop()" class="loja"><img src="assets/imgs/shop.png" /></div>
     </div>
   </div>
 </ion-content>

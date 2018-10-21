@@ -43,6 +43,8 @@ import { PerfilUserPage } from '../pages/perfil-user/perfil-user';
 import { PerfilUserEditPage } from '../pages/perfil-user/perfil-user-edit/perfil-user-edit';
 import { SearchPage } from '../pages/search/search';
 import { NativeGeocoder } from '@ionic-native/native-geocoder'
+import { ResultadosPage } from '../pages/resultados/resultados';
+import { CadastroPage } from '../pages/cadastro/cadastro';
 
 const firebaseConfig = {
   apiKey: "AIzaSyA3NSMbfS7Gwcd0S2LZQwnfvUSgazwCvYc",
@@ -66,6 +68,8 @@ const firebaseConfig = {
     PerfilUserPage,
     PerfilUserEditPage,
     SearchPage,
+    CadastroPage,
+    ResultadosPage,
     LoginComponent
   ],
   imports: [
@@ -92,6 +96,8 @@ const firebaseConfig = {
     PerfilUserPage,
     PerfilUserEditPage,
     SearchPage,
+    CadastroPage,
+    ResultadosPage,
     LoginComponent
   ],
   providers: [

@@ -1,0 +1,41 @@
+:root {
+  --clear: #c0b0e4;
+}
+
+.results-grid {
+  display: grid;
+  height: 30vh;
+  max-width: 600px;
+  grid-template-rows: 50% 50%;
+  grid-row-gap: 1.5vh;
+  margin-bottom: 5%;
+}
+
+.results-element {
+  margin-left: 10%;
+  margin-right: 10%;
+  border-radius: 20px;
+  background-color: var(--clear);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+
+  img {
+    flex: 1;
+    height: 100%;
+    border-radius: 20px;
+    align-self: flex-start;
+  }
+
+  .res-btn-container {
+    flex: 2;
+    align-self: center;
+    align-content: center;
+    align-items: center;
+
+    h1 {
+      position: relative;
+    }
+  }
+}

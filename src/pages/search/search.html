@@ -47,7 +47,7 @@
             <img *ngIf="locPressed" (tap)="togglePressed()" src="assets/imgs/location-2-pressed.png" />
           </div>
           <div *ngIf="!locationAvailable" class="location-pin">
-            <img *ngIf="!locPressed" src="assets/imgs/location-gray.png" />
+            <img *ngIf="!locPressed" (tap)="togglePressed()" src="assets/imgs/location-gray.png" />
           </div>
 
           <div class="location-box" *ngIf="!locPressed" >

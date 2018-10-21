@@ -2,6 +2,8 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { PetResponse } from "../interfaces/PetResponse"
+import { UsersProvider } from "../users/users";
+import { UserResponse } from "../interfaces/UserResponse";
 
 @Injectable()
 export class PetsProvider {
@@ -12,7 +14,8 @@ export class PetsProvider {
 
   constructor(
     private http: HttpClient,
-    public afAuth: AngularFireAuth
+    public afAuth: AngularFireAuth,
+    public users: UsersProvider
   ) { }
 
   getAllPets() {
@@ -21,7 +24,12 @@ export class PetsProvider {
       this.http.get(this.petsUrl)
         .subscribe((data) => {
           if (data) {
-            Array.prototype.forEach.call(data, element => pets.push(element))
+            Array.prototype.forEach.call(data, element => {
+              if (element.size.description.toLowerCase() == 'muitogrande') {
+                element.size.description = "Muito grande"
+              }
+              pets.push(element)
+            })
             resolve(pets)
           }
         })
@@ -36,8 +44,12 @@ export class PetsProvider {
       this.http.get(this.petsUrl + filtersQueryParam)
         .subscribe((data) => {
           if (data) {
-            Array.prototype.forEach.call(data, element => pets.push(element))
-            console.log(pets)
+            Array.prototype.forEach.call(data, element => {
+              if (element.size && element.size.description.toLowerCase() == 'muitogrande') {
+                element.size.description = "Muito grande"
+              }
+              pets.push(element)
+            })
             resolve(pets)
           }
         })
@@ -62,8 +74,8 @@ export class PetsProvider {
 
   orderByDistanceToMe(pets) {
     console.log('ordering');
-    
-    return pets.sort((a,b) => {
+
+    return pets.sort((a, b) => {
       if (a.distanceToMe && b.distanceToMe) {
         if (a.distanceToMe > b.distanceToMe)
           return 1
@@ -73,7 +85,40 @@ export class PetsProvider {
           return 0
       } else {
         return 0
-      } 
+      }
+    })
+  }
+
+  getDistances(location, pets) {
+    if (!location)
+      return pets
+    else {
+      pets.forEach((pet) => {
+        if (pet.lat && pet.lon) {
+          var R = 6371; // Radius of the earth in km
+          var dLat = (pet.lat - location.latitude) * Math.PI / 180;
+          var dLon = (pet.lon - location.longitude) * Math.PI / 180;
+          var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(location.latitude * Math.PI / 180) * Math.cos(pet.lat * Math.PI / 180) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+          var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+          var d = R * c; // Distance in km
+          pet.distanceToMe = Math.round(d * 100) / 100;          
+        }
+      });
+      return pets
+    }
+  }
+
+  notificateOwner(petId) {
+    this.users.getCurrentUser().then((user: UserResponse) => {
+      if (user) {
+        console.log(user)
+        this.http.post(this.petsUrl + '/' + petId + '/notification',user)
+        .subscribe(res => {
+          console.log(res)
+        })
+      }
     })
   }
 

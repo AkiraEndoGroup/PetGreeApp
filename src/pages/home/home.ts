@@ -10,7 +10,7 @@ import { SearchPage } from '../search/search';
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'newHome.html'
+  templateUrl: 'home.html'
 })
 export class HomePage {
   @ViewChild(Slides) slides: Slides
@@ -37,63 +37,42 @@ export class HomePage {
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController
   ) {
-      this.pets.getAllPets().then((res: PetResponse[]) => {
+    this.pets.getAllPets().then((res: PetResponse[]) => {
       this.slidesList = Array.from(res)
       console.log(this.slidesList)
-      this.getDistances()
-      this.slidesList = pets.orderByDistanceToMe(this.slidesList)
-      console.log(this.slidesList)
-    })
 
-    this.loading = loadingCtrl.create({
-      content: "Determinando localização",
-      spinner: 'dots'
-    })
+      this.loading = loadingCtrl.create({
+        content: "Determinando localização",
+        spinner: 'dots'
+      })
 
-    console.log('running geolocation api');
-    if (!this.hasLocation) {
-      this.geo.getCurrentPosition({
-        enableHighAccuracy: true,
-        timeout: 5000
-      }).then((resp) => {
-        console.log('location found!');
-        this.location = resp.coords;
-        this.hasLocation = true;
-        this.loading.dismiss();
-      }).catch((error) => {
-        this.loading.dismiss();
-        let alert = alertCtrl.create({
-          title: 'Erro de localização',
-          message: 'Não foi possível determinar sua localização.',
-          buttons: ['OK :/']
+      console.log('running geolocation api');
+      if (!this.hasLocation) {
+        this.geo.getCurrentPosition({
+          enableHighAccuracy: true,
+          timeout: 5000
+        }).then((resp) => {
+          console.log('location found!');
+          this.location = resp.coords;
+          this.hasLocation = true;
+
+          this.slidesList = pets.getDistances(this.location, this.slidesList)
+          this.slidesList = pets.orderByDistanceToMe(this.slidesList)
+          console.log(this.slidesList)
+
+          this.loading.dismiss();
+        }).catch((error) => {
+          this.loading.dismiss();
+          let alert = alertCtrl.create({
+            title: 'Erro de localização',
+            message: 'Não foi possível determinar sua localização.',
+            buttons: ['OK :/']
+          });
+          alert.present();
+          console.log('geolocation error. ' + error.message);
         });
-        alert.present();
-        console.log('geolocation error. ' + error.message);
-      });
-    }
-  }
-
-  getDistances() {
-    if (this.hasLocation) {
-      this.slidesList.forEach((pet: PetResponse) => {
-        if (pet.lat && pet.lon) {
-          if (this.location != null) {
-            var R = 6371; // Radius of the earth in km
-            var dLat = (pet.lat - this.location.latitude) * Math.PI / 180;
-            var dLon = (pet.lon - this.location.longitude) * Math.PI / 180;
-            var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-              Math.cos(this.location.latitude * Math.PI / 180) * Math.cos(pet.lat * Math.PI / 180) *
-              Math.sin(dLon / 2) * Math.sin(dLon / 2);
-            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-            var d = R * c; // Distance in km
-            pet.distanceToMe = Math.round(d * 100) / 100;
-          }
-        }
-        if (pet.size.description.toLowerCase() == 'muitogrande') {
-          pet.size.description = "Muito grande"
-        }
-      });
-    }
+      }
+    })
   }
 
   ionViewDidEnter() {
@@ -124,6 +103,9 @@ export class HomePage {
   }
 
   search(status) {
-    this.navCtrl.push(SearchPage, { filter: status })
+    this.navCtrl.push(SearchPage, {
+      filter: status,
+      location: this.location
+    })
   }
 }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 import { NavController, NavParams } from 'ionic-angular';
-import { UserResponse, formatAddress } from '../../../providers/interfaces/UserResponse';
+import { UserResponse } from '../../../providers/interfaces/UserResponse';
 import { UsersProvider } from '../../../providers/users/users'
 import { NgForm, FormBuilder, FormGroup } from '@angular/forms';
 
@@ -32,7 +32,7 @@ export class PerfilUserEditPage {
     } else {
       this.telefones = this.user.telefones
       this.endereco = this.user.endereco
-      this.myForm = fb.group({
+      this.myForm = this.fb.group({
         name: this.user.avatar.name,
         bio: this.user.avatar.bio,
         idade: this.user.avatar.idade

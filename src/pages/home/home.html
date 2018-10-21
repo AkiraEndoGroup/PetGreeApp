@@ -1,52 +1,50 @@
-<ion-header no-border>
-  <ion-navbar>
-    <button ion-button icon-only menuToggle>
-      <ion-icon name="person" style="color: white;"></ion-icon>
+<ion-header>
+  <ion-navbar hideBackButton text-center>
+    <button ion-button style="display: block !important;" menuToggle>
+      <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>{{titulo}}</ion-title>
+    <ion-title>Petgree</ion-title>
+    <!-- <ion-input placeholder="Text Input" class="navbar-input"></ion-input> -->
   </ion-navbar>
 </ion-header>
 
-<ion-content class="masters">
+<ion-content>
 
-  <ion-grid style="width:100vmin; margin-block-start: 3vmin; margin-block-end: 3vmin;">
-    <ion-row style="height: 25vh;margin: 20px;">
-      <ion-col col-4>
-        <div class="botao-perdidos" #botaoPerdidos (click)="animarBotao('perdidos')">
-          <div class="icon search"></div>
+  <!-- SLIDER PARA MOSTRAR OS PETS -->
+  <div align=center>
+    <ion-slides padding pager #slides class="home-slide-container" *ngIf="slidesList && slidesList.length" autoplay="3000"
+      paginationType="bullets" spaceBetween="200" speed="500" effect="slide">
+      <ion-slide *ngFor="let slide of slidesList" (tap)="goToPet()">
+        <div>
+          <img [src]="slide.image_url" class="home-slide-img" />
+          <div class="status-box">Status: {{slide.status.description}}</div>
+          <div *ngIf="slide.distanceToMe" class="distance-box">Distância: {{slide.distanceToMe}} km</div>
         </div>
-      </ion-col>
-      <ion-col col-8>
-        <div class="title-perdidos">Pets Perdidos</div>
-      </ion-col>
-    </ion-row>
-    <ion-row style="height: 25vh;margin: 20px;">
-      <ion-col col-8>
-        <div class="title-adocao">Adote um Pet!</div>
-      </ion-col>
-      <ion-col col-4>
-        <div class="botao-adocao" #botaoAdocao (click)="animarBotao('adocao')">
-          <div class="icon heart">
-          </div>
-        </div>
-      </ion-col>
-    </ion-row>
-    <ion-row style="height: 25vh;margin: 20px;">
-      <ion-col col-4>
-        <div class="botao-registro" #botaoRegistro (click)="animarBotao('registro')">
-          <div class="icon paw"></div>
-        </div>
-      </ion-col>
-      <ion-col col-8>
-        <div class="title-registro">Registre seu pet!</div>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+        <h2 class="slide-title" no-margin [innerHTML]="slide.name"></h2>
+        <br />
+      </ion-slide>
+    </ion-slides>
+  </div>
+
+  <div align=center>
+    <div class="home-grid">
+      <div class="item-a1">
+        <div>Estou procurando</div>
+      </div>
+      <div (tap)="search('encontrado')" class="item-a2"><img src="assets/imgs/searching.png" /></div>
+      <div class="item-a3"></div>
+      <div class="item-b1">
+        <div>Encontrei</div>
+      </div>
+      <div (tap)="search('perdido')" class="item-b2"><img src="assets/imgs/scared.png" /></div>
+      <div class="item-b3"></div>
+    </div>
+  </div>
 
 </ion-content>
 
-<ion-footer no-border>
-  <ion-toolbar>
-    <ion-title>Feito por Yago Dórea</ion-title>
-  </ion-toolbar>
-</ion-footer>
+<ion-fab bottom center padding="10dp">
+  <button ion-fab (tap)="more()" color="secondary">
+    <ion-icon name="add" size="large" color="primary"></ion-icon>
+  </button>
+</ion-fab>
