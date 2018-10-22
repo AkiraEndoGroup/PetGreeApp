@@ -15,11 +15,13 @@ import { HomePage } from "../home/home";
 })
 export class CadastroPage {
 
-  pet = PetJSON(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null)
+  pet = PetJSON(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null)
 
   filter
   location
   loading
+  picTaken: boolean
+  imageName: string
 
   camOptions: CameraOptions = {
     destinationType: this.camera.DestinationType.DATA_URL,
@@ -46,6 +48,7 @@ export class CadastroPage {
     this.filter = navParams.get('filter')
     this.location = navParams.get('location')
     this.parseColors()
+    this.picTaken = false;
   }
 
   parseColors() {
@@ -65,6 +68,7 @@ export class CadastroPage {
   addPhoto() {
     if (this.platform.is('cordova')) {
       let alert = this.alertCtrl.create({
+        title: "Adicionar foto",
         buttons: [
           {
             text: "Camera", handler: () => {
@@ -91,7 +95,7 @@ export class CadastroPage {
       })
       alert.present()
     } else {
-      alert("É preciso uma plataforma para adicionar imagens!")
+      alert("É preciso uma plataforma para adicionar fotos!")
     }
   }
 
@@ -103,18 +107,30 @@ export class CadastroPage {
       })
       this.loading.present()
 
-      let imageName = '' + this.afAuth.auth.currentUser.email + Date.now().valueOf();
-      let storageRef = this.storage.ref('images/' + imageName + '.jpg')
+      let storageRef = this.storage.ref('images/' + this.imageName + '.jpg')
 
-      let task = storageRef.put(this.imageData)
+      if (this.picTaken) {
+        // If replacing pic, delete previous one from Firebase, 
+        // or it will be a non-referenced resource
+        storageRef.delete()
+      } 
+      this.imageName = '' + this.afAuth.auth.currentUser.email + Date.now().valueOf();
+
+      storageRef = this.storage.ref('images/' + this.imageName + '.jpg')
+
+
+      storageRef.put(this.imageData)
         .then(snapshot => {
           this.loading.dismiss()
           snapshot.ref.getDownloadURL().then(url => {
+            this.picTaken = true
             this.imageUrl = url;
           })
         })
         .catch(err => {
           this.loading.dismiss()
+          let alert = this.alertCtrl.create({message:"Erro: " + err})
+          alert.present()
           console.log(err)
         })
     }
@@ -191,6 +207,7 @@ export class CadastroPage {
           title: "Erro",
           message: err
         })
+        alert.present()
       })
 
   }

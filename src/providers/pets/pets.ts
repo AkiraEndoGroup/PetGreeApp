@@ -9,8 +9,8 @@ import { Observable } from "rxjs";
 @Injectable()
 export class PetsProvider {
 
-  petsUrl = 'http://ec2-18-228-44-159.sa-east-1.compute.amazonaws.com:4242/pets';
-  // petsUrl = 'http://localhost:4242/pets'
+  // petsUrl = 'http://ec2-18-228-44-159.sa-east-1.compute.amazonaws.com:4242/pets';
+  petsUrl = 'http://localhost:4242/pets'
 
   constructor(
     private http: HttpClient,
@@ -22,14 +22,14 @@ export class PetsProvider {
     return this.getPetsByFilter(this.toQueryParam({}));
   }
 
-  getPetsByFilter(filter) {
+  async getPetsByFilter(filter) {
     let pets: PetResponse[] = []
     let filtersQueryParam = this.toQueryParam(filter)
 
     return new Promise(resolve => {
       this.http.get(this.petsUrl + filtersQueryParam)
         .timeout(5000)
-        .catch( (caught) => {
+        .catch((caught) => {
           return Observable.throw(caught)
         })
         .subscribe((data) => {
@@ -123,13 +123,33 @@ export class PetsProvider {
     })
   }
 
-  postPet(pet) {
+  async getPetById(id) {
+    return new Promise(resolve => {
+      this.http.get(this.petsUrl + "/" + id)
+        .subscribe((data) => {
+          console.log(data)
+          resolve(data)
+        }, err => console.log(err))
+    }).catch(err => console.log(err))
+  }
+
+  async postPet(pet) {
     return new Promise(resolve => {
       this.http.post(this.petsUrl, pet)
-      .subscribe((data) => {
-        console.log(data)
-        resolve(data)
-      }, err => console.log(err))
+        .subscribe((data) => {
+          console.log(data)
+          resolve(data)
+        }, err => console.log(err))
+    }).catch(err => console.log(err))
+  }
+
+  async putPet(petModel, id) {
+    return new Promise(resolve => {
+      this.http.put(this.petsUrl + '/' + id, petModel)
+        .subscribe((data) => {
+          console.log(data)
+          resolve(data)
+        }, err => console.log(err))
     }).catch(err => console.log(err))
   }
 

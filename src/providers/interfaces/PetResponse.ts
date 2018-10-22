@@ -27,7 +27,7 @@ export interface PetColor {
   description: string
 }
 
-export function PetJSON(name,type,gender,raca,size,pelo,colors,description,image_url,status,ong_email,lat,lon,created_by,owner_id) {
+export function PetJSON(name,type,gender,raca,size,pelo,colors,description,image_url,fotos,status,ong_email,lat,lon,created_by,owner_id) {
   let json = {
     name: name,
     type: type,
@@ -38,6 +38,7 @@ export function PetJSON(name,type,gender,raca,size,pelo,colors,description,image
     colors: colors,
     description: description,
     image_url: image_url,
+    fotos: fotos,
     status: status,
     ong_email: ong_email,
     lat: lat,

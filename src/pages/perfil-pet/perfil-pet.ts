@@ -7,6 +7,7 @@ import { UserResponse } from "../../providers/interfaces/UserResponse";
 import { PerfilUserPage } from "../perfil-user/perfil-user";
 import { HomePage } from "../home/home";
 import { PetsProvider } from "../../providers/pets/pets";
+import { PerfilPetEditPage } from "./perfil-pet-edit/perfil-pet-edit";
 
 @Component({
   selector: 'page-perfil-pet',
@@ -16,6 +17,7 @@ export class PerfilPetPage implements OnInit {
 
   pet: PetResponse
   fotos = []
+  isCreator: boolean = false
   isOwner: boolean = false
   hasOwner: boolean = false
   attribs = []
@@ -31,14 +33,32 @@ export class PerfilPetPage implements OnInit {
     this.pet = navParams.get('pet')
   }
 
+  ionViewWillEnter() {
+    console.log("ionViewWillEnter")
+    let petId = this.pet.id
+    if (petId) {
+      this.pets.getPetById(petId)
+      .then((pet: PetResponse) => {
+        this.pet = pet
+        this.getAttribs()
+      }, err => console.log(err))
+      .catch(err => console.log(err))
+    }
+  }
+
   ngOnInit() {
     if (this.pet == null) {
       this.return()
     } else {
       this.users.getCurrentUser()
       .then((value:UserResponse) => {
+        console.log(this.pet.owner_id);
+        
         if (value.id == this.pet.owner_id) {
-          this.isOwner = true;
+          this.isOwner = true
+        }
+        if (value.email == this.pet.created_by) {
+          this.isCreator = true
         }
       })
       this.getAttribs()
@@ -79,6 +99,7 @@ export class PerfilPetPage implements OnInit {
   }
 
   getAttribs() {
+    this.attribs = []
     if (this.pet.id) {
       this.attribs.push({
         key: "PetgreeID",
@@ -135,10 +156,13 @@ export class PerfilPetPage implements OnInit {
     }
     if (this.pet.owner_id) {
       this.hasOwner = true
-      this.attribs.push({
-        key: "Dono",
-        value: "Inserir link para " + this.pet.owner_id
-      })
+      this.users.getUserById(this.pet.owner_id)
+      .then((user: UserResponse) => {
+        this.attribs.push({
+          key: "Dono/a",
+          value: user.avatar.name
+        })
+      }).catch(err => console.log(err))
     }
     if (this.pet.description) {
       this.attribs.push({
@@ -150,6 +174,12 @@ export class PerfilPetPage implements OnInit {
 
   firstUp(word) {
     return word[0].toUpperCase() + word.substring(1).toLowerCase()
+  }
+
+  editPet() {
+    this.navCtrl.push(PerfilPetEditPage,{
+      pet: this.pet
+    })
   }
 
   alert(message) {

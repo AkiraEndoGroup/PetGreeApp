@@ -26,7 +26,10 @@
           <img *ngIf="hasOwner" (tap)="goToOwner()" src="assets/imgs/avatar.png" />
         </ion-col>
         <ion-col col-4 class="button-container">
-          <img (tap)="foundIt()" src="assets/imgs/warning.png" />
+          <img *ngIf="
+          (this.pet.status.description == 'PERDIDO' || 
+          this.pet.status.description == 'ENCONTRADO')" 
+          (tap)="foundIt()" src="assets/imgs/warning.png" />
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -56,8 +59,8 @@
   </button>
 </ion-fab>
 
-<ion-fab *ngIf="isOwner" bottom right padding="10dp">
-  <button ion-fab (tap)="alert('tap edit')" color="primary">
+<ion-fab *ngIf="(isCreator || isOwner)" bottom right padding="10dp">
+  <button ion-fab (tap)="editPet()" color="primary">
     <ion-icon name="create" size="large" color="secondary"></ion-icon>
   </button>
 </ion-fab>

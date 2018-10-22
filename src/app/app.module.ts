@@ -14,7 +14,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StatusBar } from '@ionic-native/status-bar';
 import { AnimationService } from 'css-animator';
-// import { ModalShowImage } from '../modals/modal-show-image';
+import { ModalShowImage } from '../modals/modal-show-image';
 import { PageTutorial } from '../pages/tutorial/tutorial'
 
 // Firebase modules
@@ -44,6 +44,7 @@ import { SearchPage } from '../pages/search/search';
 import { NativeGeocoder } from '@ionic-native/native-geocoder'
 import { ResultadosPage } from '../pages/resultados/resultados';
 import { CadastroPage } from '../pages/cadastro/cadastro';
+import { PerfilPetEditPage } from '../pages/perfil-pet/perfil-pet-edit/perfil-pet-edit';
 
 const firebaseConfig = {
   apiKey: "AIzaSyA3NSMbfS7Gwcd0S2LZQwnfvUSgazwCvYc",
@@ -58,12 +59,13 @@ const firebaseConfig = {
   declarations: [
     MyApp,
     HomePage,
-    // ModalShowImage,
+    ModalShowImage,
     PageTutorial,
     SplashPage,
     FunctionsPage,
     SuportePage,
     PerfilPetPage,
+    PerfilPetEditPage,
     PerfilUserPage,
     PerfilUserEditPage,
     SearchPage,
@@ -86,12 +88,13 @@ const firebaseConfig = {
   entryComponents: [
     MyApp,
     HomePage,
-    // ModalShowImage,
+    ModalShowImage,
     PageTutorial,
     SplashPage,
     FunctionsPage,
     SuportePage,
     PerfilPetPage,
+    PerfilPetEditPage,
     PerfilUserPage,
     PerfilUserEditPage,
     SearchPage,

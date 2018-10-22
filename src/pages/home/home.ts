@@ -1,7 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { PetsProvider } from '../../providers/pets/pets';
 import { Slides, NavController, MenuController, Loading, LoadingController, AlertController } from 'ionic-angular';
-// import { UsersProvider } from '../../providers/users/users';
 import { FunctionsPage } from '../functions/functions';
 import { PerfilPetPage } from '../perfil-pet/perfil-pet';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -29,7 +28,6 @@ export class HomePage {
 
   constructor(
     private pets: PetsProvider,
-    // private users: UsersProvider,
     public navCtrl: NavController,
     public menuCtrl: MenuController,
     public geo: Geolocation,
@@ -80,15 +78,12 @@ export class HomePage {
   }
 
   ionViewDidEnter() {
-    this.loading = this.loadingCtrl.create({
-      content: "Ordenando...",
-      spinner: 'dots'
-    })
-    this.loading.present()
+    this.slides.autoplayDisableOnInteraction = false;
+  }
+
+  ionViewDidLoad() {
     this.slidesList = this.pets.getDistances(this.location, this.slidesList)
     this.slidesList = this.pets.orderByDistanceToMe(this.slidesList)
-    this.loading.dismiss()
-    this.slides.autoplayDisableOnInteraction = false;
   }
 
   ionViewWillEnter() {
