@@ -22,16 +22,16 @@
     </ion-slides>
 
     <div *ngIf="!unavailable" class="results-grid">
-      <div class="results-element">
+      <div (tap)="thisIsIt()" class="results-element">
         <img src="assets/imgs/this-one.png" />
-        <div (tap)="thisIsIt()" class="res-btn-container">
-          <h1>É esse</h1>
+        <div class="res-btn-container">
+          <h1>Esse!</h1>
         </div>
       </div>
-      <div class="results-element">
+      <div (tap)="notHere()" class="results-element">
         <img src="assets/imgs/not-this-one.png" />
-        <div (tap)="notHere()" class="res-btn-container">
-          <h1>Não está entre os resultados</h1>
+        <div class="res-btn-container">
+          <h1>Nenhum desses</h1>
         </div>
       </div>
     </div>

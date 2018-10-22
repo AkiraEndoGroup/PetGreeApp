@@ -46,30 +46,37 @@ export class ResultadosPage implements OnInit {
   }
 
   ngOnInit() {
-    console.log("ngOnInit");
-    
+    console.log("unavailable: ", this.unavailable)
     if (this.unavailable) {
-      console.log("passed");
-      
-      let alert = this.alertCtrl.create({
-        title: "Nenhum pet encontrado :/",
-        message: "Deseja cadastrar?",
-        buttons: [
-          {
-            text: "Sim", handler: () => {
-              this.navCtrl.push(CadastroPage, {
-                filter: this.filter,
-                location: this.location
-              })
+      if (this.filter.status == "PERDIDO" || this.filter.status == "ENCONTRADO") {
+        let alert = this.alertCtrl.create({
+          title: "Nenhum pet encontrado :/",
+          message: "Deseja cadastrar?",
+          buttons: [
+            {
+              text: "Sim", handler: () => {
+                this.navCtrl.push(CadastroPage, {
+                  filter: this.filter,
+                  location: this.location
+                })
+              }
+            }, {
+              text: "Não", handler: () => {
+                this.navCtrl.pop()
+              }
             }
-          }, {
-            text: "Não", handler: () => {
-              this.navCtrl.pop()
-            }
-          }
-        ]
-      })
-      alert.present()
+          ]
+        })
+        alert.present()
+      } else {
+        console.log("here");
+
+        let alert = this.alertCtrl.create({
+          title: "Nenhum pet encontrado :/",
+          buttons: [{ text: "Voltar", handler: () => this.return() }]
+        })
+        alert.present()
+      }
     }
   }
 
@@ -83,7 +90,7 @@ export class ResultadosPage implements OnInit {
 
   thisIsIt() {
     let pet = this.pets[this.slides.realIndex]
-    if (this.filter.status == 'Perdido') {
+    if (this.filter.status == 'PERDIDO') {
       let alert = this.alertCtrl.create({
         title: "Você encontrou " + pet["name"] + "!",
         message: "O dono dele será informado, e logo deverá entrar em contato.",
@@ -92,42 +99,88 @@ export class ResultadosPage implements OnInit {
             this.provider.notificateOwner(pet["id"]);
             this.navCtrl.setRoot(HomePage);
           }
-        }]
+        }, "Cancelar"]
       })
       alert.present()
-    } else if (this.filter.status == 'Encontrado') {
+    } else if (this.filter.status == 'ENCONTRADO') {
       let alert = this.alertCtrl.create({
         title: "Você é o dono desse animal perdido?",
         message: "Se sim, vamos notificá-lo para que entre em contato!",
         buttons: [{
           text: "Sim!", handler: () => {
-            this.provider.notificateOwner(pet["id"]);
+            this.provider.notificatePerdido(pet["id"]);
             this.navCtrl.setRoot(HomePage);
           }
-        }]
+        }, "Cancelar"]
+      })
+      alert.present()
+    } else if (this.filter.status == 'MACHUCADO') {
+      // Você pode ajudar esse pet?
+      // Entrar em contato com a pessoa que registrou
+      let alert = this.alertCtrl.create({
+        title: "Você pode ajudar esse pet?",
+        message: "Se sim, vamos notificar o usuário que o registrou!",
+        buttons: [{
+          text: "Sim!", handler: () => {
+            this.provider.notificateMachucado(pet["id"]);
+            this.navCtrl.setRoot(HomePage);
+          }
+        }, "Cancelar"]
+      })
+      alert.present()
+    } else if (this.filter.status == 'DESABRIGADO') {
+      // Você deseja ajudar esse pet?
+      // Entrar em contato com a pessoa que registrou
+      let alert = this.alertCtrl.create({
+        title: "Você pode abrigar esse pet?",
+        message: "Se sim, vamos notificar o usuário que o registrou!",
+        buttons: [{
+          text: "Sim!", handler: () => {
+            this.provider.notificateDesabrigado(pet["id"]);
+            this.navCtrl.setRoot(HomePage);
+          }
+        }, "Cancelar"]
+      })
+      alert.present()
+    } else if (this.filter.status == 'QUER_CRUZAR') {
+      // Você deseja cruzar esse pet com o seu?
+      // Entrar em contato com a pessoa que registrou
+      let alert = this.alertCtrl.create({
+        title: "Você deseja contatar o dono desse pet?",
+        message: "Se sim, vamos notificar ele!",
+        buttons: [{
+          text: "Sim!", handler: () => {
+            this.provider.notificateCruzamento(pet["id"]);
+            this.navCtrl.setRoot(HomePage);
+          }
+        }, "Cancelar"]
       })
       alert.present()
     }
   }
 
   notHere() {
-    let alert = this.alertCtrl.create({
-      title: "Animal ainda não cadastrado",
-      message: "Deseja cadastrá-lo?",
-      buttons: [{
-        text: "Sim", handler: () => {
-          this.navCtrl.push(CadastroPage, {
-            filter: this.filter,
-            location: this.location
-          })
-        }
-      }, {
-        text: "Não", handler: () => {
-          this.navCtrl.setRoot(HomePage)
-        }
-      }]
-    })
-    alert.present()
+    if (this.filter.status == 'PERDIDO' || this.filter.status == 'ENCONTRADO') {
+      let alert = this.alertCtrl.create({
+        title: "Animal ainda não cadastrado",
+        message: "Deseja cadastrá-lo?",
+        buttons: [{
+          text: "Sim", handler: () => {
+            this.navCtrl.push(CadastroPage, {
+              filter: this.filter,
+              location: this.location
+            })
+          }
+        }, {
+          text: "Não", handler: () => {
+            this.navCtrl.setRoot(HomePage)
+          }
+        }]
+      })
+      alert.present()
+    } else if (this.filter.status == 'MACHUCADO' || this.filter.status == 'DESABRIGADO' || this.filter.status == 'QUER_CRUZAR') {
+      this.return()
+    }
   }
 
   return() {

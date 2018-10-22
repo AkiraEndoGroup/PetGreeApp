@@ -56,7 +56,7 @@ export class HomePage {
 
           this.slidesList = pets.getDistances(this.location, this.slidesList)
           this.slidesList = pets.orderByDistanceToMe(this.slidesList)
-          console.log(this.slidesList)
+          console.log(this.slidesList.length + ' pets fetched')
 
           this.loading.dismiss();
         }).catch((error) => {

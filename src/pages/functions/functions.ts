@@ -1,6 +1,9 @@
 import { Component } from "@angular/core";
 import { NavController, NavParams, AlertController } from "ionic-angular";
 import { SearchPage } from "../search/search";
+import { PetsProvider } from "../../providers/pets/pets";
+import { ResultadosPage } from "../resultados/resultados";
+import { PetResponse } from "../../providers/interfaces/PetResponse";
 
 @Component({
   selector: 'page-functions',
@@ -13,21 +16,22 @@ export class FunctionsPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public pets: PetsProvider
   ) { 
     this.location = this.navParams.get('location')
   }
 
   searchPerdidos() {
     this.navCtrl.push(SearchPage, {
-      filter: 'Perdido',
+      filter: 'PERDIDO',
       location: this.location
     })
   }
 
   searchEncontrados() {
     this.navCtrl.push(SearchPage, {
-      filter: 'Encontrado',
+      filter: 'ENCONTRADO',
       location: this.location
     })
   }
@@ -37,10 +41,10 @@ export class FunctionsPage {
   }
 
   searchMachucado() {
-    this.navCtrl.push(SearchPage, {
-      filter: 'Machucado',
-      location: this.location
-    })
+    let filter = { status: 'MACHUCADO' }
+    this.pets.getPetsByFilter(filter).then((res: PetResponse[]) => {
+      this.goToResults(res, filter)
+    }).catch(err => console.log(err))
   }
 
   cadastrarPrecisaAbrigo() {
@@ -48,15 +52,15 @@ export class FunctionsPage {
   }
 
   searchPrecisaAbrigo() {
-    this.navCtrl.push(SearchPage, {
-      filter: 'Desabrigado',
-      location: this.location
-    })
+    let filter = { status: 'DESABRIGADO' }
+    this.pets.getPetsByFilter(filter).then((res: PetResponse[]) => {
+      this.goToResults(res, filter)
+    }).catch(err => console.log(err))
   }
 
   searchQuerCruzar() {
     this.navCtrl.push(SearchPage, {
-      filter: 'Quer_cruzar',
+      filter: 'QUER_CRUZAR',
       location: this.location
     })
   }
@@ -71,6 +75,14 @@ export class FunctionsPage {
       buttons: ["OK"]
     })
     alert.present()
+  }
+
+  goToResults(results, filter) {
+    this.navCtrl.push(ResultadosPage, {
+      results: results,
+      location: this.location,
+      filter: filter
+    })
   }
 
   return() {

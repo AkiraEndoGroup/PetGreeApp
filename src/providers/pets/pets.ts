@@ -55,7 +55,6 @@ export class PetsProvider {
 
     query += filter["status"] ? "&status=" + filter["status"] : ''
 
-
     query += filter["type"] ? "&type=" + filter["type"] : ''
     query += filter["gender"] ? "&gender=" + filter["gender"] : ''
     query += filter["race"] ? "&raca=" + filter["race"] : ''
@@ -71,8 +70,6 @@ export class PetsProvider {
   }
 
   orderByDistanceToMe(pets) {
-    console.log('ordering');
-
     return pets.sort((a, b) => {
       if (a.distanceToMe && b.distanceToMe) {
         if (a.distanceToMe > b.distanceToMe)
@@ -102,7 +99,6 @@ export class PetsProvider {
           var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
           var d = R * c; // Distance in km
           pet.distanceToMe = Math.round(d * 100) / 100;
-          console.log(pet.distanceToMe);
         } else {
           pet.distanceToMe = -1
         }
@@ -111,7 +107,7 @@ export class PetsProvider {
     }
   }
 
-  notificateOwner(petId) {
+  async notificateOwner(petId) {
     this.users.getCurrentUser().then((user: UserResponse) => {
       if (user) {
         console.log(user)
@@ -122,6 +118,14 @@ export class PetsProvider {
       }
     })
   }
+
+  async notificatePerdido(petId) {}
+
+  async notificateMachucado(petId) {}
+
+  async notificateDesabrigado(petId) {}
+
+  async notificateCruzamento(petId) {}
 
   async getPetById(id) {
     return new Promise(resolve => {

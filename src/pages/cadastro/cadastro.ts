@@ -140,11 +140,11 @@ export class CadastroPage {
     console.log(this.filter)
     console.log(this.location)
 
-    if (this.filter.status == "Perdido") {
-      this.pet.status = "Encontrado"
+    if (this.filter.status == "PERDIDO") {
+      this.pet.status = "ENCONTRADO"
     }
-    if (this.filter.status == "Encontrado") {
-      this.pet.status = "Perdido"
+    if (this.filter.status == "ENCONTRADO") {
+      this.pet.status = "PERDIDO"
     }
     if (this.imageUrl) {
       this.pet.image_url = this.imageUrl
