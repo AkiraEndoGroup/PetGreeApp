@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @RestController
@@ -141,5 +143,24 @@ public class UserController extends WebMvcConfigurerAdapter {
 		} else {
 			throw new UserNotFoundException(userId);
 		}
+	}
+
+	@RequestMapping(value = "/{userId}/owned", method = RequestMethod.POST)
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void addPet(@PathVariable("userId") Long userId,
+	                   @RequestBody Long petId) {
+		System.out.println("postPhone invoked.");
+		User user = userService.getUser(userId);
+
+		if (!Objects.nonNull(user)) {
+			throw new UserNotFoundException(userId);
+		}
+		Set<Long> owned = user.getOwned();
+		if (!Objects.nonNull(owned)) {
+			owned = new HashSet<>();
+		}
+		owned.add(petId);
+		user.setOwned(owned);
+		userService.postUser(user);
 	}
 }

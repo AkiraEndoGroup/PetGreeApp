@@ -2,23 +2,22 @@ import { Component } from '@angular/core';
 import { NavParams, ViewController } from 'ionic-angular';
 
 @Component({
-    selector: 'page-showimage-modal',
-    templateUrl: 'modal-show-image.html'
+  selector: 'page-showimage-modal',
+  templateUrl: 'modal-show-image.html'
 })
 export class ModalShowImage {
 
-    imageUrl;
+  imageUrl;
 
-    constructor(
-        public navParams: NavParams, 
-        public viewCtrl: ViewController
-      )
-        {
-            this.imageUrl = navParams.get('image');
-        }
+  constructor(
+    public navParams: NavParams,
+    public viewCtrl: ViewController
+  ) {
+    this.imageUrl = navParams.get('image');
+  }
 
-    closeModal() {
-        this.viewCtrl.dismiss();
-    }
+  closeModal() {
+    this.viewCtrl.dismiss();
+  }
 
 }

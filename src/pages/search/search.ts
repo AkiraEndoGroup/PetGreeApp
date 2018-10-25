@@ -5,6 +5,7 @@ import { PetResponse } from "../../providers/interfaces/PetResponse";
 import { Geolocation, Geoposition } from "@ionic-native/geolocation"
 import { NativeGeocoder, NativeGeocoderForwardResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder';
 import { ResultadosPage } from "../resultados/resultados";
+import { CadastroPage } from "../cadastro/cadastro";
 
 @Component({
   selector: 'page-search',
@@ -16,7 +17,7 @@ export class SearchPage {
   focused: string
 
   location: any
-  storedLocation: Geoposition
+  storedLocation: any
   locPressed: boolean
   locationAvailable: boolean
   locationText: string
@@ -39,6 +40,8 @@ export class SearchPage {
   fur: string
   description: string
 
+  skipResultados: boolean
+
   loading
 
   constructor(
@@ -58,6 +61,7 @@ export class SearchPage {
     this.locPressed = false
     this.locRangeText = "Nesse ponto"
     this.locationRange = 1
+    this.skipResultados = false
     if (this.storedLocation) {
       this.locationAvailable = true
     } else {
@@ -90,8 +94,8 @@ export class SearchPage {
       this.geo.getCurrentPosition({ enableHighAccuracy: true })
         .then(resp => {
           this.locationAvailable = true
-          this.storedLocation = resp
-          this.location = resp
+          this.storedLocation = resp.coords
+          this.location = resp.coords
           this.locPressed = true
           this.loading.dismiss()
         }, error => {
@@ -253,20 +257,23 @@ export class SearchPage {
   }
 
   saveFilters() {
-    if (!this.filter) {
+    if (!this.type) {
       let alert = this.alertCtrl.create({
-        message: 'Precisamos saber o que você está procurando!',
-        buttons: ['OK']
-      })
-      alert.present()
-    } else if (!this.type) {
-      let alert = this.alertCtrl.create({
-        message: 'Precisamos saber que tipo de animal você está procurando!',
+        message: 'Precisamos saber o tipo de animal!',
         buttons: ['OK']
       })
       alert.present()
     } else {
+      /**
+       * Aqui os raios de busca são arbitrários, testados manualmente, não consegui uma forma simples de converter de km pra coordenada
+       */
+      let radius = [0.005, 0.01, 0.1, 10]
+      console.log(this.location);
+
       let filter = {
+        radius: radius[this.locationRange - 1],
+        lat: this.location ? this.location.latitude : null,
+        lon: this.location ? this.location.longitude : null,
         status: this.filter,
         type: this.ptType(),
         gender: this.ptGender(),
@@ -276,9 +283,18 @@ export class SearchPage {
         fur: this.fur,
         description: this.description
       }
-      this.pets.getPetsByFilter(filter).then((res: PetResponse[]) => {
-        this.goToResults(res, filter)
-      }).catch(err => console.log(err))
+      /**
+       * Se não veio com status é pq é um cadastro direto
+       */
+      if (filter.status) {
+        this.pets.getPetsByFilter(filter).then((res: PetResponse[]) => {
+          this.goToResults(res, filter)
+        }).catch(err => console.log(err))
+      } else {
+        this.skipResultados = true
+        console.log(filter)
+        this.goToResults([], filter)
+      }
     }
   }
 
@@ -332,11 +348,18 @@ export class SearchPage {
   }
 
   goToResults(results, filter) {
-    this.navCtrl.push(ResultadosPage, {
-      results: results,
-      location: this.location,
-      filter: filter
-    })
+    if (this.skipResultados) {
+      this.navCtrl.push(CadastroPage, {
+        location: this.location,
+        filter: filter
+      })
+    } else {
+      this.navCtrl.push(ResultadosPage, {
+        results: results,
+        location: this.location,
+        filter: filter
+      })
+    }
   }
 
   return() {

@@ -17,6 +17,8 @@ export class ResultadosPage implements OnInit {
   unavailable: boolean
   location: Geoposition
   filter
+  cadastroDireto: boolean
+  veioDeCadastro: boolean
 
   constructor(
     public navCtrl: NavController,
@@ -28,6 +30,16 @@ export class ResultadosPage implements OnInit {
     this.pets = navParams.get('results')
     this.location = navParams.get('location')
     this.unavailable = false
+    this.cadastroDireto = false
+    this.veioDeCadastro = false
+
+    if (!this.filter.status) {
+      this.navCtrl.push(CadastroPage, {
+        filter: this.filter,
+        location: this.location
+      })
+    }
+
     if (!this.pets || this.pets.length <= 0) {
       this.pets = [
         {
@@ -40,42 +52,43 @@ export class ResultadosPage implements OnInit {
     }
     if (this.location) {
       this.pets = this.provider.getDistances(this.location, this.pets)
-      this.pets = this.provider.orderByDistanceToMe(this.pets)
       console.log(this.pets);
     }
   }
 
   ngOnInit() {
     console.log("unavailable: ", this.unavailable)
-    if (this.unavailable) {
-      if (this.filter.status == "PERDIDO" || this.filter.status == "ENCONTRADO") {
-        let alert = this.alertCtrl.create({
-          title: "Nenhum pet encontrado :/",
-          message: "Deseja cadastrar?",
-          buttons: [
-            {
-              text: "Sim", handler: () => {
-                this.navCtrl.push(CadastroPage, {
-                  filter: this.filter,
-                  location: this.location
-                })
+    if (this.filter.status) {
+      if (this.unavailable) {
+        if (this.filter.status == "PERDIDO" || this.filter.status == "ENCONTRADO") {
+          let alert = this.alertCtrl.create({
+            title: "Nenhum pet encontrado :/",
+            message: "Deseja cadastrar?",
+            buttons: [
+              {
+                text: "Sim", handler: () => {
+                  this.navCtrl.push(CadastroPage, {
+                    filter: this.filter,
+                    location: this.location
+                  })
+                }
+              }, {
+                text: "Não", handler: () => {
+                  this.navCtrl.pop()
+                }
               }
-            }, {
-              text: "Não", handler: () => {
-                this.navCtrl.pop()
-              }
-            }
-          ]
-        })
-        alert.present()
-      } else {
-        console.log("here");
+            ]
+          })
+          alert.present()
+        } else {
+          console.log("here");
 
-        let alert = this.alertCtrl.create({
-          title: "Nenhum pet encontrado :/",
-          buttons: [{ text: "Voltar", handler: () => this.return() }]
-        })
-        alert.present()
+          let alert = this.alertCtrl.create({
+            title: "Nenhum pet encontrado :/",
+            buttons: [{ text: "Voltar", handler: () => this.return() }]
+          })
+          alert.present()
+        }
       }
     }
   }

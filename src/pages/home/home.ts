@@ -34,47 +34,6 @@ export class HomePage {
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController
   ) {
-    this.pets.getAllPets().then((res: PetResponse[]) => {
-      this.slidesList = Array.from(res)
-      console.log(this.slidesList)
-
-      this.loading = loadingCtrl.create({
-        content: "Determinando localização",
-        spinner: 'dots'
-      })
-      this.loading.present()
-
-      console.log('running geolocation api');
-      if (!this.hasLocation) {
-        this.geo.getCurrentPosition({
-          enableHighAccuracy: true,
-          timeout: 5000
-        }).then((resp) => {
-          console.log('location found!');
-          this.location = resp.coords;
-          this.hasLocation = true;
-
-          this.slidesList = pets.getDistances(this.location, this.slidesList)
-          this.slidesList = pets.orderByDistanceToMe(this.slidesList)
-          console.log(this.slidesList.length + ' pets fetched')
-
-          this.loading.dismiss();
-        }).catch((error) => {
-          this.loading.dismiss();
-          let alert = alertCtrl.create({
-            title: 'Erro de localização',
-            message: 'Não foi possível determinar sua localização.',
-            buttons: ['OK :/']
-          });
-          alert.present();
-          console.log('geolocation error. ' + error.message);
-        });
-      } else {
-        this.slidesList = pets.getDistances(this.location, this.slidesList)
-        this.slidesList = pets.orderByDistanceToMe(this.slidesList)
-        this.loading.dismiss()
-      }
-    })
   }
 
   ionViewDidEnter() {
@@ -82,14 +41,59 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
-    this.slidesList = this.pets.getDistances(this.location, this.slidesList)
-    this.slidesList = this.pets.orderByDistanceToMe(this.slidesList)
+    this.reload()
   }
 
   ionViewWillEnter() {
     this.menuCtrl.swipeEnable(true)
     this.slides.update()
     this.slides.startAutoplay()
+  }
+
+  reload() {
+    if (this.hasLocation) {
+      this.pets.getPetsByFilter({
+        lat: this.location.latitude,
+        lon: this.location.longitude
+      }).then((res: PetResponse[]) => this.slidesList = this.pets.getDistances(this.location, Array.from(res)))
+        .catch(err => console.log(err))
+
+    } else {
+      this.loading = this.loadingCtrl.create({
+        content: "Determinando localização",
+        spinner: 'dots'
+      })
+      this.loading.present()
+      console.log('running geolocation api');
+      this.geo.getCurrentPosition({
+        enableHighAccuracy: true,
+        timeout: 5000
+      }).then((resp) => {
+        console.log('location found!');
+        this.location = resp.coords;
+        this.hasLocation = true;
+
+        this.pets.getPetsByFilter({
+          lat: this.location.latitude,
+          lon: this.location.longitude
+        }).then((res: PetResponse[]) => this.slidesList = this.pets.getDistances(this.location, Array.from(res)))
+          .catch(err => console.log(err))
+
+        this.loading.dismiss()
+      }).catch((error) => {
+        console.log('geolocation error. ' + error.message)
+        this.loading.dismiss();
+        let alert = this.alertCtrl.create({
+          title: 'Erro de localização',
+          message: 'Não foi possível determinar sua localização.',
+          buttons: ['OK :/']
+        });
+        alert.present();
+
+        this.pets.getPetsByFilter({}).then((res: PetResponse[]) => this.slidesList = this.pets.getDistances(this.location, Array.from(res)))
+          .catch(err => console.log(err))
+      })
+    }
   }
 
   ionViewWillLeave() {

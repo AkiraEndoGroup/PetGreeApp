@@ -8,6 +8,7 @@ import { PageTutorial } from '../pages/tutorial/tutorial';
 import { LoginComponent } from '../components/login/login';
 import { SuportePage } from '../pages/suporte/suporte';
 import { PerfilUserPage } from '../pages/perfil-user/perfil-user';
+import { MeusPetsPage } from '../pages/meus-pets/meus-pets';
 
 @Component({
   templateUrl: 'app.html'
@@ -22,6 +23,7 @@ export class MyApp {
   menus = [
     {name: "Início", component: HomePage},
     {name: "Perfil", component: PerfilUserPage},
+    {name: "Meus Pets", component: MeusPetsPage},
     {name: "Tutorial", component: PageTutorial},
     {name: "Suporte", component: SuportePage},
     {name: "Sair", component: LoginComponent}

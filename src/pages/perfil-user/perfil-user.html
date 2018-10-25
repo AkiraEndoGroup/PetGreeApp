@@ -6,7 +6,7 @@
 
 <ion-content>
   <div align=center>
-    <img class="photo" src="{{user.avatar.imageUrl}}" />
+    <img class="photo" (tap)="showImage()" src="{{user.avatar.imageUrl}}" />
   </div>
 
   <!-- ATRIBUTOS -->

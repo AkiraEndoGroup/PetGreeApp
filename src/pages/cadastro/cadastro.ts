@@ -8,6 +8,7 @@ import { AngularFireAuth } from "@angular/fire/auth";
 import { UsersProvider } from "../../providers/users/users";
 import { UserResponse } from "../../providers/interfaces/UserResponse";
 import { HomePage } from "../home/home";
+import { FormGroup, FormBuilder, NgForm } from "@angular/forms";
 
 @Component({
   selector: 'page-cadastro',
@@ -15,13 +16,18 @@ import { HomePage } from "../home/home";
 })
 export class CadastroPage {
 
-  pet = PetJSON(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null)
+  pet = PetJSON(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null)
 
   filter
   location
   loading
   picTaken: boolean
   imageName: string
+
+  name
+  status
+
+  myForm: FormGroup
 
   camOptions: CameraOptions = {
     destinationType: this.camera.DestinationType.DATA_URL,
@@ -43,16 +49,39 @@ export class CadastroPage {
     private camera: Camera,
     public platform: Platform,
     private storage: AngularFireStorage,
-    private afAuth: AngularFireAuth
+    private afAuth: AngularFireAuth,
+    private fb: FormBuilder
   ) {
     this.filter = navParams.get('filter')
     this.location = navParams.get('location')
     this.parseColors()
     this.picTaken = false;
+
+    if (this.filter) {
+      if (this.filter.status == "PERDIDO") {
+        this.status = "ENCONTRADO"
+      }
+      if (this.filter.status == "ENCONTRADO") {
+        this.status = "PERDIDO"
+      }
+    }
+
+    this.myForm = this.fb.group({
+      name: '',
+      status: this.status ? this.status : 'OK'
+    })
+  }
+
+  onSubmit(form: NgForm) {
+    let obj: any = form
+    this.name = obj.name
+    this.status = obj.status
+
+    this.postPet()
   }
 
   parseColors() {
-    if (this.filter.colors) {
+    if (this.filter && this.filter.colors) {
       let colorsTxt = ''
       this.filter.colors.forEach((value, index, array) => {
         if (array[index + 1] == undefined) {
@@ -68,7 +97,7 @@ export class CadastroPage {
   addPhoto() {
     if (this.platform.is('cordova')) {
       let alert = this.alertCtrl.create({
-        title: "Adicionar foto",
+        title: "Trocar foto",
         buttons: [
           {
             text: "Camera", handler: () => {
@@ -113,7 +142,8 @@ export class CadastroPage {
         // If replacing pic, delete previous one from Firebase, 
         // or it will be a non-referenced resource
         storageRef.delete()
-      } 
+          .subscribe(data => console.log(data), err => console.log(err))
+      }
       this.imageName = '' + this.afAuth.auth.currentUser.email + Date.now().valueOf();
 
       storageRef = this.storage.ref('images/' + this.imageName + '.jpg')
@@ -129,7 +159,7 @@ export class CadastroPage {
         })
         .catch(err => {
           this.loading.dismiss()
-          let alert = this.alertCtrl.create({message:"Erro: " + err})
+          let alert = this.alertCtrl.create({ message: "Erro: " + err })
           alert.present()
           console.log(err)
         })
@@ -140,12 +170,9 @@ export class CadastroPage {
     console.log(this.filter)
     console.log(this.location)
 
-    if (this.filter.status == "PERDIDO") {
-      this.pet.status = "ENCONTRADO"
-    }
-    if (this.filter.status == "ENCONTRADO") {
-      this.pet.status = "PERDIDO"
-    }
+    this.pet.status = this.status
+    this.pet.name = this.name
+
     if (this.imageUrl) {
       this.pet.image_url = this.imageUrl
     }
@@ -155,9 +182,7 @@ export class CadastroPage {
     if (this.filter.type) {
       this.pet.type = this.filter.type
     }
-    if (this.filter.gender) {
-      this.pet.gender = this.filter.gender
-    }
+
     if (this.location) {
       this.pet.lat = this.location.latitude
       this.pet.lon = this.location.longitude
@@ -177,39 +202,52 @@ export class CadastroPage {
     if (this.filter.description) {
       this.pet.description = this.filter.description
     }
+    if (this.filter.gender) {
+      this.pet.gender = this.filter.gender
+    }
 
     this.users.getCurrentUser().then((data: UserResponse) => {
       this.pet.created_by = data.email
-      if (this.filter.status == "Perdido") {
+      if (this.pet.status == "PERDIDO"
+       || this.pet.status == "OK"
+       || this.pet.status == "QUER_CRUZAR") {
         this.pet.owner_id = data.id
+        console.log("user.id = " + data.id)
       }
-    })
 
-    console.log(this.pet)
+      console.log(this.pet)
 
-    this.pets.postPet(this.pet)
-      .then(data => {
-        let alert = this.alertCtrl.create({
-          title: "Obrigado!",
-          message: "Logo mais esse pet estará bem!",
-          buttons: [
-            {
-              text: "Voltar para página inicial",
-              handler: () => {
-                this.navCtrl.setRoot(HomePage)
+      this.pets.postPet(this.pet)
+        .then(data => {
+          let alert = this.alertCtrl.create({
+            title: "Obrigado!",
+            message:  (this.filter.status != "QUER_CRUZAR"
+                    && this.filter.status != "OK") ? "Logo mais esse pet estará bem!" : '',
+            buttons: [
+              {
+                text: "Voltar para página inicial",
+                handler: () => {
+                  this.navCtrl.setRoot(HomePage)
+                }
               }
-            }
-          ]
+            ]
+          })
+          alert.present()
+        }, err => {
+          let alert = this.alertCtrl.create({
+            title: "Erro " + err.status,
+            message: err
+          })
+          alert.present()
+        }).catch(err => {
+          let alert = this.alertCtrl.create({
+            title: "Erro " + err,
+            message: err
+          })
+          alert.present()
         })
-        alert.present()
-      }).catch(err => {
-        let alert = this.alertCtrl.create({
-          title: "Erro",
-          message: err
-        })
-        alert.present()
-      })
 
+    })
   }
 
   dataURItoBlob(dataURI) {
@@ -222,6 +260,7 @@ export class CadastroPage {
   }
 
   return() {
+    this.navCtrl.getPrevious().data.veioDeCadastro = true
     this.navCtrl.pop()
   }
 }

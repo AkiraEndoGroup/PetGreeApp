@@ -17,7 +17,6 @@ import { AnimationService } from 'css-animator';
 import { ModalShowImage } from '../modals/modal-show-image';
 import { PageTutorial } from '../pages/tutorial/tutorial'
 
-// Firebase modules
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
@@ -28,7 +27,6 @@ import { LoginComponent } from '../components/login/login';
 
 import { Facebook } from '@ionic-native/facebook'
 
-// Geolocation
 import { Geolocation } from '@ionic-native/geolocation';
 import { PetsProvider } from '../providers/pets/pets';
 import { SplashPage } from '../pages/splash/splash';
@@ -45,6 +43,10 @@ import { NativeGeocoder } from '@ionic-native/native-geocoder'
 import { ResultadosPage } from '../pages/resultados/resultados';
 import { CadastroPage } from '../pages/cadastro/cadastro';
 import { PerfilPetEditPage } from '../pages/perfil-pet/perfil-pet-edit/perfil-pet-edit';
+import { ModalEditAddress } from '../modals/modal-edit-address';
+import { ModalEditColors } from '../modals/modal-edit-colors';
+import { MeusPetsPage } from '../pages/meus-pets/meus-pets';
+import { ModalEditPhone } from '../modals/modal-edit-phone';
 
 const firebaseConfig = {
   apiKey: "AIzaSyA3NSMbfS7Gwcd0S2LZQwnfvUSgazwCvYc",
@@ -60,6 +62,9 @@ const firebaseConfig = {
     MyApp,
     HomePage,
     ModalShowImage,
+    ModalEditAddress,
+    ModalEditColors,
+    ModalEditPhone,
     PageTutorial,
     SplashPage,
     FunctionsPage,
@@ -68,6 +73,7 @@ const firebaseConfig = {
     PerfilPetEditPage,
     PerfilUserPage,
     PerfilUserEditPage,
+    MeusPetsPage,
     SearchPage,
     CadastroPage,
     ResultadosPage,
@@ -89,6 +95,9 @@ const firebaseConfig = {
     MyApp,
     HomePage,
     ModalShowImage,
+    ModalEditAddress,
+    ModalEditColors,
+    ModalEditPhone,
     PageTutorial,
     SplashPage,
     FunctionsPage,
@@ -97,6 +106,7 @@ const firebaseConfig = {
     PerfilPetEditPage,
     PerfilUserPage,
     PerfilUserEditPage,
+    MeusPetsPage,
     SearchPage,
     CadastroPage,
     ResultadosPage,

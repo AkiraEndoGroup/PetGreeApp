@@ -1,0 +1,84 @@
+<ion-header>
+</ion-header>
+
+<!-- ATRIBUTOS -->
+<form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm.value)">
+  <ion-content class="attrib-container">
+    <div align=center>
+      <ion-grid class="attrib-grid">
+
+        <ion-row class="attrib-row">
+          <ion-col col-4 class="attrib-key">
+            Rua
+          </ion-col>
+          <ion-col col-8 class="edit-attrib-value">
+            <div class="form-group">
+              <input type="text" class="input-box" [formControl]="myForm.controls['rua']">
+            </div>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="attrib-row">
+          <ion-col col-4 class="attrib-key">
+            Número
+          </ion-col>
+          <ion-col col-8 class="edit-attrib-value">
+            <div class="form-group">
+              <input type="number" class="input-box" [formControl]="myForm.controls['numero']">
+            </div>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="attrib-row">
+          <ion-col col-4 class="attrib-key">
+            Complemento
+          </ion-col>
+          <ion-col col-8 class="edit-attrib-value">
+            <div class="form-group">
+              <input type="text" class="input-box" [formControl]="myForm.controls['complemento']">
+            </div>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="attrib-row">
+          <ion-col col-4 class="attrib-key">
+            Cidade
+          </ion-col>
+          <ion-col col-8 class="edit-attrib-value">
+            <div class="form-group">
+              <input type="text" class="input-box" [formControl]="myForm.controls['cidade']">
+            </div>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="attrib-row">
+          <ion-col col-4 class="attrib-key">
+            Estado
+          </ion-col>
+          <ion-col col-8 class="edit-attrib-value">
+            <div class="form-group">
+              <input type="text" class="input-box" [formControl]="myForm.controls['estado']">
+            </div>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="attrib-row">
+          <ion-col col-4 class="attrib-key">
+            CEP
+          </ion-col>
+          <ion-col col-8 class="edit-attrib-value">
+            <div class="form-group">
+              <input type="text" class="input-box" [formControl]="myForm.controls['cep']">
+            </div>
+          </ion-col>
+        </ion-row>
+
+      </ion-grid>
+    </div>
+  </ion-content>
+  <ion-fab bottom right padding="10dp">
+    <button ion-fab (tap)="onSubmit()" type="submit" color="primary">
+      <ion-icon name="checkmark" size="large" color="secondary"></ion-icon>
+    </button>
+  </ion-fab>
+</form>

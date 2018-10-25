@@ -78,12 +78,16 @@ public class UserConverter {
 			user.setEndereco(userModel.getEndereco());
 		}
 
-		if (userModel.getTelefones() != null && !userModel.getTelefones().isEmpty()) {
-			String phone = userModel.getTelefones().iterator().next();
-			if (!ValidateUser.isThisAPhone(phone)) {
-				throw new InvalidPhoneException(phone);
+		if (userModel.getTelefones() != null) {
+			if (userModel.getTelefones().size() == 0) {
+				user.setTelefones(userModel.getTelefones());
+			} else {
+				String phone = userModel.getTelefones().iterator().next();
+				if (!ValidateUser.isThisAPhone(phone)) {
+					throw new InvalidPhoneException(phone);
+				}
+				user.setTelefones(userModel.getTelefones());
 			}
-			user.setTelefones(userModel.getTelefones());
 		}
 
 		return user;

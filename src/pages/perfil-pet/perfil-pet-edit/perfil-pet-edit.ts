@@ -7,6 +7,7 @@ import { AngularFireStorage } from "@angular/fire/storage";
 import { Camera, CameraOptions } from "@ionic-native/camera";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { ModalShowImage } from "../../../modals/modal-show-image";
+import { ModalEditColors } from "../../../modals/modal-edit-colors";
 
 @Component({
   selector: 'page-perfil-pet-edit',
@@ -73,12 +74,12 @@ export class PerfilPetEditPage {
 
     this.myForm = this.fb.group({
       name: this.pet.name,
-      status: this.pet.status.description,
-      type: this.firstUp(this.pet.type.description),
-      gender: this.firstUp(this.pet.gender.description),
+      status: this.pet.status ? this.pet.status.description: '',
+      type: this.pet.type ? this.firstUp(this.pet.type.description): '',
+      gender: this.pet.gender ? this.firstUp(this.pet.gender.description): '',
       race: this.firstUp(this.pet.raca),
-      size: this.firstUp(this.pet.size.description),
-      pelo: this.firstUp(this.pet.pelo.description),
+      size: this.pet.size ? this.firstUp(this.pet.size.description): '',
+      pelo: this.pet.pelo ? this.firstUp(this.pet.pelo.description) : '',
       description: this.firstUp(this.pet.description),
     })
   }
@@ -100,7 +101,6 @@ export class PerfilPetEditPage {
       this.fotos[0],
       this.fotos.slice(1, this.fotos.length),
       obj.status,
-      this.pet.ong_email,
       this.pet.lat,
       this.pet.lon,
       this.pet.created_by,
@@ -120,10 +120,18 @@ export class PerfilPetEditPage {
   }
 
   changeColors() {
-    // colors modal
+    let modal = this.modalCtrl.create(ModalEditColors,{ colors: this.colorsArray })
+    modal.present()
+    modal.onDidDismiss(data => {
+      if (data) {
+        this.colorsArray = data
+      }
+    })
   }
 
   firstUp(word) {
+    if (!word || word.length < 1)
+      return null
     return word[0].toUpperCase() + word.substring(1).toLowerCase()
   }
 
@@ -189,7 +197,7 @@ export class PerfilPetEditPage {
       })
       this.loading.present()
 
-      let imageName = '' + this.afAuth.auth.currentUser.email + Date.now().valueOf();
+      let imageName = '' + Date.now().valueOf() + this.afAuth.auth.currentUser.email
       let storageRef = this.storage.ref('images/' + imageName + '.jpg')
       storageRef.put(this.imageData)
         .then(snapshot => {

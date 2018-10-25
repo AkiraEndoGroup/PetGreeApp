@@ -11,7 +11,7 @@
       spaceBetween="200" speed="500" effect="slide" style="padding-bottom: 0; padding-top: 0; margin: 0;">
       <ion-slide *ngFor="let foto of fotos">
         <div>
-          <img [src]="foto" class="perfil-pet-slide-img" />
+          <img [src]="foto" (tap)="showImage()" class="perfil-pet-slide-img" />
           <div class="pet-status-box">Status: {{pet.status.description}}</div>
           <div *ngIf="pet.distanceToMe" class="pet-distance-box">Distância: {{pet.distanceToMe}} km</div>
         </div>

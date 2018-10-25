@@ -9,8 +9,8 @@ import { Observable } from "rxjs";
 @Injectable()
 export class PetsProvider {
 
-  // petsUrl = 'http://ec2-18-228-44-159.sa-east-1.compute.amazonaws.com:4242/pets';
-  petsUrl = 'http://localhost:4242/pets'
+  petsUrl = 'http://ec2-18-228-44-159.sa-east-1.compute.amazonaws.com:4242/pets';
+  // petsUrl = 'http://localhost:4242/pets'
 
   constructor(
     private http: HttpClient,
@@ -51,9 +51,17 @@ export class PetsProvider {
 
   toQueryParam(filter) {
     // Até que eu consiga filtrar melhor os resultados por distância...
-    let query = "?limit=100"
+    let query = "?limit=15"
 
     query += filter["status"] ? "&status=" + filter["status"] : ''
+
+    query += filter["radius"] ? "&radius=" + filter["radius"] : ''
+    query += filter["lat"] ? "&lat=" + filter["lat"] : ''
+    query += filter["lon"] ? "&lon=" + filter["lon"] : ''
+
+    if (filter["lat"] && filter["lon"] && !filter["radius"]) {
+      query += "&radius=10"
+    }
 
     query += filter["type"] ? "&type=" + filter["type"] : ''
     query += filter["gender"] ? "&gender=" + filter["gender"] : ''
@@ -66,23 +74,25 @@ export class PetsProvider {
       })
     }
     console.log("query: " + query)
+    
     return query
   }
 
-  orderByDistanceToMe(pets) {
-    return pets.sort((a, b) => {
-      if (a.distanceToMe && b.distanceToMe) {
-        if (a.distanceToMe > b.distanceToMe)
-          return 1
-        if (a.distanceToMe < b.distanceToMe)
-          return -1
-        if (a.distanceToMe == b.distanceToMe)
-          return 0
-      } else {
-        return 0
-      }
-    })
-  }
+  // orderByDistanceToMe(pets) {
+  //   pets.sort((a, b) => {
+  //     if (a.distanceToMe && b.distanceToMe) {
+  //       if (a.distanceToMe > b.distanceToMe)
+  //         return 1
+  //       if (a.distanceToMe < b.distanceToMe)
+  //         return -1
+  //       if (a.distanceToMe == b.distanceToMe)
+  //         return 0
+  //     } else {
+  //       return 0
+  //     }
+  //   })
+  //   return pets
+  // }
 
   getDistances(location, pets) {
     if (!location)
@@ -119,13 +129,13 @@ export class PetsProvider {
     })
   }
 
-  async notificatePerdido(petId) {}
+  async notificatePerdido(petId) { }
 
-  async notificateMachucado(petId) {}
+  async notificateMachucado(petId) { }
 
-  async notificateDesabrigado(petId) {}
+  async notificateDesabrigado(petId) { }
 
-  async notificateCruzamento(petId) {}
+  async notificateCruzamento(petId) { }
 
   async getPetById(id) {
     return new Promise(resolve => {

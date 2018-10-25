@@ -13,8 +13,6 @@ export interface PetResponse {
   description: string,
   image_url: string,
   fotos: string[],
-  ong_email: string,
-  ong_name: string,
   owner_id: number,
   lat: number,
   lon: number,
@@ -27,7 +25,7 @@ export interface PetColor {
   description: string
 }
 
-export function PetJSON(name,type,gender,raca,size,pelo,colors,description,image_url,fotos,status,ong_email,lat,lon,created_by,owner_id) {
+export function PetJSON(name,type,gender,raca,size,pelo,colors,description,image_url,fotos,status,lat,lon,created_by,owner_id) {
   let json = {
     name: name,
     type: type,
@@ -40,7 +38,6 @@ export function PetJSON(name,type,gender,raca,size,pelo,colors,description,image
     image_url: image_url,
     fotos: fotos,
     status: status,
-    ong_email: ong_email,
     lat: lat,
     lon: lon,
     created_by: created_by,

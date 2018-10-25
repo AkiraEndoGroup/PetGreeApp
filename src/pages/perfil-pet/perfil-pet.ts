@@ -1,5 +1,5 @@
-import { Component, OnInit } from "@angular/core";
-import { NavController, NavParams, AlertController } from "ionic-angular";
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { NavController, NavParams, AlertController, Slides, ModalController } from "ionic-angular";
 import { PetResponse } from "../../providers/interfaces/PetResponse";
 import { Push } from "@ionic-native/push"
 import { UsersProvider } from "../../providers/users/users";
@@ -8,12 +8,14 @@ import { PerfilUserPage } from "../perfil-user/perfil-user";
 import { HomePage } from "../home/home";
 import { PetsProvider } from "../../providers/pets/pets";
 import { PerfilPetEditPage } from "./perfil-pet-edit/perfil-pet-edit";
+import { ModalShowImage } from "../../modals/modal-show-image";
 
 @Component({
   selector: 'page-perfil-pet',
   templateUrl: 'perfil-pet.html'
 })
 export class PerfilPetPage implements OnInit {
+  @ViewChild(Slides) slides: Slides
 
   pet: PetResponse
   fotos = []
@@ -27,6 +29,7 @@ export class PerfilPetPage implements OnInit {
     public navParams: NavParams,
     public push: Push,
     public alertCtrl: AlertController,
+    public modalCtrl: ModalController,
     public users: UsersProvider,
     public pets: PetsProvider
   ) {
@@ -38,11 +41,11 @@ export class PerfilPetPage implements OnInit {
     let petId = this.pet.id
     if (petId) {
       this.pets.getPetById(petId)
-      .then((pet: PetResponse) => {
-        this.pet = pet
-        this.getAttribs()
-      }, err => console.log(err))
-      .catch(err => console.log(err))
+        .then((pet: PetResponse) => {
+          this.pet = pet
+          this.getAttribs()
+        }, err => console.log(err))
+        .catch(err => console.log(err))
     }
   }
 
@@ -51,22 +54,29 @@ export class PerfilPetPage implements OnInit {
       this.return()
     } else {
       this.users.getCurrentUser()
-      .then((value:UserResponse) => {
-        console.log(this.pet.owner_id);
-        
-        if (value.id == this.pet.owner_id) {
-          this.isOwner = true
-        }
-        if (value.email == this.pet.created_by) {
-          this.isCreator = true
-        }
-      })
+        .then((value: UserResponse) => {
+          console.log(this.pet.owner_id);
+
+          if (value.id == this.pet.owner_id) {
+            this.isOwner = true
+          }
+          if (value.email == this.pet.created_by) {
+            this.isCreator = true
+          }
+        })
       this.getAttribs()
       this.fotos.push(this.pet.image_url)
       this.pet.fotos.forEach(foto => {
         this.fotos.push(foto)
       })
     }
+  }
+
+  showImage() {
+    let modal = this.modalCtrl.create(
+      ModalShowImage,
+      { image: this.fotos[this.slides.realIndex] })
+    modal.present();
   }
 
   foundIt() {
@@ -93,7 +103,7 @@ export class PerfilPetPage implements OnInit {
 
   goToOwner() {
     let owner_id = this.pet.owner_id;
-    this.navCtrl.push(PerfilUserPage,{
+    this.navCtrl.push(PerfilUserPage, {
       userId: owner_id
     })
   }
@@ -144,9 +154,9 @@ export class PerfilPetPage implements OnInit {
     }
     if (this.pet.colors && this.pet.colors.length > 0) {
       let cores = ""
-      this.pet.colors.forEach((value,index,array) => {
+      this.pet.colors.forEach((value, index, array) => {
         cores = cores + this.firstUp(value.description)
-        if (array[index+1])
+        if (array[index + 1])
           cores = cores + ', '
       })
       this.attribs.push({
@@ -157,12 +167,12 @@ export class PerfilPetPage implements OnInit {
     if (this.pet.owner_id) {
       this.hasOwner = true
       this.users.getUserById(this.pet.owner_id)
-      .then((user: UserResponse) => {
-        this.attribs.push({
-          key: "Dono/a",
-          value: user.avatar.name
-        })
-      }).catch(err => console.log(err))
+        .then((user: UserResponse) => {
+          this.attribs.push({
+            key: "Dono/a",
+            value: user.avatar.name
+          })
+        }).catch(err => console.log(err))
     }
     if (this.pet.description) {
       this.attribs.push({
@@ -177,7 +187,7 @@ export class PerfilPetPage implements OnInit {
   }
 
   editPet() {
-    this.navCtrl.push(PerfilPetEditPage,{
+    this.navCtrl.push(PerfilPetEditPage, {
       pet: this.pet
     })
   }

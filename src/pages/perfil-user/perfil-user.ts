@@ -1,9 +1,10 @@
 import { Component } from "@angular/core";
-import { NavController, NavParams } from "ionic-angular";
+import { NavController, NavParams, ModalController } from "ionic-angular";
 import { UserResponse, UserBuilder, formatAddress } from "../../providers/interfaces/UserResponse";
 import { UsersProvider } from "../../providers/users/users";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { PerfilUserEditPage } from "./perfil-user-edit/perfil-user-edit";
+import { ModalShowImage } from "../../modals/modal-show-image";
 
 @Component({
   selector: 'page-perfil-user',
@@ -14,12 +15,14 @@ export class PerfilUserPage {
   user = UserBuilder()
   attribs = []
   isCurrentUser: boolean = true
+  imageName: string
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public users: UsersProvider,
-    public afAuth: AngularFireAuth
+    public afAuth: AngularFireAuth,
+    public modalCtrl: ModalController
   ) { }
 
   ionViewWillEnter() {
@@ -107,6 +110,13 @@ export class PerfilUserPage {
         })
       })
     }
+  }
+
+  showImage() {
+    let modal = this.modalCtrl.create(
+      ModalShowImage,
+      { image: this.user.avatar.imageUrl })
+    modal.present();
   }
 
   editProfile() {
