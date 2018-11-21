@@ -1,0 +1,79 @@
+:root {
+  --primary-color: #00a98e;
+  --secondary-color: #7d5dc3;
+}
+
+.grid-buttons {
+  padding: 10px;
+  width: 60%;
+}
+
+.button-container {
+  max-width: 80px;
+  max-height: 80px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    max-width: 80px;
+    max-height: 80px;
+  }
+}
+
+.perfil-pet-slide-container {
+  margin-top: 0px;
+  height: 42vh;
+  max-width: 600px;
+}
+
+.perfil-pet-slide-img {
+  height: 32vh !important;
+  width: 32vh !important;
+  border-radius: 20px;
+  margin-bottom: 5px;
+  object-fit: cover !important;
+}
+
+.pet-status-box {
+  color: white;
+  background-color: black;
+  position: absolute;
+  top: 20px;
+  right: 50px;
+}
+
+.pet-distance-box {
+  color: black;
+  background-color: white;
+  position: absolute;
+  bottom: 15%;
+  right: 50px;
+}
+
+.attrib-container {
+  height: 30vh;
+  overflow: hidden;
+
+  .scroll-content {
+    max-height: 100% !important;
+  }
+}
+
+.attrib-grid {
+  max-width: 600px;
+  background-color: #00a98e;
+  width: 80%;
+}
+
+.attrib-row {
+  background-color: #7d5dc3;
+  margin: 1px;
+}
+
+.attrib-key {
+  color: white;
+}
+
+.attrib-value {
+  color: white;
+}

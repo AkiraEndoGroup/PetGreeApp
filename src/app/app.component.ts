@@ -1,55 +1,65 @@
-import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, MenuController } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
+import { Component, OnInit } from '@angular/core';
 
-import { SplashPage } from '../pages/splash/splash';
-import { HomePage } from '../pages/home/home';
-import { PageTutorial } from '../pages/tutorial/tutorial';
-import { LoginComponent } from '../components/login/login';
-import { SuportePage } from '../pages/suporte/suporte';
-import { PerfilUserPage } from '../pages/perfil-user/perfil-user';
-import { MeusPetsPage } from '../pages/meus-pets/meus-pets';
+import { MenuController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { UsersService, UserResponse } from './users.service';
+import { Plugins } from '@capacitor/core';
+import { Observable, bindCallback } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+
+const { Geolocation, SplashScreen } = Plugins
 
 @Component({
-  templateUrl: 'app.html'
+  selector: 'app-root',
+  templateUrl: 'app.component.html'
 })
-export class MyApp {
-  @ViewChild(Nav) nav: Nav;
+export class AppComponent implements OnInit {
 
-  rootPage: any = SplashPage;
-
-  pages: Array<{ title: string, component: any }>;
+  coords
 
   menus = [
-    {name: "Início", component: HomePage},
-    {name: "Perfil", component: PerfilUserPage},
-    {name: "Meus Pets", component: MeusPetsPage},
-    {name: "Tutorial", component: PageTutorial},
-    {name: "Suporte", component: SuportePage},
-    {name: "Sair", component: LoginComponent}
+    {name: "Início", route: '/home' },
+    {name: "Perfil", route: '/perfil-user', resource: 0 },
+    {name: "Meus Pets", route: '/meus-pets' },
+    {name: "Tutorial", route: '/tutorial' },
+    {name: "Suporte", route: '/suporte' },
+    {name: "Sair", route: '/login' }
   ]
 
   constructor(
-    public platform: Platform,
-    public statusBar: StatusBar,
-    public menuCtrl: MenuController
-    ) {
-    this.initializeApp();
-  }
+    private menuCtrl: MenuController,
+    private router: Router,
+    private users: UsersService,
+    private http: HttpClient
+  ) { }
 
-  initializeApp() {
-    this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      this.statusBar.styleDefault();
-    });
+  async ngOnInit() {
+    this.watchPosition().subscribe(coords => {
+      this.coords = coords
+    })
+    SplashScreen.hide()
+    await this.users.getCurrentUser()
+    .then( async (user: UserResponse) => {
+      if (user)
+        this.menus[1].resource = await user.id
+      else
+        console.log(user);
+    }).catch(err => console.log(err))
+  }
+  
+  watchPosition(): Observable<any> {
+    const watch = bindCallback(Geolocation.watchPosition)({});
+    return watch.pipe(map((pos: any) => pos.coords))
   }
 
   openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
     this.menuCtrl.close()
-    this.nav.push(page.component,page.options);
+    if (page.resource) {
+      console.log(page)
+      this.router.navigate([page.route, page.resource])
+    } else {
+      this.router.navigate([page.route])
+    }
   }
-
 }

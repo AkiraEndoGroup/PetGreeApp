@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar text-center>
+    <ion-title style="color: white;">Usuário: {{user.avatar.name}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content>
+  <div align=center>
+    <img class="photo" (click)="showImage()" src="{{user.avatar.imageUrl}}" />
+  </div>
+
+  <!-- ATRIBUTOS -->
+  <ion-content class="user-attrib-container">
+    <div align=center>
+      <ion-grid class="attrib-grid">
+        <ion-row class="attrib-row" *ngFor="let attrib of attribs">
+          <ion-col size="4" class="attrib-key">
+            {{attrib.key}}
+          </ion-col>
+          <ion-col size="8" class="attrib-value">
+            {{attrib.value}}
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </ion-content>
+
+</ion-content>
+
+<ion-fab slot="fixed" vertical="bottom" horizontal="start" padding="10dp">
+  <ion-fab-button (click)="return()" color="primary">
+    <ion-icon name="return-left" size="large" color="secondary"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
+<ion-fab slot="fixed" *ngIf="isCurrentUser" vertical="bottom" horizontal="end" padding="10dp">
+  <ion-fab-button (click)="editProfile()" color="primary">
+    <ion-icon name="create" size="large" color="secondary"></ion-icon>
+  </ion-fab-button>
+</ion-fab>

@@ -1,0 +1,60 @@
+<ion-toolbar text-center>
+  <ion-menu-toggle>
+    <ion-button>
+    </ion-button>
+  </ion-menu-toggle>
+  <ion-title>Mais Opções</ion-title>
+</ion-toolbar>
+
+
+<ion-content>
+  <div align=center>
+    <div class="functions-grid">
+      <div (tap)="searchEncontrados()" class="perdi-title">
+        <div>Estou procurando</div>
+      </div>
+      <div (tap)="searchEncontrados()" class="perdi"><img src="assets/imgs/searching.png" /></div>
+
+      <div (tap)="searchPerdidos()" class="encontrei-title">
+        <div>Encontrei</div>
+      </div>
+      <div (tap)="searchPerdidos()" class="encontrei"><img src="assets/imgs/scared.png" /></div>
+
+      <div (tap)="cadastrarMachucado()" class="precisa-ajuda-title">
+        <div>Precisa de ajuda</div>
+      </div>
+      <div (tap)="cadastrarMachucado()" class="precisa-ajuda"><img src="assets/imgs/injured.png" /></div>
+
+      <div (tap)="searchMachucado()" class="posso-ajudar-title">
+        <div>Posso ajudar</div>
+      </div>
+      <div (tap)="searchMachucado()" class="posso-ajudar"><img src="assets/imgs/hero.png" /></div>
+
+      <div (tap)="cadastrarPrecisaAbrigo()" class="precisa-abrigo-title">
+        <div>Precisa de abrigo</div>
+      </div>
+      <div (tap)="cadastrarPrecisaAbrigo()" class="precisa-abrigo"><img src="assets/imgs/house.png" /></div>
+
+      <div (tap)="searchPrecisaAbrigo()" class="posso-abrigar-title">
+        <div>Posso abrigar</div>
+      </div>
+      <div (tap)="searchPrecisaAbrigo()" class="posso-abrigar"><img src="assets/imgs/adopt.png" /></div>
+
+      <div (tap)="searchQuerCruzar()" class="quer-cruzar-title">
+        <div>Quer cruzar</div>
+      </div>
+      <div (tap)="searchQuerCruzar()" class="quer-cruzar"><img src="assets/imgs/dog-love.png" /></div>
+
+      <div (tap)="goShop()" class="loja-title">
+        <div>Loja</div>
+      </div>
+      <div (tap)="goShop()" class="loja"><img src="assets/imgs/shop.png" /></div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-fab slot="fixed" vertical="bottom" left padding="10dp">
+  <ion-fab-button (tap)="return()" color="primary">
+    <ion-icon name="return-left" size="large" color="secondary"></ion-icon>
+  </ion-fab-button>
+</ion-fab>

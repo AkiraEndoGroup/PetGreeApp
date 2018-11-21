@@ -1,0 +1,25 @@
+<div align=center class="login-body">
+  <ion-grid class="login-grid">
+    <ion-row align-items-center justify-content-center style="height: 50%;">
+      <ion-button *ngIf="!loggedGoogle && !loggedFacebook" (tap)="googleLogin()">
+        Login com Google
+      </ion-button>
+      <ion-button *ngIf="loggedGoogle" (tap)="googleSignOut()">
+        Sair do Google
+      </ion-button>
+    </ion-row>
+    <ion-row align-items-center justify-content-center style="height: 50%;">
+      <ion-button *ngIf="!loggedFacebook && !loggedGoogle" (tap)="fbLogin()">
+        Login com Facebook
+      </ion-button>
+      <ion-button *ngIf="loggedFacebook" (tap)="fbSignOut()">
+        Sair do Facebook
+      </ion-button>
+    </ion-row>
+  </ion-grid>
+  <ion-fab slot="fixed" right vertical="bottom" padding="10dp">
+    <ion-fab-button (tap)="back()">
+      <ion-icon name="return-left"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</div>

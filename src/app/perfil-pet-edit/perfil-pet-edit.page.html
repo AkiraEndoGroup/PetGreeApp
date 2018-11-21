@@ -1,0 +1,186 @@
+<ion-header>
+  <ion-toolbar text-center>
+    <ion-title style="color: white;">Editar</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div align=center>
+    <!-- SLIDER PARA MOSTRAR AS FOTOS DO PET -->
+    <ion-slides style="height: 40vh !important;width: 40vh !important;border-radius: 20px;" padding pager #slides class="perfil-pet-slide-container"
+      *ngIf="fotos && fotos.length" paginationType="bullets" spaceBetween="200" speed="500" effect="slide" style="padding-bottom: 0; padding-top: 0; margin: 0;">
+      <ion-slide *ngFor="let foto of fotos">
+        <div>
+          <img [src]="foto" style="height: 32vh !important;width: 32vh !important;" (click)="showImage()" class="perfil-pet-slide-img" />
+        </div>
+      </ion-slide>
+    </ion-slides>
+
+    <ion-fab slot="fixed" vertical="top" horizontal="end" padding="5dp">
+      <ion-fab-button>
+        <ion-icon name="images"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-list>
+        <ion-fab-button (click)="addPhoto()" color="primary">
+          <ion-icon name="add" size="large" color="secondary"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button (click)="removePhoto()" color="primary">
+          <ion-icon name="trash" size="large" color="secondary"></ion-icon>
+        </ion-fab-button>
+      </ion-fab-list>
+    </ion-fab>
+  </div>
+
+    <!-- ATRIBUTOS -->
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm.value)">
+      <ion-content class="attrib-container">
+        <div align=center>
+          <ion-grid class="attrib-grid">
+
+            <ion-row class="attrib-row">
+              <ion-col size="4" class="attrib-key">
+                Nome
+              </ion-col>
+              <ion-col size="8" class="edit-attrib-value">
+                <div class="form-group">
+                  <input type="text" class="input-box" [formControl]="myForm.controls['name']">
+                </div>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="attrib-row">
+              <ion-col size="4" class="attrib-key">
+                Status
+              </ion-col>
+              <ion-col size="8" class="edit-attrib-value">
+                <div class="form-group">
+                  <select [formControl]="myForm.controls['status']">
+                    <option value="OK">OK</option>
+                    <option value="PERDIDO">Perdido</option>
+                    <option value="ENCONTRADO">Encontrado</option>
+                    <option value="MACHUCADO">Machucado/Em Perigo</option>
+                    <option value="DESABRIGADO">Desabrigado</option>
+                    <option value="QUER_CRUZAR">Quer cruzar</option>
+                  </select>
+                </div>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="attrib-row">
+              <ion-col size="4" class="attrib-key">
+                Família
+              </ion-col>
+              <ion-col size="8" class="edit-attrib-value">
+                <div class="form-group">
+                  <select [formControl]="myForm.controls['type']">
+                    <option value="Cachorro">Cachorro</option>
+                    <option value="Gato">Gato</option>
+                    <option value="Roedor">Roedor</option>
+                    <option value="Cavalo">Cavalo</option>
+                    <option value="Reptil">Réptil</option>
+                    <option value="Passaro">Pássaro</option>
+                    <option value="Outro">Outro</option>
+                  </select>
+                </div>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="attrib-row">
+              <ion-col size="4" class="attrib-key">
+                Sexo
+              </ion-col>
+              <ion-col size="8" class="edit-attrib-value">
+                <div class="form-group">
+                  <select [formControl]="myForm.controls['gender']">
+                    <option value="Macho">Macho</option>
+                    <option value="Femea">Fêmea</option>
+                    <option value="Desconhecido">Não sei</option>
+                  </select>
+                </div>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="attrib-row">
+              <ion-col size="4" class="attrib-key">
+                Raça
+              </ion-col>
+              <ion-col size="8" class="edit-attrib-value">
+                <div class="form-group">
+                  <input type="text" class="input-box" [formControl]="myForm.controls['race']">
+                </div>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="attrib-row">
+              <ion-col size="4" class="attrib-key">
+                Cor
+              </ion-col>
+              <ion-col size="8" class="edit-attrib-value">
+                <div class="form-group">
+                  <ion-button type="button" class="edit-button" (click)="changeColors()">Editar cor</ion-button>
+                </div>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="attrib-row">
+              <ion-col size="4" class="attrib-key">
+                Tamanho
+              </ion-col>
+              <ion-col size="8" class="edit-attrib-value">
+                <div class="form-group">
+                  <select [formControl]="myForm.controls['size']">
+                    <option value="Pequenino">Pequenino</option>
+                    <option value="Pequeno">Pequeno</option>
+                    <option value="Medio">Médio</option>
+                    <option value="Grande">Grande</option>
+                    <option value="Muitogrande">Muito grande</option>
+                    <option value="Imenso">Imenso</option>
+                  </select>
+                </div>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="attrib-row">
+              <ion-col size="4" class="attrib-key">
+                Pêlo
+              </ion-col>
+              <ion-col size="8" class="edit-attrib-value">
+                <div class="form-group">
+                  <select [formControl]="myForm.controls['pelo']">
+                    <option value="Nenhum">Nenhum</option>
+                    <option value="Pouco">Pouco</option>
+                    <option value="Medio">Médio</option>
+                    <option value="Muito">Muito</option>
+                  </select>
+                </div>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="attrib-row">
+              <ion-col size="4" class="attrib-key">
+                Detalhes
+              </ion-col>
+              <ion-col size="8" class="edit-attrib-value">
+                <div class="form-group">
+                  <textarea max="255" [formControl]="myForm.controls['description']"></textarea>
+                </div>
+              </ion-col>
+            </ion-row>
+
+          </ion-grid>
+        </div>
+      </ion-content>
+      <ion-fab slot="fixed" vertical="bottom" horizontal="end" padding="10dp">
+        <ion-fab-button type="submit" (click)="onSubmit(myForm.value)" color="primary">
+          <ion-icon name="checkmark" size="large" color="secondary"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+    </form>
+
+</ion-content>
+
+<ion-fab slot="fixed" vertical="bottom" lhorizontal="start" eft padding="10dp">
+  <ion-fab-button (click)="return()" color="primary">
+    <ion-icon name="return-left" size="large" color="secondary"></ion-icon>
+  </ion-fab-button>
+</ion-fab>

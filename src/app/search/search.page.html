@@ -1,0 +1,238 @@
+<ion-header>
+  <ion-toolbar text-center>
+    <ion-title style="color: white;">Descrição</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content no-scroll class="search-master">
+  <div align=center class="search-container">
+    <div class="filter-grid">
+      <div *ngIf="!location" class="grid-element" (click)="focus('Localização')"><img src="assets/imgs/location.png"></div>
+      <div *ngIf="location" class="grid-element-selected" (click)="focus('Localização')"><img src="assets/imgs/location.png"></div>
+
+      <div *ngIf="!gender" class="grid-element" (click)="focus('Sexo')"><img src="assets/imgs/gender.png"></div>
+      <div *ngIf="gender" class="grid-element-selected" (click)="focus('Sexo')"><img src="assets/imgs/gender.png"></div>
+
+      <div *ngIf="!type" class="grid-element" (click)="focus('Família')"><img src="assets/imgs/type.png"></div>
+      <div *ngIf="type" class="grid-element-selected" (click)="focus('Família')"><img src="assets/imgs/type.png"></div>
+
+      <div *ngIf="!race" class="grid-element" (click)="focus('Raça')"><img src="assets/imgs/race.png"></div>
+      <div *ngIf="race" class="grid-element-selected" (click)="focus('Raça')"><img src="assets/imgs/race.png"></div>
+
+      <div *ngIf="!hasColors" class="grid-element" (click)="focus('Cores')"><img src="assets/imgs/color.png"></div>
+      <div *ngIf="hasColors" class="grid-element-selected" (click)="focus('Cores')"><img src="assets/imgs/color.png"></div>
+
+      <div *ngIf="!size" class="grid-element" (click)="focus('Tamanho')"><img src="assets/imgs/size.png"></div>
+      <div *ngIf="size" class="grid-element-selected" (click)="focus('Tamanho')"><img src="assets/imgs/size.png"></div>
+
+      <div *ngIf="!fur" class="grid-element" (click)="focus('Pêlo')"><img src="assets/imgs/hair.png"></div>
+      <div *ngIf="fur" class="grid-element-selected" (click)="focus('Pêlo')"><img src="assets/imgs/hair.png"></div>
+
+      <div *ngIf="!description" class="grid-element" (click)="focus('Detalhes')"><img src="assets/imgs/other.png"></div>
+      <div *ngIf="description" class="grid-element-selected" (click)="focus('Detalhes')"><img src="assets/imgs/other.png"></div>
+    </div>
+  </div>
+</ion-content>
+<ion-content no-scroll class="master-2">
+  <div align=center>
+    <div class="focus-title">
+      <h1>{{focused}}</h1>
+    </div>
+    <div class="focused">
+      <div *ngIf="focused == 'Localização'" class="location">
+        <div class="location-grid">
+
+          <div *ngIf="locationAvailable" class="location-pin">
+            <img *ngIf="!locPressed" (click)="togglePressed()" src="assets/imgs/location-2.png" />
+            <img *ngIf="locPressed" (click)="togglePressed()" src="assets/imgs/location-2-pressed.png" />
+          </div>
+          <div *ngIf="!locationAvailable" class="location-pin">
+            <img *ngIf="!locPressed" (click)="togglePressed()" src="assets/imgs/location-gray.png" />
+          </div>
+
+          <div class="location-box" *ngIf="!locPressed">
+            <ion-input [(ngModel)]="locationText" rows="1" max="255" placeholder="Escreva ou selecione o pino."
+              clearInput></ion-input>
+            <div class="btn-container">
+              <ion-button (click)="geocode()">OK</ion-button>
+            </div>
+          </div>
+
+          <div class="location-slider">
+            <ion-item>
+              <ion-range id="myRange" min="1" max="4" snaps="true" pin="false" [(ngModel)]="locationRange">
+                <ion-icon slot="start" name="locate"></ion-icon>
+                <ion-icon slot="end" name="navigate"></ion-icon>
+              </ion-range>
+            </ion-item>
+          </div>
+          <div class="location-slider-label">{{locRangeText}}</div>
+
+        </div>
+      </div>
+
+      <div *ngIf="focused == 'Sexo'" class="gender">
+        <div class="gender-grid">
+          <div class="gender-element" (click)="setGender('Macho')">
+            <img src="assets/imgs/search/male.png" />
+            <div *ngIf="gender == 'Macho'"><span>{{gender}}</span></div>
+          </div>
+          <div class="gender-element" (click)="setGender('Fêmea')">
+            <img src="assets/imgs/search/female.png" />
+            <div *ngIf="gender == 'Fêmea'"><span>{{gender}}</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="focused == 'Família'" class="type">
+        <div class="type-grid">
+          <div class="type-element" (click)="setType('Cachorro')">
+            <img src="assets/imgs/search/dog.png" />
+            <div *ngIf="type == 'Cachorro'"><span>{{type}}</span></div>
+          </div>
+          <div class="type-element" (click)="setType('Gato')">
+            <img src="assets/imgs/search/cat.png" />
+            <div *ngIf="type == 'Gato'"><span>{{type}}</span></div>
+          </div>
+          <div class="type-element" (click)="setType('Roedor')">
+            <img src="assets/imgs/search/rodent.png" />
+            <div *ngIf="type == 'Roedor'"><span>{{type}}</span></div>
+          </div>
+          <div class="type-element" (click)="setType('Cavalo')">
+            <img src="assets/imgs/search/horse.png" />
+            <div *ngIf="type == 'Cavalo'"><span>{{type}}</span></div>
+          </div>
+          <div class="type-element-non-clickable"></div>
+          <div class="type-element" (click)="setType('Réptil')">
+            <img src="assets/imgs/search/reptile.png" />
+            <div *ngIf="type == 'Réptil'"><span>{{type}}</span></div>
+          </div>
+          <div class="type-element" (click)="setType('Pássaro')">
+            <img src="assets/imgs/search/bird.png" />
+            <div *ngIf="type == 'Pássaro'"><span>{{type}}</span></div>
+          </div>
+          <div class="type-element" (click)="setType('Outro')">
+            <img src="assets/imgs/search/other.png" />
+            <div *ngIf="type == 'Outro'"><span>{{type}}</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="focused == 'Raça'" class="race">
+        <div *ngIf="!type" style="padding: 20px;">Por favor, selecione antes uma família (espécie)</div>
+        <div *ngIf="type" class="race-inner">
+          <div class="race-grid">
+            <div *ngFor="let raca of raceList" class="race-element" (click)="setRace(raca.name)">
+              <img src="{{raca.img}}" />
+              <div *ngIf="raca.name == race"><span>{{raca.name}}</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="focused == 'Cores'" class="color">
+        <div class="color-grid">
+          <div class="color-element" [ngStyle]="{'background-color': 'white'}" (click)="addColor('white')">
+            <div *ngIf="is.white"><span>Branco</span></div>
+          </div>
+
+          <div class="color-element" [ngStyle]="{'background-color': 'black'}" (click)="addColor('black')">
+            <div *ngIf="is.black"><span>Preto</span></div>
+          </div>
+
+          <div class="color-element" [ngStyle]="{'background-color': 'brown'}" (click)="addColor('brown')">
+            <div *ngIf="is.brown"><span>Marrom</span></div>
+          </div>
+
+          <div class="color-element" [ngStyle]="{'background-color': 'orange'}" (click)="addColor('orange')">
+            <div *ngIf="is.orange"><span>Laranja</span></div>
+          </div>
+
+          <div class="color-element" [ngStyle]="{'background-color': 'beige'}" (click)="addColor('beige')">
+            <div *ngIf="is.beige"><span>Beige</span></div>
+          </div>
+
+          <div class="color-element" [ngStyle]="{'background-color': 'green'}" (click)="addColor('green')">
+            <div *ngIf="is.green"><span>Outro</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="focused == 'Tamanho'" class="size">
+        <div class="size-grid">
+          <div class="size-element" (click)="setSize('Pequenino')">
+            <img src="assets/imgs/search/tam0.png" />
+            <div *ngIf="size == 'Pequenino'"><span>{{size}}</span></div>
+          </div>
+
+          <div class="size-element" (click)="setSize('Pequeno')">
+            <img src="assets/imgs/search/tam1.png" />
+            <div *ngIf="size == 'Pequeno'"><span>{{size}}</span></div>
+          </div>
+
+          <div class="size-element" (click)="setSize('Médio')">
+            <img src="assets/imgs/search/tam2.png" />
+            <div *ngIf="size == 'Médio'"><span>{{size}}</span></div>
+          </div>
+
+          <div class="size-element" (click)="setSize('Grande')">
+            <img src="assets/imgs/search/tam3.png" />
+            <div *ngIf="size == 'Grande'"><span>{{size}}</span></div>
+          </div>
+
+          <div class="size-element" (click)="setSize('Muito Grande')">
+            <img src="assets/imgs/search/tam4.png" />
+            <div *ngIf="size == 'Muito Grande'"><span>{{size}}</span></div>
+          </div>
+
+          <div class="size-element" (click)="setSize('Imenso')">
+            <img src="assets/imgs/search/tam5.png" />
+            <div *ngIf="size == 'Imenso'"><span>{{size}}</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="focused == 'Pêlo'" class="fur">
+        <div class="fur-grid">
+          <div class="fur-element" (click)="setFur('Nenhum')">
+            <img src="assets/imgs/search/fur0.png" />
+            <div *ngIf="fur == 'Nenhum'"><span>{{fur}}</span></div>
+          </div>
+
+          <div class="fur-element" (click)="setFur('Pouco')">
+            <img src="assets/imgs/search/fur1.png" />
+            <div *ngIf="fur == 'Pouco'"><span>{{fur}}</span></div>
+          </div>
+
+          <div class="fur-element" (click)="setFur('Médio')">
+            <img src="assets/imgs/search/fur2.png" />
+            <div *ngIf="fur == 'Médio'"><span>{{fur}}</span></div>
+          </div>
+
+          <div class="fur-element" (click)="setFur('Muito')">
+            <img src="assets/imgs/search/fur3.png" />
+            <div *ngIf="fur == 'Muito'"><span>{{fur}}</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="focused == 'Detalhes'" class="other">
+        <div class="other-input">
+          <textarea [(ngModel)]="description" rows="10" max="255" placeholder="Insira aqui detalhes adicionais como coleira, manchas, traços comportamenais ou algo não contemplado pelos filtros."></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-fab slot="fixed" vertical="bottom" horizontal="start" style="padding-bottom:10dp;padding-left:10dp;padding-right:0;padding-top:0;">
+  <ion-fab-button (click)="return()" color="primary">
+    <ion-icon name="return-left" size="mini" color="secondary"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
+<ion-fab slot="fixed" vertical="bottom" horizontal="end" padding="10dp">
+  <ion-fab-button (click)="saveFilters()" color="primary">
+    <ion-icon name="play" size="mini" color="secondary"></ion-icon>
+  </ion-fab-button>
+</ion-fab>

@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Petgree</string>
+    <string name="title_activity_main">Petgree</string>
+    <string name="package_name">com.dorea.petgree.app</string>
+    <string name="fileprovider_authority">com.dorea.petgree.app.fileprovider</string>
+    <string name="custom_url_scheme">com.dorea.petgree.app</string>
+    <string name="fb_app_id">494256917715469</string>
+    <string name="fb_app_name">Petgree</string>
+</resources>

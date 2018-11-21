@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar >
+    <ion-item text-center>
+      <ion-buttons>
+        <ion-menu-button style="color: white;"></ion-menu-button>
+      </ion-buttons>
+      <ion-title style="color: white;">
+        Petgree
+      </ion-title>
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- SLIDER PARA MOSTRAR OS PETS -->
+  <div align=center>
+    <ion-slides padding pager #slides class="home-slide-container" *ngIf="slidesList && slidesList.length > 0" autoplay="3000"
+      paginationType="bullets" spaceBetween="200" speed="500" effect="slide">
+      <ion-slide *ngFor="let slide of slidesList" (click)="goToPet()">
+        <ion-list>
+          <ion-item>
+            <div align=center>
+              <img [src]="slide.image_url" class="home-slide-img" />
+              <div *ngIf="slide.status" class="status-box">Status: {{slide.status.description}}</div>
+              <div *ngIf="(slide.distanceToMe >= -0.1)" class="distance-box">Distância: {{slide.distanceToMe}} km</div>
+            </div>
+          </ion-item>
+          <ion-item>
+            <div style="width: 100%;" text-center>
+              <h2 class="slide-title" no-margin [innerHTML]="slide.name"></h2>
+            </div><br />
+
+          </ion-item>
+        </ion-list>
+
+      </ion-slide>
+    </ion-slides>
+  </div>
+
+  <div align=center>
+    <div class="home-grid">
+      <div class="item-a1">
+        <div>Estou procurando</div>
+      </div>
+      <div (click)="search('ENCONTRADO')" class="item-a2"><img src="assets/imgs/searching.png" /></div>
+      <div class="item-a3"></div>
+      <div class="item-b1">
+        <div>Encontrei</div>
+      </div>
+      <div (click)="search('PERDIDO')" class="item-b2"><img src="assets/imgs/scared.png" /></div>
+      <div class="item-b3"></div>
+    </div>
+  </div>
+
+</ion-content>
+
+<ion-fab slot="fixed" vertical="bottom" horizontal="center" padding="10dp">
+  <ion-fab-button (click)="more()" color="secondary">
+    <ion-icon name="add" size="large" color="primary"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
+<ion-fab slot="fixed" vertical="top" horizontal="end" padding="10dp">
+  <ion-fab-button (click)="reload()" color="secondary">
+    <ion-icon name="refresh" size="mini" color="primary"></ion-icon>
+  </ion-fab-button>
+</ion-fab>

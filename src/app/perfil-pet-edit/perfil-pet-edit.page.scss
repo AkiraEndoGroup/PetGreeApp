@@ -1,0 +1,18 @@
+.edit-pet-grid {
+  display: grid;
+  align-content: center;
+  justify-content: center;
+  grid-template-rows: 40vh auto;
+  grid-template-columns: auto;
+  max-width: 600px;
+}
+
+.edit-pet-slides {
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.edit-pet-form {
+  grid-row-start: 2;
+  grid-row-end: 3;
+}

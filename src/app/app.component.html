@@ -1,0 +1,22 @@
+<ion-menu side="start" class="e2eLeftMenu" contentId="content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title style="color: white;">Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list>
+      <ion-item style="background-color: white;" *ngFor="let menu of menus" (click)="openPage(menu)">
+        <ion-label text-center>
+          {{menu.name}}
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+
+</ion-menu>
+
+<ion-app>
+  <ion-router-outlet id="content"></ion-router-outlet>
+</ion-app>

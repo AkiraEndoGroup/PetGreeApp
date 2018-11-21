@@ -1,0 +1,54 @@
+// http://ionicframework.com/docs/theming/
+@import "~@ionic/angular/css/core.css";
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+@font-face {
+  font-family: 'Aleo';
+  src: url('assets/fonts/aleo.ttf');
+}
+@font-face {
+  font-family: 'Arvo';
+  src: url('assets/fonts/arvo.ttf');
+}
+
+body {
+  padding: 10%;
+}
+
+.ion-page {
+  background-color: #7d5dc3;  
+}
+
+.item-inner {
+  border: 0;
+}
+
+.toolbar-background-md,.toolbar-background-ios,.toolbar-background-wp {
+  background: #7d5dc3;
+}
+
+.toolbar-title-md,.toolbar-title-ios,.toolbar-title-wp {
+  color: white;
+  font-family: 'Aleo';
+}
+
+.masters {
+  background-color: var(--primary);
+}
+
+.masters-navbar {
+  background-color: var(--secondary);
+}
+
+.form-error {
+  color: red;
+  size: 16dp;
+}

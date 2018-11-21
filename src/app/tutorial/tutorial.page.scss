@@ -1,0 +1,22 @@
+:root {
+  --primary-color: #00a98e;
+  --secondary-color: #7d5dc3;
+}
+
+.slide-container {
+  background-color: var(--secondary-color);
+  height: calc(100vh - 65px);
+  height: -o-calc(100% - 65px);       /* opera */
+  height: -webkit-calc(100% - 65px);  /* google, safari */
+  height: -moz-calc(100% - 65px);     /* firefox */
+}
+
+.swiper-slide img {
+  height: 45vh;
+  border-radius: 20px;
+  object-fit: cover;
+}
+
+body {
+  background-color: var(--secondary-color);
+}

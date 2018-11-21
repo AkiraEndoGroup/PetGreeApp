@@ -1,0 +1,23 @@
+.modal-colors {
+  background-color: transparent !important;
+  align-content: center;
+  align-self: center;
+  justify-content: center;
+  max-height: 300px;
+
+  .scroll-content {
+    position: relative;
+    bottom: calc(50% - 100px);
+    left: calc(50% - 100px);
+    height: 200px;
+    width: 200px;
+  }
+  .fixed-content {
+    position: relative;
+    background-color: transparent;
+    left: calc(50% - 100px);
+    bottom: 0;
+    height: 200px;
+    width: 200px;
+  }
+}

@@ -1,0 +1,44 @@
+<form [formGroup]="fGroup" style="height: 100%;" (ngSubmit)="onSubmit()">
+  <ion-content class="attrib-container">
+    <div align=center>
+      <div align=center>
+        <p style="color: white;">Padrão: +55[DDD][número]</p>
+      </div>
+      <ion-grid class="attrib-grid">
+
+        <ion-row formArrayName="items" *ngFor="let item of fGroup.get('items')['controls']; let i = index" class="attrib-row">
+          <ion-col size="3" class="attrib-key">
+            Tel {{i+1}}:
+          </ion-col>
+          <ion-col size="7" class="edit-attrib-value">
+            <div [formGroupName]="i" class="form-group">
+              <input type="text" (change)="updateValid()" class="input-box" [ngClass]="{'invalid': item.value.valid == false}"
+                formControlName="name">
+            </div>
+          </ion-col>
+          <ion-col size="2" class="attrib-key">
+            <ion-button type="button" style="height:2rem !important;" (click)="removeItem(i)">X</ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row class="attrib-row">
+          <ion-col size="12" class="edit-attrib-value">
+            <div class="form-group">
+              <ion-button type="button" (click)="addItem()">Adicionar telefone</ion-button>
+            </div>
+          </ion-col>
+        </ion-row>
+
+      </ion-grid>
+    </div>
+    <ion-fab slot="fixed" vertical="bottom" horizontal="end" padding="10dp" style="padding-bottom: -50px;">
+      <ion-fab-button *ngIf="valid" (click)="onSubmit()" type="submit" color="primary">
+        <ion-icon name="checkmark" size="large" color="secondary"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    <ion-fab slot="fixed" vertical="bottom" horizontal="start" padding="10dp" style="padding-bottom: -50px;">
+      <ion-fab-button (click)="closeModal()" color="primary">
+        <ion-icon name="return-left" size="large" color="secondary"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </ion-content>
+</form>

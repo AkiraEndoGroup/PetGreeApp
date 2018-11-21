@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title style="color: white;">Meus pets</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div align=center class="meuspets">
+    <div class="meuspets-container">
+      <div *ngFor="let pet of pets" class="meuspets-element">
+        <img src="{{pet.image_url}}" (click)="goToPet(pet)" />
+      </div>
+      <div class="meuspets-element">
+        <img src="assets/imgs/add.png" (click)="cadastrar()" />
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-fab slot="fixed" vertical="bottom" left padding="10dp">
+  <ion-fab-button (click)="return()" color="primary">
+    <ion-icon name="return-left" size="large" color="secondary"></ion-icon>
+  </ion-fab-button>
+</ion-fab>

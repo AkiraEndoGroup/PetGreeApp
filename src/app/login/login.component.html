@@ -1,0 +1,27 @@
+<div align=center class="login-body">
+  <ion-grid>
+    <ion-row align-items-center>
+      <ion-col justify-content-center>
+        <ion-button expand="block" *ngIf="!loggedGoogle && !loggedFacebook" (click)="googleLogin()">
+          Login com Google
+        </ion-button>
+        <ion-button expand="block" *ngIf="loggedGoogle" (click)="googleSignOut()">
+          Sair do Google
+        </ion-button>
+      </ion-col>
+      <ion-col justify-content-center>
+        <ion-button expand="block" *ngIf="!loggedFacebook && !loggedGoogle" (click)="fbLogin()">
+          Login com Facebook
+        </ion-button>
+        <ion-button expand="block" *ngIf="loggedFacebook" (click)="fbSignOut()">
+          Sair do Facebook
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-fab slot="fixed" horizontal="start" vertical="bottom" padding="10dp">
+    <ion-fab-button (click)="back()">
+      <ion-icon name="return-left"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</div>

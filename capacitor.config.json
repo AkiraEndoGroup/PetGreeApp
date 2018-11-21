@@ -1,0 +1,15 @@
+{
+  "appId": "com.dorea.petgree.app",
+  "appName": "Petgree",
+  "bundledWebRuntime": false,
+  "webDir": "www",
+  "linuxAndroidStudioPath": "/opt/android-studio/bin/studio.sh",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 500
+    }
+  },
+  "android": {
+    "allowMixedContent": true
+  }
+}

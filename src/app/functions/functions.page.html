@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-item text-center>
+      <ion-buttons>
+        <ion-menu-button style="color: white;"></ion-menu-button>
+      </ion-buttons>
+      <ion-title style="color: white;">
+        Mais Opções
+      </ion-title>
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div align=center>
+    <div class="functions-grid">
+      <div (click)="searchEncontrados()" class="perdi-title">
+        <div>Estou procurando</div>
+      </div>
+      <div (click)="searchEncontrados()" class="perdi"><img src="assets/imgs/searching.png" /></div>
+
+      <div (click)="searchPerdidos()" class="encontrei-title">
+        <div>Encontrei</div>
+      </div>
+      <div (click)="searchPerdidos()" class="encontrei"><img src="assets/imgs/scared.png" /></div>
+
+      <div (click)="cadastrarMachucado()" class="precisa-ajuda-title">
+        <div>Precisa de ajuda</div>
+      </div>
+      <div (click)="cadastrarMachucado()" class="precisa-ajuda"><img src="assets/imgs/injured.png" /></div>
+
+      <div (click)="searchMachucado()" class="posso-ajudar-title">
+        <div>Posso ajudar</div>
+      </div>
+      <div (click)="searchMachucado()" class="posso-ajudar"><img src="assets/imgs/hero.png" /></div>
+
+      <div (click)="cadastrarPrecisaAbrigo()" class="precisa-abrigo-title">
+        <div>Precisa de abrigo</div>
+      </div>
+      <div (click)="cadastrarPrecisaAbrigo()" class="precisa-abrigo"><img src="assets/imgs/house.png" /></div>
+
+      <div (click)="searchPrecisaAbrigo()" class="posso-abrigar-title">
+        <div>Posso abrigar</div>
+      </div>
+      <div (click)="searchPrecisaAbrigo()" class="posso-abrigar"><img src="assets/imgs/adopt.png" /></div>
+
+      <div (click)="searchQuerCruzar()" class="quer-cruzar-title">
+        <div>Quer cruzar</div>
+      </div>
+      <div (click)="searchQuerCruzar()" class="quer-cruzar"><img src="assets/imgs/dog-love.png" /></div>
+
+      <div (click)="goShop()" class="loja-title">
+        <div>Loja</div>
+      </div>
+      <div (click)="goShop()" class="loja"><img src="assets/imgs/shop.png" /></div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-fab slot="fixed" vertical="bottom" horizontal="start" padding="10dp">
+  <ion-fab-button (click)="return()" color="primary">
+    <ion-icon name="return-left" size="large" color="secondary"></ion-icon>
+  </ion-fab-button>
+</ion-fab>

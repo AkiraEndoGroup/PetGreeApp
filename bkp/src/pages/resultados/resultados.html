@@ -1,0 +1,44 @@
+<ion-toolbar text-center>
+  <ion-title>Resultados</ion-title>
+</ion-toolbar>
+
+<ion-content>
+
+  <!-- SLIDER PARA MOSTRAR OS PETS -->
+  <div align=center *ngIf="pets && pets.length">
+    <ion-slides padding pager #slides class="home-slide-container" autoplay="3000"
+      paginationType="bullets" spaceBetween="200" speed="500" effect="slide">
+      <ion-slide *ngFor="let pet of pets" (tap)="goToPet()">
+        <div>
+          <img [src]="pet.image_url" class="home-slide-img" />
+          <div *ngIf="pet.status" class="status-box">Status: {{pet.status.description}}</div>
+          <div *ngIf="(pet.distanceToMe >= -0.1)" class="distance-box">Distância: {{pet.distanceToMe}} km</div>
+        </div>
+        <h2 *ngIf="pet.name && pet.name.length > 0" class="slide-title" no-margin [innerHTML]="pet.name"></h2>
+        <br />
+      </ion-slide>
+    </ion-slides>
+
+    <div *ngIf="!unavailable" class="results-grid">
+      <div (tap)="thisIsIt()" class="results-element">
+        <img src="assets/imgs/this-one.png" />
+        <div class="res-btn-container">
+          <h1>Esse!</h1>
+        </div>
+      </div>
+      <div (tap)="notHere()" class="results-element">
+        <img src="assets/imgs/not-this-one.png" />
+        <div class="res-btn-container">
+          <h1>Nenhum desses</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</ion-content>
+
+<ion-fab slot="fixed" vertical="bottom" left padding="10dp">
+  <ion-fab-button (tap)="return()" color="primary">
+    <ion-icon name="return-left" size="large" color="secondary"></ion-icon>
+  </ion-fab-button>
+</ion-fab>

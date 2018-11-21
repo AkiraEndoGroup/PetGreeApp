@@ -1,0 +1,138 @@
+
+:root {
+  --primary-color: #00a98e;
+  --secondary-color: #7d5dc3;
+}
+
+.home-slide-container {
+  margin-top: 10px;
+  height: 50vh;
+  width: 50vh;
+  max-width: 600px;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-slide-img {
+  height: 32vh !important;
+  width: 32vh !important;
+  object-fit: cover !important;
+  border-radius: 20px;
+}
+
+.scroll-content,
+.fixed-content {
+  background-color: var(--secondary-color);
+  max-height: calc(100% - 56px)
+}
+
+.status-box {
+  color: white;
+  background-color: black;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+}
+
+.distance-box {
+  color: black;
+  background-color: white;
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+}
+
+ion-fab[center] {
+  margin-left: -44px; // FAB tem 88px
+}
+
+.home-grid {
+  display: grid;
+  width: 80%;
+  height: 35vh;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 30px auto 30px;
+  grid-column-gap: 3px;
+  grid-row-gap: 3px;
+  max-width: 600px
+}
+
+.item-a1 {
+  border-radius: 30px 0 0 0;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  background-color: #00a98e;
+  display: flex;
+  justify-content: center;
+  div {
+    font-size: medium;
+    align-self: center;
+    justify-self: center;
+  }
+}
+
+.item-a2 {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  background-color: #00a98e;
+}
+
+.item-a3 {
+  border-radius: 0 0 0 30px;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  background-color: #00a98e;
+}
+
+.item-b1 {
+  border-radius: 0 30px 0 0;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  background-color: #00a98e;
+  display: flex;
+  justify-content: center;
+
+  div {
+    font-size: medium;
+    align-self: center;
+    justify-self: center;
+  }
+}
+
+.item-b2 {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 2;
+  grid-row-end: 3;
+  background-color: #00a98e;
+  object-fit: contain;
+}
+
+.item-b3 {
+  border-radius: 0 0 30px 0;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  background-color: #00a98e;
+}
+
+.navbar-input {
+  display: block !important;
+  background-color: blueviolet;
+  border-radius: 10px;
+  color: white;
+}
+
+.navbar-input::placeholder {
+  color: white;
+  ;
+}
